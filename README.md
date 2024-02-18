@@ -6,7 +6,12 @@ Typ I panel consists of 8 modules with the same UI. Each module has:
 * 2 pushbutton switches (NKK BB15/BB16)
 * 2 5mm LED
 
-Modules:
+### Modules:
 * [4 channel mixer](Modules/Mixer.md)
 * [4 step sequencer](Modules/Sequencer.md)
 * [Function generator](Modules/Function.md)
+
+### OSHWLab:
+* [PCB Panel 4x4 size](https://oshwlab.com/com.poed/panel-typ-i)
+* [Blank module PCB](https://oshwlab.com/com.poed/blank)
+  
