@@ -13,5 +13,6 @@ Typ I panel consists of 8 modules with the same UI. Each module has:
 
 ### OSHWLab:
 * [PCB Panel 4x4 size](https://oshwlab.com/com.poed/panel-typ-i)
+* [Dual modules motherboard PCB](https://oshwlab.com/com.poed/motherboard)
 * [Blank module PCB](https://oshwlab.com/com.poed/blank)
   
