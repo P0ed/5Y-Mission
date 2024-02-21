@@ -65,7 +65,7 @@ color("#222222")
 translate([in / 2, in / 2])
 for(x = [0:3]) for(y = [0:0])
 translate([x * in, y * in])
-Knob($fn = $fn / 4, simplify = true);
+Knob(simplify = true);
 
 color("#222222")
 translate([in, in])
@@ -73,7 +73,7 @@ for(x = [0:1]) for(y = [0:0])
 translate([x * in * 2, y * in])
 Button();
 
-color("#EE9944")
+color("#449955")
 translate([in, in])
 for(x = [0:1]) for(y = [1:1])
 translate([x * in * 2, y * in])

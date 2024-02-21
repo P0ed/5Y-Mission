@@ -1,4 +1,4 @@
-module Knob($fn = 192, simplify = false) {
+module Knob(simplify = false) {
 	d = 12.7;
 	h = 17;
 	sr = 25.4;
@@ -38,7 +38,7 @@ module Knob($fn = 192, simplify = false) {
 		circle(r=mr);
 
 		// ribs
-		for(i=[0:7]) {
+		for(i = [0:7]) {
 			dr = 8.5;
 			start = 1.85;
 			end = 3.1;
