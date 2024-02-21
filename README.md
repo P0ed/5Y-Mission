@@ -23,6 +23,8 @@ The modules are installed via two 1x20 pin headers:
 * [Blank module PCB](https://oshwlab.com/com.poed/blank)
 
 ### Parts:
+* [4x3x2 Panel](Panel/Panel.dxf)
+* [17" Panel](Panel/Panel17.dxf)
 * [AD823](Parts/AD823.pdf)
 * [Bourns 51](Parts/51AAA-B24-B20L.pdf)
 * [Knob](Parts/1900/1900.stl)
