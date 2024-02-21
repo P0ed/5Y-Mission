@@ -1,4 +1,6 @@
 ### YADUSGC
+<img width="800" alt="Screenshot 2024-02-21 at 20 58 10" src="https://github.com/P0ed/5Y-Mission/assets/5844101/deae1058-f72e-431d-ad85-529cefd027bd">
+
 Based on first order state variable filter topology. There is a mixer at input, something that works as variable resistor with exponential response and an integrator. Integrator's input is derivative of its output. This derivative is then split into positive and negative parts and allows to control rise and fall times independently.
 
 Besides SVF there are two flip-flops for attack and decay. Decay flip-flop helps with the shape of last portion of a triangle compared to DUSG design that uses only attack flip-flop where not infinite gain of mixing opamp happens in the end.
