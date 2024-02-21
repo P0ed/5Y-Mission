@@ -1,3 +1,5 @@
+<img width="800" alt="Screenshot 2024-02-21 at 20 57 11" src="https://github.com/P0ed/5Y-Mission/assets/5844101/c7d21f87-e40e-4aa4-a743-46e0eac0b8d0">
+
 ### Functional description:
 ```
 OUT1: IN1 * P1 (SW1) IN2 * P2
