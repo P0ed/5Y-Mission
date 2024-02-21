@@ -27,7 +27,6 @@ GC: (SW2)P3 * IN3 + IN4 + P4
 GA: GC + P1 + P2 * IN2
 GD: GC - P1 + P2 * IN2
 SW2: (+) : (-)
-
 ```
 LED wavelength: 572nm
 
