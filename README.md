@@ -1,6 +1,9 @@
 # 5Y-Mission
 4U Modular analog synthesizer
 
+<img width="718" alt="Screenshot 2024-02-21 at 21 03 33" src="https://github.com/P0ed/5Y-Mission/assets/5844101/a92c6793-bd27-4dff-a935-6d1c097b11fe">
+
+
 Typ I panel consists of 8 modules with identical UI. Each module has:
 * 12 9.5mm holes laid out in a 4x3 grid for 8 Banana jacks and 4 potentiometers
 * 2 pushbutton switches
