@@ -5,8 +5,8 @@
 
 Typ I panel consists of 2 modules with identical UI. Each module has:
 * 8 banana jacks and 4 potentiometers laid out in a 4x3 grid
-* 2 pushbutton switches
 * 2 5mm LED
+* 2 pushbutton switches
 
 Motherboard fits two modules:
 
