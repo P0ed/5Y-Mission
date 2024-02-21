@@ -32,5 +32,6 @@ SW2: (+) : (-)
 LED wavelength: 572nm
 
 ### Schematic:
+<img width="800" alt="Screenshot 2024-02-21 at 20 35 20" src="https://github.com/P0ed/5Y-Mission/assets/5844101/da8bdf91-d95c-40e5-b945-ff0277825f57">
 
 [Spice simulation](Function.asc)
