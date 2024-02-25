@@ -8,8 +8,8 @@ module Knob(h, d, ribs, skirt, holes = true) {
 	top_d = e_scale * d;
 	skirt_h = in(3 / 32);
 	skirt_d = in(3 / 4);
-	d_insert = 9.6;
-	h_insert = 8.6;
+	d_insert = 9.7;
+	h_insert = 8.4;
 
 	difference() {
 		// body
@@ -48,16 +48,17 @@ module Knob(h, d, ribs, skirt, holes = true) {
 			circle(mr);
 		}
 		if(skirt) {
+			sin_a = sin(21);
 			translate([
 				0,
-				skirt_d / 2 - mr * 2,
-				skirt_h / 2 + mr
+				skirt_d / 2 - mr * 1.5,
+				skirt_h / 2 + mr * 1.5 * sin_a
 			])
 			hull() {
 				sphere(mr);
 			
-				dr = d / 2 + mr * 3.5 - skirt_d / 2;
-				translate([0, dr, skirt_h / 2 + dr / 2])
+				dr = skirt_d / 2 - d / 2 - mr * 2.7;
+				translate([0, -dr, dr * sin_a])
 				sphere(mr);
 			}
 		}
@@ -78,11 +79,11 @@ module Knob(h, d, ribs, skirt, holes = true) {
 
 		if(holes) {
 			// shaft hole
-			translate([0, 0, -0.1])
+			translate([0, 0, -0.01])
 			linear_extrude(h - in(3 / 32))
 			circle(d=6.5);
-			
-			ds = skirt ? skirt_h / 2 : 0;
+
+			ds = skirt ? skirt_h : 0;
 
 			// insert hole
 			translate([0, 0, -0.01])
@@ -94,7 +95,7 @@ module Knob(h, d, ribs, skirt, holes = true) {
 			rotate([90, 0, 0])
 			linear_extrude(5)
 			circle(d=3.2);
-			
+
 			translate([0, 0, -0.01])
 			if(skirt) {
 				linear_extrude(in(1 / 32))
@@ -113,7 +114,7 @@ module D1900() {
 }
 
 module D1910() {
-	Knob(h = in(1 / 2), d = in(17 / 32), ribs = 8, skirt = true);
+	Knob(h = in(1 / 2), d = in(17 / 32 / 0.94), ribs = 8, skirt = true);
 }
 
 module cs(box = [20, 20, 20]) {
@@ -122,3 +123,8 @@ module cs(box = [20, 20, 20]) {
 		children();
 	}
 }
+
+//$fn = 128;
+//
+//D1910();
+//cs() D1900();
