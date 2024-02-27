@@ -3,25 +3,25 @@
 
 Based on first order state variable filter topology. There is a mixer at input, something that works as variable resistor with exponential response and an integrator. Integrator's input is derivative of its output. This derivative is then split into positive and negative parts and allows to control rise and fall times independently.
 
-Besides SVF there are two flip-flops for attack and decay. Decay flip-flop helps with the shape of last portion of a triangle compared to DUSG design that uses only attack flip-flop where not infinite gain of mixing opamp happens in the end.
+Besides SVF there are two flip-flops for attack and decay.
 
 With two of these and a mixer it should be possible to build second order SVF with resonance.
 
 ### Functional description:
 ```
-ATT := 0
+ATK := 0
 DEK := 0
 
-OUT1: ATT || END
+OUT1: ATK || END
 OUT2: !OUT1
 END: OUT4 < 4.20
 OUT3: OUT4'
 OUT4: ∫((IN - OUT4) * G)
 
-IN: (ATT ? 10 : 0) + (DEK ? -10 : 0) + (SW1 ? IN : 0)
-[!SW1 && IN1 > 1 && END]: ATT := 1
-[OUT > 5]: ATT := 0
-[!END && ATT]: DEK := 1
+IN: (ATK ? 10 : 0) + (DEK ? -10 : 0) + (SW1 ? IN : 0)
+[!SW1 && IN1 > 1 && END]: ATK := 1
+[OUT > 5]: ATK := 0
+[!END && ATK]: DEK := 1
 [OUT < 0.1]: DEK := 0
 
 G: OUT3 > 0 ? GA : GD
