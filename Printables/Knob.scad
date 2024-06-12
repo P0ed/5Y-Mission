@@ -1,97 +1,121 @@
-include <polyround.scad>;
+r = 11 / 2;
+l = 0.001;
+
+shaft_h = 9.0;
+shaft_d = 6.35;
+
+skirt_r = 10.7 / 2;
+skirt_h = 0;//2;
+
+top_h = 3.3;
+dc = 0.39;
+
+h = shaft_h + skirt_h + top_h;
+
+lq = 12;
+mq = 24;
+hq = 48;
+vhq = 96;
 
 module knob() {
-	shaft_h = 25.4 * 3 / 8 - 1;
-	shaft_d = 6.35;
-	skirt_h = 2.5;
-	
-	h = shaft_h + skirt_h + 2;
-	top_r = 7;
-	bot_r = 7;
-	
-	x = 1.2;
-	rr = 1.4;
-	
-	shaft_hole(shaft_d, shaft_h, top_r - 1, skirt_h, true)
-	rotate_extrude()
-	polygon(polyRound([
-		[0, 0, 0],
-		[bot_r, 0, 0],
-		[top_r, h - x, 0],
-		[top_r, h, rr / 1.2],
-		[top_r - x * 2, h, rr],
-		[top_r - x * 3, h - x, rr],
-		[0, h - x, 0],
-	], $fn / 8));
+	indicator(h, r)
+	cut(h - 0.7, r)
+	shaft_hole(shaft_d, shaft_h, skirt_r, skirt_h)
+	ribs(8, 2.15, dc)
+	cylinder(h, r, r, $fn=vhq);
 }
 
-module shaft_hole(shaft_d, shaft_h, skirt_r, skirt_h, slot) {
-	dx = 0.01;
-	
+module ribs(cnt, rib_r, dr) {
+	difference() {
+		children();
+		
+		for(i = [0: cnt - 1])
+		rotate(i * 360 / cnt + 180 / cnt)
+		translate([r - dr + rib_r, 0, -l])
+		cylinder(h + l * 2, rib_r, rib_r, $fn=hq);
+	}
+}
+
+module shaft_hole(shaft_d, shaft_h, skirt_r, skirt_h) {
 	difference() {
 		children();
 
 		union() {
 			if(skirt_h > 0) {
-				translate([0, 0, -0.2])
+				translate([0, 0, -l])
 				linear_extrude(skirt_h)
-				circle(skirt_r);
+				circle(skirt_r, $fn=hq);
 			}
 
 			difference() {
-				translate([0, 0, -dx])
+				translate([0, 0, -l])
 				linear_extrude(shaft_h + skirt_h)
-				circle(d = shaft_d, $fn = 13);
+				circle(d = shaft_d, $fn=hq);
 
-				if(slot) {
-					translate([0, 0, shaft_h - 1.6 + skirt_h])
-					linear_extrude(0.4, scale = [1.5, 1])
-					square([1.1 / 1.5, shaft_d], center = true);
-					
-					translate([0, 0, shaft_h - 1.2 + skirt_h - dx])
-					linear_extrude(1.2 + dx)
-					square([1.1, shaft_d], center = true);
-				}
+				translate([0, 0, shaft_h - 1.6 + skirt_h])
+				linear_extrude(0.4, scale = [1.5, 1])
+				square([1.1 / 1.5, shaft_d], center = true);
+				
+				translate([0, 0, shaft_h - 1.2 + skirt_h - l])
+				linear_extrude(1.2 + l)
+				square([1.1, shaft_d], center = true);
 			}
 		}
 	}
 }
 
-module btn_cap(link) {
-	top_r = 4.9 / 2;
-	bot_r = top_r;
-	travel = 1.5;
-	h = 5.4 + 0.8 - travel;
-	
-	x = 0.39;
-	k = 1.47;
-	
-	shaft_hole(2.8, h - 0.8, 0, 0, false) {
-
-		if(link)
-		translate([-3, -0.4, 0])
-		cube([2, 0.8, 0.8]);
-
-		rotate_extrude()
-		polygon(polyRound([
-			[0, 0, 0],
-			[bot_r, 0, 0],
-			[top_r, h - x * k, 0],
-			[top_r * 1.01, h, 4],
-			[top_r * 0.75, h, 4],
-			[top_r * 0.51, h, 4],
-			[top_r * 0.25, h - x / k, 4],
-			[0, h - x / k, 0],
-		], 3));
+module hl(t) {
+	hull() {
+		children();
+		translate(t) children();
 	}
 }
 
-//for(x = [0: 7])
-//translate([14.4 * x, 0, 0])
-//render()
-//knob();
+module indicator(h, r) {
+	difference() {
+		children();
 
-for(x = [0: 3])
-translate([5.3 * x, 0, 0])
-render()
-btn_cap(x != 0, $fn = 31);
+		sr = 1.5;
+		scl = 0.6;
+
+		translate([0, -dc, h + sr - dc])
+		hl([0, r + sr, 0])
+		rotate([0, 90, 0])
+		sphere(sr, $fn=lq);
+	}
+}
+
+module cut(h, r) {
+	intersection() {
+		children();
+		
+		union() {
+			cylinder(h, r, r, $fn=vhq);
+			translate([0, 0, h])
+			cylinder(r, r, r / 4, $fn=vhq);
+		}
+	}
+}
+
+module row(cnt, offset) {
+	dr = 2;
+	dx = offset + dr;
+	mw = 1.1;
+	mo = 2.2;
+
+	for(x = [0: cnt - 1])
+	translate([dx * x, 0, 0])
+	children();
+
+	for(x=[0: cnt - 2])
+	translate([dx * x + r - mo, -mw / 2, -1.8])
+	difference() {
+		cube([dx - r * 2 + mo * 2, mw, 2]);
+
+		translate([mw, -l, mw])
+		cube([dx - r * 2 + mo * 2 - mw * 2, mw + 2 * l, 2]);
+	}
+}
+
+//row(8, r * 2)
+knob();
