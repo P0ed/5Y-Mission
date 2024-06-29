@@ -6,7 +6,7 @@ rail = [3, 10];
 dh = [9, 6.5];
 
 ps = [4.25 * in, 7 * in];
-mc = 1;
+mc = 2;
 s = [ps.x * mc, ps.y, 40];
 
 dx = 0.01;
@@ -52,15 +52,6 @@ module box(s) {
 		}
 	}
 	
-	if(mc > 1) for (i = [1: mc - 1])
-	translate([ps.x * i - wall / 2, 0, 0])
-	difference() {
-		cube([wall, s.y, s.z]);
-		translate([-dx, wall * 2, wall * 2])
-		cube([wall + dx * 2, s.y - wall * 4, s.z]);
-	}
-	
-	
 	for(i = [0: mc - 1]) {
 		translate([(i + 1) * ps.x - dh.x, ps.y - dh.y, s.z - wall - dx])
 		nut_mount();
@@ -90,17 +81,17 @@ module ul() {
 		children();
 		
 		cnt = 6;
-		for(x=[0: 1])
+		for(x=[0: 5])
 		for(z=[0: cnt - 1])
 		translate([
-			x * s.x * 3 / 7 + s.x * 2 / 7,
+			x * s.x * 3 / 19 + s.x * 2 / 19,
 			s.y * 5 / 24,
 			wall + dx - (z + 1) * (wall - 1.2) / cnt
 		])
 		hul([0, s.y * 7 / 12, 0])
 		rotate([0, 0, 180 - 180 * x])
 		linear_extrude((wall - 1.2) / cnt + dx)
-		circle(s.x / 7 - exp(0.5 + 2 * z / cnt), $fn=11 - z);
+		circle(s.z / 5 - exp(0.5 + 2 * z / cnt), $fn=6);
 		
 		for(x=[0: 1])
 		for(z=[0: cnt - 1])
@@ -113,7 +104,7 @@ module ul() {
 		hul([0, s.y * 7 / 12, 0])
 		rotate([0, 0, 180 - 180 * x])
 		linear_extrude((wall - 1.2) / cnt + dx)
-		circle(s.z / 5 - exp(0.5 + 2 * z / cnt), $fn=11 - z);
+		circle(s.z / 5 - exp(0.5 + 2 * z / cnt), $fn=6);
 	}
 }
 
@@ -142,17 +133,20 @@ module hole() {
 	difference() {
 		children();
 		
-		translate([s.x / 2, s.y + dx, 14])
-		rotate([90])
-		cylinder(d=5, h=3, $fn=10);
+		translate([20, s.y - 3.5, 3.5])
+		rotate([45])
+		cylinder(d=5, h=6, $fn=10);
 		
-
+		translate([20 - 3.8, s.y - 3, 3])
+		rotate([0, -90, 180])
+		rotate([0, 45, 45])
+		cylinder(d=5, h=10, $fn=10);
+		
 		for(x=[0: 1])
-		translate([s.x / 2 + x * 6 - 3, s.y + dx - 6.5, 9.5])
-		rotate([90])
-		rotate([135])
-		hul([0, 4.2])
-		cylinder(d=2.4, h=5, $fn=10);
+		translate([40, s.y - 5 + x * 3, 2 + x * 3])
+		rotate([45])
+		hul([4, 0])
+		cylinder(d=2.4, h=6, $fn=10);
 	}
 }
 

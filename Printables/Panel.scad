@@ -1,16 +1,17 @@
-$fn = 24;
-hq = 24;
-vhq = 48;
+s = 3;
+$fn = 24 / s;
+hq = 24 / s;
+vhq = 48 / s;
 
-w = in(17 / 4);
+w = in(17 / 2);
 h = in(7);
 hx = 9;
 hy = 6.5;
 
-dx = (w - in(1) * 3) / 2;
+dx = (w - in(1) * 7) / 2;
 dy = (h - in(1) * 5) / 2;
 
-pt = 3.3;
+pt = 3.5;
 wt = 1.2;
 pl = 0.01;
 
@@ -20,6 +21,8 @@ sws_h = 3.5;
 pot_h = sw_h - 8.9;		// 4.2
 nna_h = 6.6;			// 13.1 - 6.5
 
+
+sw = [5.2, 6.2];
 sw_d = 6.2;
 nna_d = 6.5;
 pot_d = 9.7;
@@ -54,13 +57,12 @@ module border(delta) {
 }
 
 module M3() { circle(d = 3.2, $fn=hq); }
-module Button() { 
-	swh_w = 3.6;
-	translate([0, -(sw_d - swh_w) / 2])
-	hul([0, sw_d - swh_w])
-	circle(d=swh_w, $fn=22);
+module LED() { 
+	translate([-sw.x / 2, -sw.y / 2])
+	hul([sw.x, 0])
+	hul([0, sw.y])
+	circle(0.5, $fn=4);
 }
-module LED() { circle(d = 5.0, $fn=hq); }
 module Banana() { circle(d = pot_d, $fn=hq); }
 
 module 4holes(w, h, hx = 0) {
@@ -77,13 +79,13 @@ module Panel() {
 			square([w, h]);
 			
 			do(1, 1, in(4), in(1)) {
-				do(4, 2, in(1), in(5)) {
+				do(8, 2, in(1), in(5)) {
 					translate(grid(0, 0)) Banana();
 				}
-				do(2, 2, in(2), in(4)) {
-					translate(grid(0.5, 0.5)) Button();
+				do(4, 2, in(2), in(4)) {
+					translate(grid(0.5, 0.5)) LED();
 				}
-				do(2, 2, in(2), in(2)) {
+				do(4, 2, in(2), in(2)) {
 					translate(grid(0.5, 1.5)) LED();
 				}
 			}
@@ -93,7 +95,7 @@ module Panel() {
 			}
 		}
 		
-		do(2, 2, in(2), in(4)) {
+		do(4, 2, in(2), in(4)) {
 			translate([0, 0, sws_h])
 			translate(grid(0.5, 0.5)) 
 			linear_extrude(wt)
@@ -104,17 +106,17 @@ module Panel() {
 		translate([-1, in(0.5), -pl])
 		linear_extrude(wt, scale=[1, 0.68])
 		translate([0, -wt / 2])
-		square([110, wt]);
+		square([w + 2, wt]);
 		
-		do(5, 1, in(1), 0)
-		translate([in(0.125), in(0.5), -pl])
+		do(9, 1, in(1), 0)
+		translate([in(0.25), in(0.5), -pl])
 		linear_extrude(wt, scale=[0.68, 1])
 		translate([-wt / 2, 0])
 		square([wt, in(6)]);
 
 		cnt = 6;
-		do(4, 2, in(1), in(5))
-		translate([in(0.625), in(1), -pl])
+		do(8, 2, in(1), in(5))
+		translate([in(0.75), in(1), -pl])
 		for(i=[0: cnt - 1])
 		translate([0, 0, i * 1.5 / cnt])
 		linear_extrude(
@@ -123,17 +125,12 @@ module Panel() {
 		)
 		circle(r=12.4 - exp(0.4 + i * 1.3 / cnt), $fn=vhq);
 
-		do(4, 6, in(1), in(1))
-		translate([in(0.625), in(1), -pl]) {
-			linear_extrude(wt + pl * 2)
-			circle(r=6.4, $fn=vhq);
-
-			translate([0, 0, wt])
-			linear_extrude(2.1 + pl * 2)
+		translate([in(0.75), in(1), -pl])
+		do(8, 6, in(1), in(1)) {
+			linear_extrude(pt + pl * 2)
 			circle(r=nna_d/2, $fn=hq);
 
-			translate([0, 0, wt])
-			linear_extrude(0.6 + pl * 2)
+			linear_extrude(0.8 + pl * 2)
 			circle(r=pot_d/2, $fn=hq);
 		}
 
@@ -176,12 +173,6 @@ module border(delta) {
 	}
 }
 
-module line(start, end, thickness = 1) {
-	translate(start) hul([end.x - start.x, end.y - start.y])
-	circle(thickness);
-}
-
-
 module banana_spacer() { 
 	round_spacer(nna_d, 3, nna_h, 0.75);
 }
@@ -189,11 +180,6 @@ module banana_spacer() {
 
 module pot_spacer() { 
 	round_spacer(pot_d, 3, pot_h, 0.7);
-}
-
-
-module sw_spacer() {
-	round_spacer(sw_d, 1.5, sws_h, 0.9);
 }
 
 module cut(s=[in(10), in(10), in(10)]) {
@@ -206,19 +192,15 @@ module cut(s=[in(10), in(10), in(10)]) {
 
 //cut()
 rotate([180, 0, 0]) {
-	translate([-in(1.25 / 2), -in(2 / 2), wt-pt])
+	translate([-in(1.5 / 2), -in(2 / 2), wt-pt])
 	Panel();
 	
 	translate(g(0, 1))
-	do(4, 4, in(1), in(1))
+	do(8, 4, in(1), in(1))
 	banana_spacer();
 
 	translate(g(0, 0))
-	do(4, 2, in(1), in(5))
+	do(8, 2, in(1), in(5))
 	pot_spacer();
-				
-	translate(g(0.5, 0.5))
-	do(2, 2, in(2), in(4))
-	sw_spacer();
 }
 
