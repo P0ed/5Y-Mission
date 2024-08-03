@@ -2,9 +2,9 @@ $fn = 8;
 hfn = 48;
 
 wt = 1.2;
-sw_h = 13.9;
+sw_h = 13.1;
 pot_h = sw_h - 8.9;
-nna_h = 14 - 6.5;
+nna_h = sw_h - 6.5;
 
 nna_d = 6.7;
 pot_d = 10.0;
@@ -47,6 +47,21 @@ module pot_spacer() {
 	round_spacer(pot_d, 3, pot_h);
 }
 
+module switch_spacer() {
+	linear_extrude(4.5) 
+	difference() {
+		rr([5 + 2 * wt, 6 + 2 * wt], r=0.5 + wt / 2);
+		rr([5, 6], r=0.5);
+	}
+}
+
+module rr(s, r) {
+	translate([-s.x / 2 + r, -s.y / 2 + r])
+	hul([0, s.y - r * 2]) 
+	hul([s.x - r * 2, 0])
+	circle(r=r, $fn=4);
+}
+
 translate(g(0, 1))
 do(8, 4, in(1), in(1))
 banana_spacer();
@@ -54,6 +69,10 @@ banana_spacer();
 translate(g(0, 0))
 do(8, 2, in(1), in(5))
 pot_spacer();
+
+translate(g(0.5, 0.5))
+do(4, 2, in(2), in(4))
+switch_spacer();
 
 for(x = [0: 6])
 for(y = [0: 5])
