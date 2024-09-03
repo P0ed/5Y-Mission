@@ -22,7 +22,8 @@ module knob() {
 	cut(h - 0.7, r)
 	shaft_hole(shaft_d, shaft_h, skirt_r, skirt_h)
 	ribs(8, 2.15, dc)
-	cylinder(h, r, r, $fn=vhq);
+	linear_extrude(h)
+	circle(r, $fn=vhq);
 }
 
 module ribs(cnt, rib_r, dr) {
@@ -117,5 +118,5 @@ module row(cnt, offset) {
 	}
 }
 
-//row(8, r * 2)
+row(4, 10)
 knob();
