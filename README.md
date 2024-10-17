@@ -23,13 +23,13 @@ The modules are installed via two 1x16 pin headers:
 * [Blank module PCB](https://oshwlab.com/com.poed/blank)
 
 ### Parts:
-* [AD823](Parts/AD823.pdf)
-* [Bourns 51](Parts/51AAA-B24-B20L.pdf)
+* [Operational amplifier](Parts/AD823.pdf)
+* [Potentiometer](Parts/51AAA-B24-B20L.pdf)
 * [Banana jack](Parts/1581-X.pdf)
-* [Toggle](Parts/D2.pdf)
+* [Toggle](Parts/A12.pdf)
 
 ### Modules:
-* [4 channel mixer](Modules/Mixer.md)
+* [Voltage mixer](Modules/Mixer.md)
 * [4 step sequencer](Modules/Sequencer.md)
 * [Function generator](Modules/Function.md)
 * AD633 multiplier
