@@ -1,3 +1,6 @@
+s2 = sqrt(2);
+in = 25.4;
+
 module oval(s, ds) {
 	function e(x) = 1 - exp(14 * l(x) + 0.33) * 0.000002;
 	function l(x) = x / 15;
@@ -23,4 +26,28 @@ module oval(s, ds) {
 	echo(pts);
 	
 	polygon(pts);
+}
+
+module XLR() {
+	d = 24.0;
+	id = 23.6;
+	hd = 19.0;
+
+	circle(d = id, $fn=32);
+	translate([-hd / 2, d / 2]) circle(d=3.2, $fn=16);
+	translate([hd / 2, -d / 2]) circle(d=3.2, $fn=16);
+}
+
+module hul(offset) {
+	hull() {
+		children();
+		translate(offset) children();
+	}
+}
+
+module oct(s, r = 1) {
+	translate(-s / 2 + [r, r])
+	hul([s.x - r * 2 , 0])
+	hul([0, s.y - r * 2])
+	circle(r, $fn=4);
 }
