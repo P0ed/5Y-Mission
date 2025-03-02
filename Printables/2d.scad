@@ -38,6 +38,16 @@ module XLR() {
 	translate([hd / 2, -d / 2]) circle(d=3.2, $fn=16);
 }
 
+module miniXLR() {
+	d = 11.2;
+
+	intersection() {
+		circle(d = d, $fn=32);
+		translate([0, 0.5])
+		square([d, d], center=true);
+	}
+}
+
 module hul(offset) {
 	hull() {
 		children();
@@ -50,4 +60,12 @@ module oct(s, r = 1) {
 	hul([s.x - r * 2 , 0])
 	hul([0, s.y - r * 2])
 	circle(r, $fn=4);
+}
+
+module oct3(s, r = 1) {
+	translate(-s / 2 + [r, r, r])
+	hul([s.x - r * 2, 0, 0])
+	hul([0, s.y - r * 2, 0])
+	hul([0, 0, s.z - r * 2])
+	sphere(r, $fn=6);
 }
