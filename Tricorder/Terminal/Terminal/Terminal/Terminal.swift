@@ -1,10 +1,11 @@
 import SwiftUI
 
 @main
-struct TerminalApp: App {
+struct Terminal: App {
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+			ProgramView()
         }
     }
 }

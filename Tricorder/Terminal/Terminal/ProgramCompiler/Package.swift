@@ -3,13 +3,20 @@ import PackageDescription
 
 let package = Package(
     name: "ProgramCompiler",
+	platforms: [
+		.iOS(.v17),
+		.macOS(.v14),
+		.watchOS(.v10),
+		.tvOS(.v17)
+	],
     products: [
         .library(
             name: "ProgramCompiler",
-            targets: ["ProgramCompiler"]
+            targets: ["ProgramCompiler", "Machine"]
 		),
     ],
     targets: [
-        .target(name: "ProgramCompiler"),
+		.target(name: "ProgramCompiler", dependencies: ["Machine"]),
+		.target(name: "Machine")
     ]
 )

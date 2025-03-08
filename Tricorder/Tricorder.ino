@@ -1,11 +1,12 @@
 #include "instructions.h";
 #include "memory.h";
+#include "interpreter.h"
 #include "ble.h"
 
 Memory mem = {};
 
 void setup() {
-  mem.rx.a = 1;
+  mem.rx[0] = 1;
   pinMode(LEDR, OUTPUT);
   
   initBLE();
