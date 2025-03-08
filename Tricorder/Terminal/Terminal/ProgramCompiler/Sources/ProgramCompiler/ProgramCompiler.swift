@@ -26,6 +26,7 @@ func tokenize(line: Int, string: String) throws -> [Token] {
 	let ids = CharacterSet.letters.union(.decimalDigits).union(["_"])
 	let symbols = CharacterSet(charactersIn: ";{:}(,).=<>+-*/%!~#&|")
 	var tokens = [] as [Token]
+
 	while !sc.isAtEnd {
 
 		let c = string[sc.currentIndex]
@@ -66,13 +67,7 @@ func tokenize(line: Int, string: String) throws -> [Token] {
 				)
 			}
 		case _ where c.isWhitespace:
-			sc.scanLocation += 1
-//			let cc = sc.scanCharacter()
-//			if let ws = sc.scanCharacters(from: .whitespaces) {
-//				print(sc.scanLocation, ws, c, cc)
-//			} else {
-//				print(sc.scanLocation, c, cc)
-//			}
+			string.indices.formIndex(after: &sc.currentIndex)
 		default:
 			if let symbols = sc.scanCharacters(from: symbols) {
 				tokens += symbols.enumerated().map {
