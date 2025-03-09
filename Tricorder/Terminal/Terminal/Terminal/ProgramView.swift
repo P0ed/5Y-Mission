@@ -9,13 +9,17 @@ struct ProgramView: View {
 	@State
 	var bytecode: String = ""
 	@State
+	var editorHidden = false
+	@State
+	var consoleHidden = false
+	@State
 	var output: String = ""
 	@State
 	var executable: Program?
 
     var body: some View {
 		VStack(alignment: .leading) {
-			HStack {
+			HStack(spacing: 12) {
 				Button(action: build) {
 					Text(.init("⌘ + B"))
 				}
@@ -24,24 +28,42 @@ struct ProgramView: View {
 					Text(.init("⌘ + R"))
 				}
 				.keyboardShortcut(.init("r"), modifiers: .command)
+				Spacer()
+				Button(action: {
+					editorHidden.toggle()
+					consoleHidden = editorHidden ? false : consoleHidden
+				}) {
+					Text(.init("⌘ + E"))
+				}
+				.keyboardShortcut(.init("e"), modifiers: .command)
+				Button(action: {
+					consoleHidden.toggle()
+					editorHidden = consoleHidden ? false : editorHidden
+				}) {
+					Text(.init("⌘ + D"))
+				}
+				.keyboardShortcut(.init("d"), modifiers: .command)
 			}
-			.padding(.init(top: 12, leading: 12, bottom: 4, trailing: 12))
+			.padding(.init(top: 8, leading: 12, bottom: 0, trailing: 12))
 
-			TextEditor(text: $program)
-				.font(.system(size: 16).monospaced())
-				.lineSpacing(4)
-
-			TextEditor(text: $output)
-				.font(.system(size: 16).monospaced())
-				.lineSpacing(4)
+			if !editorHidden {
+				TextEditor(text: $program)
+					.font(.system(size: 16).monospaced())
+					.lineSpacing(4)
+			}
+			if !consoleHidden {
+				TextEditor(text: $output)
+					.font(.system(size: 16).monospaced())
+					.lineSpacing(4)
+			}
 		}
     }
 
 	func build() {
 		do {
-			let stmt = try Stmt(program: program)
-			tree = "\(stmt)"
-			let program = try stmt.compile()
+			let stmts = try [Stmt](program: program)
+			tree = "\(stmts)"
+			let program = try stmts.compile()
 			executable = program
 			bytecode = program.rawData.map(\.description).joined(separator: "\n")
 			output = tree + "\n= = = = = = = = = = = =\n" + bytecode
@@ -61,7 +83,8 @@ struct ProgramView: View {
 	}
 
 	func run() {
-		executable?.run()
+		if executable == nil { build() }
+		if let executable { output += "\nexit(\(executable.run()))" }
 	}
 }
 
