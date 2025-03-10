@@ -28,6 +28,10 @@ struct ProgramView: View {
 					Text(.init("⌘ + R"))
 				}
 				.keyboardShortcut(.init("r"), modifiers: .command)
+				Button(action: {}) {
+					Text(.init("⌘ + U"))
+				}
+				.keyboardShortcut(.init("u"), modifiers: .command)
 				Spacer()
 				Button(action: {
 					editorHidden.toggle()
@@ -40,9 +44,9 @@ struct ProgramView: View {
 					consoleHidden.toggle()
 					editorHidden = consoleHidden ? false : editorHidden
 				}) {
-					Text(.init("⌘ + D"))
+					Text(.init("⌘ + T"))
 				}
-				.keyboardShortcut(.init("d"), modifiers: .command)
+				.keyboardShortcut(.init("t"), modifiers: .command)
 			}
 			.padding(.init(top: 8, leading: 12, bottom: 0, trailing: 12))
 
@@ -98,7 +102,7 @@ string = char 32;
 person = (
 	string name,
 	string email,
-	(string public, string prvivate) keys
+	(string public, string private) keys
 );
 
 // function def

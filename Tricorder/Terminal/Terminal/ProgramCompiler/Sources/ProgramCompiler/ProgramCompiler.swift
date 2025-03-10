@@ -21,43 +21,11 @@ public extension OPCode {
 	}
 }
 
-func buidTree(tokens: [Token]) throws -> [Stmt] {
-
-	return []
-}
-
 public extension Array where Element == Stmt {
 
 	init(program: String) throws {
-
-		func compounds(_ begin: String, _ end: String) -> (String) throws -> [Substring] {
-
-			func compounds(_ program: String) throws -> [Substring] {
-				let compoundsX = program.split(separator: begin)
-
-				if compoundsX.count == 1 { return compoundsX }
-
-				let compoundsXS = compoundsX[1].split(separator: end)
-				if compoundsXS.count > 1 {
-					return try compoundsX + compounds(String(compoundsXS[1]))
-				} else {
-					throw TreeParsingError(description: "Can't find matching bracket '\(end)':\n\(program)")
-				}
-			}
-
-			return compounds
-		}
-
-		let lines = program.split(separator: "\n").enumerated()
-		let codeLines = lines.filter { !$0.element.starts(with: "//") }
-
-		let tokens = try codeLines.flatMap { line, value in
-			try tokenize(line: line, string: String(value))
-		}
-
+		let tokens = try tokenize(program: program)
 		self = try buidTree(tokens: tokens)
-
-		throw TreeParsingError(description: "Tokens:\n\(tokens.map(\.value))")
 	}
 
 	func compile() throws -> Program {

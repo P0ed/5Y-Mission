@@ -1,25 +1,27 @@
 import Foundation
 
-struct Token {
+struct Token: Hashable {
 	var line: Int
 	var idx: Int
 	var value: TokenValue
 }
 
-enum TokenValue {
+enum TokenValue: Hashable {
 	case hex(UInt32)
 	case int(Int32)
 	case float(Float)
 	case string(String)
 	case identifier(String)
 	case symbol(String)
+	case compound([Token])
+	case tuple([Token])
 }
 
 public extension UInt8 {
 	var hexString: String { String(format: "%02x", self) }
 }
 
-public struct Typ {
+public struct Typ: Hashable {
 	var name: String
 	var signature: String
 }
