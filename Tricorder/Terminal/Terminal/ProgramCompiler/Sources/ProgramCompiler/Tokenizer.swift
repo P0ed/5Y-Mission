@@ -30,7 +30,7 @@ private func tokenize(line: Int, string: String) throws -> [Token] {
 			tokens.append(Token(
 				line: line,
 				idx: scidx.utf16Offset(in: string),
-				value: .identifier(id)
+				value: .id(id)
 			))
 		case _ where c.isNumber:
 			if let int = sc.scanInt(representation: .decimal) {
@@ -46,7 +46,7 @@ private func tokenize(line: Int, string: String) throws -> [Token] {
 					if let float = sc.scanFloat(representation: .decimal) {
 						tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .float(float)))
 					} else {
-						throw TreeParsingError(
+						throw CompilationError(
 							description: "Can't parse number '\(c)' at line: \(line) idx: \(tokens.count)"
 						)
 					}
@@ -58,7 +58,7 @@ private func tokenize(line: Int, string: String) throws -> [Token] {
 				tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .string(str)))
 				_ = sc.scanCharacter()
 			} else {
-				throw TreeParsingError(
+				throw CompilationError(
 					description: "Can't parse string literal '\(c)' at line: \(line) idx: \(tokens.count)"
 				)
 			}
@@ -74,7 +74,7 @@ private func tokenize(line: Int, string: String) throws -> [Token] {
 					)
 				}
 			} else {
-				throw TreeParsingError(
+				throw CompilationError(
 					description: "Can't tokenize '\(c)' at line: \(line) idx: \(tokens.count)"
 				)
 			}
@@ -90,13 +90,13 @@ private func compounds(_ begin: String, _ end: String, _ make: ([Token]) -> Toke
 			stk += [[]]
 		} else if token.value == .symbol(end) {
 			guard stk.count > 1 else {
-				throw TreeParsingError(
+				throw CompilationError(
 					description: "Can't find matching bracket '\(begin)' for token \(token)"
 				)
 			}
 
 			var t = token
-			t.value = .compound(stk.removeLast())
+			t.value = make(stk.removeLast())
 			stk[stk.count - 1] += [t]
 		} else {
 			stk[stk.count - 1] += [token]
@@ -105,7 +105,7 @@ private func compounds(_ begin: String, _ end: String, _ make: ([Token]) -> Toke
 
 	guard stk.count == 1 else {
 		let tkn = (stk.first?.first ?? tokens.last).map(String.init(describing:)) ?? ""
-		throw TreeParsingError(
+		throw CompilationError(
 			description: "Can't find matching bracket '\(end)' for token \(tkn)"
 		)
 	}

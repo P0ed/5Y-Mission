@@ -21,7 +21,7 @@ public extension OPCode {
 	}
 }
 
-public extension Array where Element == Stmt {
+public extension Scope {
 
 	init(program: String) throws {
 		let tokens = try tokenize(program: program)

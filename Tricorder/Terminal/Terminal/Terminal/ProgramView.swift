@@ -64,25 +64,19 @@ struct ProgramView: View {
     }
 
 	func build() {
+		tree = ""
+		bytecode = ""
+		executable = nil
+
 		do {
-			let stmts = try [Stmt](program: program)
-			tree = "\(stmts)"
-			let program = try stmts.compile()
+			let scope = try Scope(program: program)
+			tree = "\(scope)"
+			let program = try scope.compile()
 			executable = program
 			bytecode = program.rawData.map(\.description).joined(separator: "\n")
 			output = tree + "\n= = = = = = = = = = = =\n" + bytecode
-		} catch let error as TreeParsingError {
-			executable = nil
-			tree = error.description
-			bytecode = ""
-			output = tree
-		} catch let error as CompilationError {
-			executable = nil
-			bytecode = error.description
-			output = tree + "\n= = = = = = = = = = = =\n" + bytecode
 		} catch {
-			executable = nil
-			output = "Unknown error: \(error.localizedDescription)"
+			output = (error as? CompilationError)?.description ?? error.localizedDescription
 		}
 	}
 
@@ -93,24 +87,24 @@ struct ProgramView: View {
 }
 
 let testProgram = """
-int cnt = 0;
+int cnt: 0;
 
 // type def static array of chars 32 elements long
-string = char 32;
+string: char 32;
 
 // struct decl
-person = (
+person: (
 	string name,
 	string email,
 	(string public, string private) keys
 );
 
 // function def
-void <- int incCnt = { x | cnt = cnt + x };
+void <- int incCnt: { x | cnt = cnt + x };
 
-int <- int square = { x | x * 2 };
+int <- int square: { x | x * 2 };
 
-int <- person lenx = { x |
+int <- person lenx: { x |
 
 	void <- void side_effect = { | };
 
@@ -118,13 +112,13 @@ int <- person lenx = { x |
 	count sum
 };
 
-int <- person len = {
+int <- person len: {
 	count # name + email
 };
 
-person p = (name: "Kostya", email: "x@y.z");
-int l = len p;
-int lx = p.len;
+person p: (name: "Kostya", email: "x@y.z");
+int l: len p;
+int lx: p.len;
 len (name: "Katya", email: "xxx@yyy.zzz")
 
 """
