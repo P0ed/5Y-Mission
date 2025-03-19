@@ -70,7 +70,12 @@ struct ProgramView: View {
 
 		do {
 			let scope = try Scope(program: program)
-			tree = "\(scope)"
+			let types = scope.types
+				.sorted { $0.key < $1.key }
+				.map { "\t\($0): \($1.resolvedDescription)" }
+				.joined(separator: "\n")
+			let exprs = scope.exprs
+			tree = "types:\n\(types)\nexprs: \(exprs)"
 			let program = try scope.compile()
 			executable = program
 			bytecode = program.rawData.map(\.description).joined(separator: "\n")
@@ -81,13 +86,14 @@ struct ProgramView: View {
 	}
 
 	func run() {
-		if executable == nil { build() }
+		build()
 		if let executable { output += "\nexit(\(executable.run()))" }
 	}
 }
 
 let testProgram = """
 int cnt: 0;
+cnt = cnt + 1;
 
 // type def static array of chars 32 elements long
 string: char 32;
@@ -100,25 +106,10 @@ person: (
 );
 
 // function def
-void <- int incCnt: { x | cnt = cnt + x };
+int < int square: { x | x * 2 };
 
-int <- int square: { x | x * 2 };
+int < int < int add: { x | { y | x + y } };
 
-int <- person lenx: { x |
-
-	void <- void side_effect = { | };
-
-	char 62 sum = x.name + x.email;
-	count sum
-};
-
-int <- person len: {
-	count # name + email
-};
-
-person p: (name: "Kostya", email: "x@y.z");
-int l: len p;
-int lx: p.len;
-len (name: "Katya", email: "xxx@yyy.zzz")
+square(add(1)(1))
 
 """

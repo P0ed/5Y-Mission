@@ -1,11 +1,18 @@
 import Foundation
 
 func tokenize(program: String) throws -> [Token] {
-	let lines = program.split(separator: "\n").enumerated()
-	let codeLines = lines.filter { !$0.element.starts(with: "//") }
+	let lines = program
+		.split(separator: "\n")
+		.enumerated()
+		.map {
+			($0 + 1, String(String($1).split(
+				separator: "//",
+				omittingEmptySubsequences: false
+			)[0]))
+		}
 
-	let tokens = try codeLines.flatMap { line, value in
-		try tokenize(line: line, string: String(value))
+	let tokens = try lines.flatMap { line, value in
+		try tokenize(line: line, string: value)
 	}
 
 	let cmpnds = try compounds("{", "}", TokenValue.compound, tokens)

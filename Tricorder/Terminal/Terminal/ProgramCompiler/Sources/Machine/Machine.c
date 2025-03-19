@@ -1,3 +1,3 @@
-#include "interpreter.h"
+#include "machine.h"
 
 Memory mem;

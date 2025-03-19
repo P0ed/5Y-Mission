@@ -25,18 +25,26 @@ public extension Scope {
 
 	init(program: String) throws {
 		let tokens = try tokenize(program: program)
-		self = try buidTree(tokens: tokens)
+		self = .empty
+		try buildTree(tokens: tokens)
 	}
 
 	func compile() throws -> Program {
-		return Program(rawData: [
-			Instruction(op: RXI, x: 0, y: 1, z: .max),
-			Instruction(op: RXI, x: 1, y: 0, z: 2),
-			Instruction(op: ADD, x: 0, y: 0, z: 1),
-			Instruction(op: RET, x: 0, y: 0, z: 0)
-		])
+		var instructions = [] as [Instruction]
 
-//		throw CompilationError(description: "Failed to compile tree: \(self)")
+		for expr in exprs {
+			switch expr {
+			case let .assignment(lhs, rhs):
+				_ = lhs
+				_ = rhs
+				break
+			default:
+				break
+			}
+		}
+
+		instructions += [Instruction(op: RET, x: 0, y: 0, z: 0)]
+		return Program(rawData: instructions)
 	}
 }
 
