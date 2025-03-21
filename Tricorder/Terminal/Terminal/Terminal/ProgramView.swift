@@ -70,12 +70,20 @@ struct ProgramView: View {
 
 		do {
 			let scope = try Scope(program: program)
+
 			let types = scope.types
 				.sorted { $0.key < $1.key }
 				.map { "\t\($0): \($1.resolvedDescription)" }
 				.joined(separator: "\n")
+			let vars = scope.vars
+				.map { "\t\($0)" }
+				.joined(separator: "\n")
 			let exprs = scope.exprs
-			tree = "types:\n\(types)\nexprs: \(exprs)"
+				.map { "\t\($0)" }
+				.joined(separator: "\n")
+			
+			tree = "types:\n\(types)\nvars:\n\(vars)\nexprs:\n\(exprs)"
+
 			let program = try scope.compile()
 			executable = program
 			bytecode = program.rawData.map(\.description).joined(separator: "\n")
@@ -90,26 +98,3 @@ struct ProgramView: View {
 		if let executable { output += "\nexit(\(executable.run()))" }
 	}
 }
-
-let testProgram = """
-int cnt: 0;
-cnt = cnt + 1;
-
-// type def static array of chars 32 elements long
-string: char 32;
-
-// struct decl
-person: (
-	string name,
-	string email,
-	(string public, string private) keys
-);
-
-// function def
-int < int square: { x | x * 2 };
-
-int < int < int add: { x | { y | x + y } };
-
-square(add(1)(1))
-
-"""

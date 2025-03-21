@@ -26,26 +26,28 @@ public struct Scope {
 
 public indirect enum Expr {
 	case consti(Int32)
-	case id(String)
+	case constu(UInt32)
 	case constf(Float)
 	case consts(String)
+	case id(String)
+	case variable(Var)
 	case funktion(String?, [Expr])
 	case assignment(Expr, Expr)
+	case sum(Expr, Expr)
 }
 
-public indirect enum Typ {
-	case int, float, char, bit, void,
+public indirect enum Typ: Hashable {
+	case int, float, char, bool, void,
 		 type(String, Typ),
 		 array(Typ, Int),
-		 tuple([(Typ, String)]),
+		 tuple([VarDecl]),
 		 pointer(Typ),
 		 function(Typ, Typ)
 }
 
-public struct VarDecl {
+public struct VarDecl: Hashable {
 	var type: Typ
 	var name: String
-	var value: Expr
 }
 
 public struct CompilationError: Error, CustomStringConvertible {
@@ -73,15 +75,15 @@ public extension Typ {
 
 	var size: Int {
 		switch self {
-		case .int, .float, .char, .bit: 1
+		case .int, .float, .char, .bool: 1
 		case .void: 0
 		case .pointer: 1
 		case .function: 1
 		case let .type(_, type): type.size
 		case let .array(.char, len): (len + 3) / 4
-		case let .array(.bit, len): (len + 31) / 32
+		case let .array(.bool, len): (len + 31) / 32
 		case let .array(type, len): type.size * len
-		case let .tuple(tuple): tuple.map(\.0.size).reduce(0, +)
+		case let .tuple(tuple): tuple.map(\.type.size).reduce(0, +)
 		}
 	}
 
@@ -90,13 +92,13 @@ public extension Typ {
 		case .int: "i"
 		case .float: "f"
 		case .char: "c"
-		case .bit: "b"
+		case .bool: "b"
 		case .void: "v"
 		case .pointer: "p"
 		case let .function(o, i): o.layout + "<" + i.layout
 		case let .type(_, type): type.layout
 		case let .array(type, len): [String](repeating: type.layout, count: len).joined()
-		case let .tuple(tuple): tuple.map(\.0.layout).joined()
+		case let .tuple(tuple): tuple.map(\.type.layout).joined()
 		}
 	}
 }
@@ -108,13 +110,13 @@ extension Typ: CustomStringConvertible {
 		case .int: "int"
 		case .float: "float"
 		case .char: "char"
-		case .bit: "bit"
+		case .bool: "bool"
 		case .void: "void"
 		case let .pointer(t): "ptr<\(t)>"
 		case let .function(o, i): "\(o) < \(i)"
 		case let .type(name, _): "\(name)"
 		case let .array(type, len): "\(type.description)[\(len)]"
-		case let .tuple(tuple): "(\(tuple.map { "\($1): \($0)" }.joined(separator: ", ")))"
+		case let .tuple(tuple): "(\(tuple.map { "\($0.name): \($0.type)" }.joined(separator: ", ")))"
 		}
 	}
 
@@ -124,10 +126,6 @@ extension Typ: CustomStringConvertible {
 		default: description
 		}
 	}
-}
-
-public extension UInt8 {
-	var hexString: String { String(format: "%02x", self) }
 }
 
 public struct Var {
@@ -145,4 +143,8 @@ public final class Ref<A> {
 public extension Scope {
 	var size: Int { vars.map(\.type.size).reduce(0, +) }
 	var offset: Int { parent.map { $0.size + ($0.parent?.offset ?? 0) } ?? 0 }
+
+//	var returnType: Typ {
+////		exp
+//	}
 }
