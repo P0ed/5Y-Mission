@@ -1,32 +1,46 @@
 typedef enum : unsigned char {
-	/// `rx[x] = y << 8 | z`
-	RXI = 0x00,
-	/// `rx[x] |= (y << 8 | z) << 16`
-	RXU = 0x01,
+	/// `rx[x] = yz`
+	RXI,
+	/// `rx[x] |= yz << 16`
+	RXU,
+	///  `rx[x] = rx[y]`
+	RXRX,
 	/// `rx[x] = stack[rx[y] + z]`
-	RXST = 0x02,
+	RXST,
 	/// `stack[rx[x] + y] = rx[z]`
-	STRX = 0x03,
+	STRX,
 	/// `rx[x] = rx[y] + rx[z]`
-	ADD = 0x04,
-	/// `rx[x] += y << 8 | z`
-	INC = 0x05,
+	ADD,
+	/// `rx[x] += yz`
+	INC,
 	/// `rx[x] = rx[y] * rx[z]`
-	MUL = 0x06,
+	MUL,
 	/// `rx[x] = ~(rx[y] & rx[z])`
-	NAND = 0x07,
+	NAND,
 	/// `rx[x] = rx[y] << rx[z]`
-	SHL = 0x08,
+	SHL,
 	/// `rx[x] = rx[y] >> rx[z]`
-	SHR = 0x09,
-	/// `runFunction(x, y << 8 | z)`
-	FN = 0xFE,
+	SHR,
+	/// `top += yz`
+	FRME,
+	/// `closure = x`
+	CLSR,
+	/// `top += x; runFunction(yz)`
+	FN,
+	/// `top += x; runFunction(rx[y])`
+	FNRX,
 	/// `return`
-	RET = 0xFF
+	RET
 } OPCode;
 
-typedef union { char s; unsigned char u; } i8;
+static const unsigned int closure_size = 1 << 6;
+static const unsigned int stack_size = 1 << 16;
+
+typedef union { char s; unsigned char u; struct { unsigned char reg: 6, sel: 2; }; } i8;
 typedef union { short s; unsigned short u; } i16;
+
+typedef unsigned short ptr;
+typedef int word;
 
 typedef struct {
 	OPCode op;
@@ -35,44 +49,69 @@ typedef struct {
 } Instruction;
 
 typedef struct {
-	int pc;
-	int sc;
+	word *pc;
+
+	word *top;
+	word *closure;
+	word *aux;
+	word *base;
 
 	unsigned char cc;
-	unsigned char sortedc[128];
-	unsigned char rc[128];
-	int closures[128][4];
+	unsigned char sortedc[255];
+	unsigned char rc[255];
 
-	int stack[256 * 256];
+	word closures[256][closure_size];
+	word stack[stack_size];
 
 } Memory;
 
+typedef struct {
+	unsigned short address;
+	unsigned char closure;
+	unsigned char aux;
+} Function;
+
 extern Memory mem __attribute__((swift_attr("nonisolated(unsafe)")));
 
-#define stack mem.stack
-#define sc mem.sc
-#define pc mem.pc
-#define rx (stack + sc)
+#define rx(x) *(*(&mem.top + x.sel) + x.reg)
+#define fn(x) *((Function *)(*(&mem.top + x.sel) + x.reg))
 
-static inline void loadProgram(const Instruction *program, const int len) {
-	sc = len;
-	pc = 0;
-	for (int i = 0; i < len; ++i) stack[i] = ((int *)program)[i];
-	for (char i = 0; i > 0; ++i) mem.sortedc[i] = i;
-	for (char i = 0; i > 0; ++i) mem.rc[i] = 0;
+static void (*willRun)(int) = 0;
+
+static inline void loadProgram(const Instruction *program, int len, void (*willRunPC)(int)) {
+	mem.pc = mem.stack;
+	mem.top = mem.stack + len;
+	mem.closure = mem.closures[0];
+	mem.aux = mem.closures[0];
+	mem.base = mem.stack + len;
+	mem.cc = 0;
+
+	willRun = willRunPC;
+
+	for (unsigned char i = 0; i < 255; ++i) mem.sortedc[i] = i + 1;
+	for (unsigned char i = 0; i < 255; ++i) mem.rc[i] = 0;
+
+	for (int i = 0; i < len; ++i) mem.stack[i] = ((int *)program)[i];
 }
 
-static inline int readRegister(char idx) { return rx[idx]; }
-
-static inline char closure() {
-	return mem.cc == 127 ? -1: mem.sortedc[mem.cc++];
+static inline int readRegister(unsigned char reg) {
+	i8 x = (i8){ .sel = 0, .reg = reg };
+	return *(*(&mem.top + x.sel) + x.reg);
 }
 
-static inline void retain(char closure) {
+static inline Instruction readInstruction() {
+	return *((Instruction *)mem.pc);
+}
+
+static inline unsigned char closure() {
+	return mem.cc < 255 ? mem.sortedc[mem.cc++] : 0;
+}
+
+static inline void retain(unsigned char closure) {
 	mem.rc[closure] += 1;
 }
 
-static void release(char closure) {
+static void release(unsigned char closure) {
 	if ((mem.rc[closure] -= 1) != 0) return;
 
 	mem.cc -= 1;
@@ -84,57 +123,75 @@ static void release(char closure) {
 	}
 }
 
-static inline int runFunction(const int frame, const int function) {
-	const int ret = pc;
-	sc += frame;
-	pc = function;
+static inline int runFunction(const Function function, const int frame) {
+	word *const ret = mem.pc;
+	word *const stk = mem.top;
+	mem.top += frame;
+	mem.pc = mem.stack + function.address;
+	mem.closure = mem.closures[function.closure];
 
-	while (1) {
-		Instruction inst = *((Instruction *)(stack + pc));
+	static int idx = 0;
+	while (idx++ < (1 << 12)) {
+		Instruction inn = *((Instruction *)mem.pc);
+		willRun((int)(long)mem.pc - (int)(long)mem.stack);
 
-		switch (inst.op) {
+		switch (inn.op) {
 			case RXI:
-				rx[inst.x.u] = inst.yz.u;
+				rx(inn.x) = inn.yz.u;
 				break;
 			case RXU:
-				rx[inst.x.u] |= inst.yz.u << 16;
+				rx(inn.x) |= inn.yz.u << 16;
 				break;
+			case RXRX:
+				rx(inn.x) = rx(inn.y);
 			case RXST:
-				rx[inst.x.u] = stack[rx[inst.y.u] + inst.z.u];
+				rx(inn.x) = mem.stack[rx(inn.y) + inn.z.u];
 				break;
 			case STRX:
-				stack[rx[inst.x.u] + inst.y.u] = rx[inst.z.u];
+				mem.stack[rx(inn.x) + inn.y.u] = rx(inn.z);
 				break;
 			case ADD:
-				rx[inst.x.u] = rx[inst.y.u] + rx[inst.z.u];
+				rx(inn.x) = rx(inn.y) + rx(inn.z);
 				break;
 			case INC:
-				rx[inst.x.u] += inst.yz.u;
+				rx(inn.x) += inn.yz.u;
 				break;
 			case MUL:
-				rx[inst.x.u] = rx[inst.y.u] * rx[inst.z.u];
+				rx(inn.x) = rx(inn.y) * rx(inn.z);
 				break;
 			case NAND:
-				rx[inst.x.u] = ~(rx[inst.y.u] & rx[inst.z.u]);
+				rx(inn.x) = ~(rx(inn.y) & rx(inn.z));
 				break;
 			case SHL:
-				rx[inst.x.u] = rx[inst.y.u] << rx[inst.z.u];
+				rx(inn.x) = rx(inn.y) << rx(inn.z);
 				break;
 			case SHR:
-				rx[inst.x.u] = rx[inst.y.u] >> rx[inst.z.u];
+				rx(inn.x) = rx(inn.y) >> rx(inn.z);
 				break;
-			case FN:
-				if (runFunction(inst.x.u, inst.yz.u)) return 1;
+			case FRME:
+				mem.top += inn.yz.s;
 				break;
+			case CLSR:
+				mem.aux = mem.closures[inn.x.u];
+				break;
+			case FN: {
+				int r = runFunction((Function){ .address = inn.yz.u }, inn.x.u);
+				if (r) return r; else break;
+			}
+			case FNRX: {
+				Function f = fn(inn.y);
+				int r = runFunction(f, inn.x.u);
+				if (r) return r; else break;
+			}
 			case RET:
-				pc = ret;
-				sc -= frame;
+				mem.pc = ret;
+				mem.top = stk;
 				return 0;
 			default:
-				break;
+				return -2;
 		}
 
-		pc += 1;
+		mem.pc += 1;
 	}
-	return 1;
+	return -1;
 }

@@ -1,12 +1,13 @@
 import Foundation
+import Machine
 
-struct Token: Hashable {
-	var line: Int
-	var idx: Int
-	var value: TokenValue
+public struct Token: Hashable {
+	public var line: Int
+	public var idx: Int
+	public var value: TokenValue
 }
 
-enum TokenValue: Hashable {
+public enum TokenValue: Hashable {
 	case hex(UInt32)
 	case int(Int32)
 	case float(Float)
@@ -17,58 +18,60 @@ enum TokenValue: Hashable {
 	case tuple([Token])
 }
 
-public struct Scope {
-	@Ref public var parent: Scope?
-	public var types: [String: Typ]
-	public var vars: [Var]
-	public var exprs: [Expr]
+public struct Func: Hashable {
+	var offset: Int
+	var type: Typ
+	var name: String
+	var program: Program
 }
 
 public indirect enum Expr {
-	case consti(Int32)
-	case constu(UInt32)
-	case constf(Float)
-	case consts(String)
-	case id(String)
-	case variable(Var)
-	case funktion(String?, [Expr])
-	case assignment(Expr, Expr)
-	case sum(Expr, Expr)
+	case consti(Int32),
+		 constu(UInt32),
+		 constf(Float),
+		 consts(String),
+		 id(String),
+		 typDecl(String, TypeExpr),
+		 varDecl(String, TypeExpr, Expr),
+		 funktion([String], [Expr]),
+		 assignment(Expr, Expr),
+		 call(Expr, Expr),
+		 sum(Expr, Expr),
+		 delta(Expr, Expr),
+		 mul(Expr, Expr),
+		 div(Expr, Expr)
+}
+
+public indirect enum TypeExpr {
+	case id(String),
+		 arr(TypeExpr, Int),
+		 fn(TypeExpr, TypeExpr),
+		 ptr(TypeExpr),
+		 tuple([(String, TypeExpr)])
 }
 
 public indirect enum Typ: Hashable {
 	case int, float, char, bool, void,
 		 type(String, Typ),
 		 array(Typ, Int),
-		 tuple([VarDecl]),
+		 tuple([Field]),
 		 pointer(Typ),
 		 function(Typ, Typ)
 }
 
-public struct VarDecl: Hashable {
-	var type: Typ
+public struct Var: Hashable {
+	public var offset: Int
+	public var type: Typ
+	public var name: String
+}
+
+public struct Field: Hashable {
 	var name: String
+	var type: Typ
 }
 
 public struct CompilationError: Error, CustomStringConvertible {
 	public var description: String
-}
-
-extension Token: CustomStringConvertible {
-	public var description: String {
-		"\(line):\(value)"
-	}
-}
-
-extension Array where Element == Token {
-
-	var description: String {
-		isEmpty ? "[]" : "line: \(self[0].line) [" + map(\.value)
-			.map(String.init(describing:))
-			.joined(separator: ", ") + "]"
-	}
-
-	var line: Int { isEmpty ? 0 : self[0].line }
 }
 
 public extension Typ {
@@ -95,7 +98,7 @@ public extension Typ {
 		case .bool: "b"
 		case .void: "v"
 		case .pointer: "p"
-		case let .function(o, i): o.layout + "<" + i.layout
+		case let .function(i, o): i.layout + ">" + o.layout
 		case let .type(_, type): type.layout
 		case let .array(type, len): [String](repeating: type.layout, count: len).joined()
 		case let .tuple(tuple): tuple.map(\.type.layout).joined()
@@ -103,48 +106,44 @@ public extension Typ {
 	}
 }
 
-extension Typ: CustomStringConvertible {
-
-	public var description: String {
-		switch self {
-		case .int: "int"
-		case .float: "float"
-		case .char: "char"
-		case .bool: "bool"
-		case .void: "void"
-		case let .pointer(t): "ptr<\(t)>"
-		case let .function(o, i): "\(o) < \(i)"
-		case let .type(name, _): "\(name)"
-		case let .array(type, len): "\(type.description)[\(len)]"
-		case let .tuple(tuple): "(\(tuple.map { "\($0.name): \($0.type)" }.joined(separator: ", ")))"
-		}
-	}
-
-	public var resolvedDescription: String {
-		switch self {
-		case let .type(_, type): "\(type)"
-		default: description
-		}
-	}
-}
-
-public struct Var {
-	var offset: Int
-	var type: Typ
-	var name: String
-}
-
-@propertyWrapper
-public final class Ref<A> {
-	public var wrappedValue: A
-	public init(wrappedValue: A) { self.wrappedValue = wrappedValue }
-}
-
 public extension Scope {
 	var size: Int { vars.map(\.type.size).reduce(0, +) }
-	var offset: Int { parent.map { $0.size + ($0.parent?.offset ?? 0) } ?? 0 }
+	var offset: Int { parent().map { $0.size + ($0.parent()?.offset ?? 0) } ?? 0 }
+}
 
-//	var returnType: Typ {
-////		exp
-//	}
+extension Instruction: @retroactive Hashable {
+
+	public static func == (lhs: Instruction, rhs: Instruction) -> Bool {
+		lhs.op == rhs.op && lhs.x.u == rhs.x.u && lhs.yz.u == rhs.yz.u
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(op.rawValue)
+		hasher.combine(x.u)
+		hasher.combine(yz.u)
+	}
+}
+
+extension Token {
+
+	var symbol: String? {
+		if case let .symbol(v) = value { return v }
+		return nil
+	}
+	var int: Int32? {
+		if case let .int(v) = value { return v }
+		return nil
+	}
+	var hex: UInt32? {
+		if case let .hex(v) = value { return v }
+		return nil
+	}
+	var id: String? {
+		if case let .id(v) = value { return v }
+		return nil
+	}
+	var compound: [Token]? {
+		if case let .compound(v) = value { return v }
+		return nil
+	}
 }

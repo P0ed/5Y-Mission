@@ -2,7 +2,7 @@ import Foundation
 
 func tokenize(program: String) throws -> [Token] {
 	let lines = program
-		.split(separator: "\n")
+		.split(separator: "\n", omittingEmptySubsequences: false)
 		.enumerated()
 		.map {
 			($0 + 1, String(String($1).split(
@@ -24,7 +24,7 @@ func tokenize(program: String) throws -> [Token] {
 private func tokenize(line: Int, string: String) throws -> [Token] {
 	let sc = Scanner(string: string)
 	let ids = CharacterSet.letters.union(.decimalDigits).union(["_"])
-	let symbols = CharacterSet(charactersIn: ";{:}(,).=<>+-*/%!~#&|")
+	let symbols = CharacterSet(charactersIn: ":;,\\{}()[].=<>+-*/%!~#&|?^'")
 	var tokens = [] as [Token]
 
 	while !sc.isAtEnd {
@@ -40,23 +40,26 @@ private func tokenize(line: Int, string: String) throws -> [Token] {
 				value: .id(id)
 			))
 		case _ where c.isNumber:
-			if let int = sc.scanInt(representation: .decimal) {
-				tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .int(Int32(int))))
+			if sc.scanString("0x") != nil {
+				let hex = try sc.scanUInt64(representation: .hexadecimal)
+					.unwraped("Can't parse hex '\(c)' at line: \(line) idx: \(tokens.count)")
+				tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .hex(UInt32(hex))))
 			} else {
 				sc.currentIndex = scidx
 
-				if let hex = sc.scanUInt64(representation: .hexadecimal) {
-					tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .hex(UInt32(hex))))
-				} else {
-					sc.currentIndex = scidx
-
-					if let float = sc.scanFloat(representation: .decimal) {
-						tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .float(float)))
+				if let int = sc.scanInt(representation: .decimal) {
+					if sc.scanString(".") != nil {
+						sc.currentIndex = scidx
+						if let float = sc.scanFloat(representation: .decimal) {
+							tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .float(float)))
+						} else {
+							throw err("Can't parse float '\(c)' at line: \(line) idx: \(tokens.count)")
+						}
 					} else {
-						throw CompilationError(
-							description: "Can't parse number '\(c)' at line: \(line) idx: \(tokens.count)"
-						)
+						tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .int(Int32(int))))
 					}
+				} else {
+					throw err("Can't parse int '\(c)' at line: \(line) idx: \(tokens.count)")
 				}
 			}
 		case "\"":
