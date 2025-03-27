@@ -22,6 +22,7 @@ public struct Func: Hashable {
 	var offset: Int
 	var type: Typ
 	var name: String
+	var id: Int
 	var program: Program
 }
 
@@ -31,9 +32,10 @@ public indirect enum Expr {
 		 constf(Float),
 		 consts(String),
 		 id(String),
+		 tuple([(String, Expr)]),
 		 typDecl(String, TypeExpr),
 		 varDecl(String, TypeExpr, Expr),
-		 funktion([String], [Expr]),
+		 funktion(Int, [String], [Expr]),
 		 assignment(Expr, Expr),
 		 call(Expr, Expr),
 		 sum(Expr, Expr),
@@ -106,11 +108,6 @@ public extension Typ {
 	}
 }
 
-public extension Scope {
-	var size: Int { vars.map(\.type.size).reduce(0, +) }
-	var offset: Int { parent().map { $0.size + ($0.parent()?.offset ?? 0) } ?? 0 }
-}
-
 extension Instruction: @retroactive Hashable {
 
 	public static func == (lhs: Instruction, rhs: Instruction) -> Bool {
@@ -138,12 +135,20 @@ extension Token {
 		if case let .hex(v) = value { return v }
 		return nil
 	}
+	var str: String? {
+		if case let .string(v) = value { return v }
+		return nil
+	}
 	var id: String? {
 		if case let .id(v) = value { return v }
 		return nil
 	}
 	var compound: [Token]? {
 		if case let .compound(v) = value { return v }
+		return nil
+	}
+	var tuple: [Token]? {
+		if case let .tuple(v) = value { return v }
 		return nil
 	}
 }

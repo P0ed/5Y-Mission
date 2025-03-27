@@ -1,24 +1,6 @@
 import Foundation
 import Machine
 
-extension OPCode: @retroactive CustomStringConvertible {
-	public var description: String {
-		switch self {
-		case RXI: "RXI"
-		case RXU: "RXU"
-		case RXST: "RXST"
-		case STRX: "STRX"
-		case ADD: "ADD"
-		case INC: "INC"
-		case MUL: "MUL"
-		case FN: "FN"
-		case FNRX: "FNRX"
-		case RET: "RET"
-		default: rawValue.hexString
-		}
-	}
-}
-
 func err(_ msg: String) -> CompilationError { .init(description: msg) }
 
 public extension Scope {
@@ -37,36 +19,25 @@ public extension Scope {
 	}
 
 	func compile() throws -> Program {
-		var instructions = funcs.map(\.program.rawData).reduce(into: [], +=)
-
-		if !instructions.isEmpty {
-			guard instructions.count + 2 < UInt16.max else { throw err("Instructions are too large") }
-			instructions.insert(FN(x: 0, yz: UInt16(instructions.count + 1)), at: 0)
-		}
+		let compiledFuncs = funcs.map(\.program.rawData).reduce(into: [], +=)
+		var instructions = compiledFuncs
 
 		for expr in exprs {
 			switch expr {
 			case let .varDecl(name, _, rhs):
-				let v = try local(name).unwraped("Unknown id")
-				instructions += try eval(expr: rhs, type: v.type, offset: UInt8(v.offset))
+				let v = try local(name).unwraped("Unknown id \(name)")
+				instructions += try eval(expr: rhs, type: v.type, offset: u8(v.offset))
 			case let .assignment(.id(id), rhs):
-				guard let v = local(id) else { throw err("Unknown id") }
-				instructions += try eval(expr: rhs, type: v.type, offset: UInt8(v.offset))
+				let v = try local(id).unwraped("Unknown id \(id)")
+				instructions += try eval(expr: rhs, type: v.type, offset: u8(v.offset))
 			case let .mul(.id(lID), .id(rID)):
-				guard let l = local(lID) else { throw err("Unknown id") }
-				guard let r = local(rID) else { throw err("Unknown id") }
-
-				instructions += [
-					MUL(x: 0, y: UInt8(l.offset), z: UInt8(r.offset))
-				]
-			case let .call(fn, _):
-				if case let .id(id) = fn,
-				   let fn = local(id),
-				   case let .function(i, o) = fn.type {
-
-					instructions += [
-						FNRX(x: UInt8(fn.offset), yz: 0)
-					]
+				let l = try local(lID).unwraped("Unknown id \(lID)")
+				let r = try local(rID).unwraped("Unknown id \(rID)")
+				instructions += [MUL(x: 0, y: u8(l.offset), z: u8(r.offset))]
+			case let .call(fn, a):
+				if case let .id(id) = fn, let fn = local(id), case let .function(i, o) = fn.type {
+					instructions += try eval(expr: a, type: i, offset: u8(o.size))
+					instructions += [FNRX(x: u8(fn.offset), yz: 0)]
 				} else {
 					throw err("Unknown function expr \(fn)")
 				}
@@ -77,34 +48,48 @@ public extension Scope {
 		}
 
 		instructions += [RET(x: 0, yz: 0)]
+
+		if parent() == nil {
+			guard instructions.count < u16.max else { throw err("Instructions count > UInt16.max") }
+			instructions.append(FN(x: 0, yz: u16(compiledFuncs.count)))
+		}
+
 		return Program(rawData: instructions)
 	}
 
-	func sum(_ ret: UInt8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
+	func sum(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
 		switch (lhs, rhs) {
-		case let (.id(id), .consti(c)):
-			guard let v = local(id) else { throw err("Unknown id") }
+		case let (.id(id), .consti(c)), let (.consti(c), .id(id)):
+			let v = try local(id).unwraped("Unknown id \(id)")
 			return [
-				RXI(x: ret + 1, yz: UInt16(c)),
-				ADD(x: ret, y: UInt8(v.offset), z: ret + 1)
+				RXI(x: u8(size), yz: u16(c)),
+				ADD(x: ret, y: u8(v.offset), z: u8(size))
+			]
+		case let (.id(lhs), .id(rhs)):
+			let l = try local(lhs).unwraped("Unknown id \(lhs)")
+			let r = try local(rhs).unwraped("Unknown id \(rhs)")
+			guard l.type == r.type else { throw err("Type mismatch \(l.type) != \(r.type)") }
+
+			return [
+				ADD(x: ret, y: u8(l.offset), z: u8(r.offset))
 			]
 		default: throw err("Invalid sum")
 		}
 	}
 
-	func mul(_ ret: UInt8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
+	func mul(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
 		switch (lhs, rhs) {
 		case let (.id(lID), .id(rID)):
 			guard let l = local(lID) else { throw err("Unknown id") }
 			guard let r = local(rID) else { throw err("Unknown id") }
 			return [
-				MUL(x: ret, y: UInt8(l.offset), z: UInt8(r.offset))
+				MUL(x: ret, y: u8(l.offset), z: u8(r.offset))
 			]
 		default: throw err("Invalid mul")
 		}
 	}
 
-	func call(_ ret: UInt8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
+	func call(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
 		guard case let .id(v) = lhs, let fn = local(v) else {
 			throw err("Unknown id")
 		}
@@ -112,27 +97,37 @@ public extension Scope {
 			throw err("Type mismatch")
 		}
 
-		return try eval(expr: rhs, type: i, offset: ret + UInt8(type.size)) + [
-			FNRX(x: ret, y: UInt8(fn.offset), z: 0)
+		return try eval(expr: rhs, type: i, offset: ret + u8(type.size)) + [
+			FNRX(x: ret, y: u8(fn.offset), z: 0)
 		]
 	}
 
-	private func eval(expr: Expr, type: Typ, offset: UInt8) throws -> [Instruction] {
+	private func eval(expr: Expr, type: Typ, offset: u8) throws -> [Instruction] {
 		var instructions = [] as [Instruction]
 
 		switch expr {
 		case let .consti(int):
 			instructions += [
-				RXI(x: offset, yz: UInt16(int & 0xFFFF))
+				RXI(x: offset, yz: u16(int & 0xFFFF))
 			] + (int > 0xFFFF ? [
-				RXU(x: offset, yz: UInt16(int >> 16))
+				RXU(x: offset, yz: u16(int >> 16))
 			] : [])
+		case let .consts(s):
+			let encoded = s.filter(\.isASCII).cString(using: .ascii) ?? []
+			let itemAt: (Int) -> u8 = {
+				$0 < encoded.count ? encoded[$0].magnitude : 0
+			}
+			instructions += (0..<((encoded.count + 3) / 4)).flatMap { idx in
+				let i: u16 = u16(itemAt(idx * 4 + 0)) | u16(itemAt(idx * 4 + 1)) << 8
+				let u: u16 = u16(itemAt(idx * 4 + 2)) | u16(itemAt(idx * 4 + 3)) << 8
+				return [RXI(x: offset + u8(idx), yz: i), RXU(x: offset + u8(idx), yz: u)]
+			}
 		case let .id(id):
-			guard let v = local(id) else { throw err("Unknown id") }
+			let v = try local(id).unwraped("Unknown id \(id)")
 
 			instructions += [
-				RXI(x: UInt8(v.offset + v.type.size), yz: UInt16(0)),
-				ADD(x: offset, y: UInt8(v.offset + v.type.size), z: UInt8(v.offset))
+				RXI(x: u8(v.offset + v.type.size), yz: u16(0)),
+				ADD(x: offset, y: u8(v.offset + v.type.size), z: u8(v.offset))
 			]
 		case let .call(lhs, rhs):
 			instructions += try call(offset, type, lhs, rhs)
@@ -140,8 +135,19 @@ public extension Scope {
 			instructions += try sum(offset, type, lhs, rhs)
 		case let .mul(lhs, rhs):
 			instructions += try mul(offset, type, lhs, rhs)
-		case let .funktion(labels, exprs):
-			instructions += [RXI(x: offset, yz: 1)]
+		case let .funktion(fid, _, _):
+			let fn = try funcs.first { $0.id == fid }.unwraped("Unknown func \(fid)")
+			instructions += [RXI(x: offset, yz: u16(fn.offset))]
+		case let .tuple(fs):
+			if case let .tuple(fields) = type.resolved, fields.count == fs.count {
+				var df = 0 as u8
+				instructions += try zip(fields, fs).reduce(into: []) { r, e in
+					r += try eval(expr: e.1.1, type: e.0.type, offset: offset + df)
+					df += u8(e.0.type.size)
+				}
+			} else {
+				throw err("Invalid tuple \(fs)")
+			}
 		default:
 			throw err("Invalid expression \(expr)")
 		}
@@ -149,14 +155,15 @@ public extension Scope {
 	}
 }
 
-extension UInt8 { var hexString: String { String(format: "%02x", self) } }
+extension Typ {
+	var resolved: Typ { if case let .type(_, t) = self { return t } else { return self } }
+}
 
 extension OPCode {
-
-	func callAsFunction(x: UInt8, yz: UInt16) -> Instruction {
+	func callAsFunction(x: u8, yz: u16) -> Instruction {
 		Instruction(op: self, x: i8(u: x), .init(yz: i16(u: yz)))
 	}
-	func callAsFunction(x: UInt8, y: UInt8, z: UInt8) -> Instruction {
+	func callAsFunction(x: u8, y: u8, z: u8) -> Instruction {
 		Instruction(op: self, x: i8(u: x), .init(.init(y: i8(u: y), z: i8(u: z))))
 	}
 }

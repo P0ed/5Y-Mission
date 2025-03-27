@@ -33,20 +33,24 @@ typedef enum : unsigned char {
 	RET
 } OPCode;
 
-static const unsigned int closure_size = 1 << 6;
-static const unsigned int stack_size = 1 << 16;
-
-typedef union { char s; unsigned char u; struct { unsigned char reg: 6, sel: 2; }; } i8;
-typedef union { short s; unsigned short u; } i16;
-
-typedef unsigned short ptr;
-typedef int word;
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef char s8;
+typedef short s16;
+typedef int s32;
+typedef s32 word;
+typedef union { s8 s; u8 u; struct { u8 reg: 6, sel: 2; }; } i8;
+typedef union { s16 s; u16 u; } i16;
 
 typedef struct {
 	OPCode op;
 	i8 x;
 	union { i16 yz; struct { i8 y, z; }; };
 } Instruction;
+
+static const u32 closure_size = 1 << 6;
+static const u32 stack_size = 1 << 16;
 
 typedef struct {
 	word *pc;
@@ -66,52 +70,27 @@ typedef struct {
 } Memory;
 
 typedef struct {
-	unsigned short address;
-	unsigned char closure;
-	unsigned char aux;
+	u16 address;
+	u8 closure;
+	u8 aux;
 } Function;
 
 extern Memory mem __attribute__((swift_attr("nonisolated(unsafe)")));
 
+static void (*willRun)(const u16, const Instruction) = 0;
+
 #define rx(x) *(*(&mem.top + x.sel) + x.reg)
 #define fn(x) *((Function *)(*(&mem.top + x.sel) + x.reg))
-
-static void (*willRun)(int) = 0;
-
-static inline void loadProgram(const Instruction *program, int len, void (*willRunPC)(int)) {
-	mem.pc = mem.stack;
-	mem.top = mem.stack + len;
-	mem.closure = mem.closures[0];
-	mem.aux = mem.closures[0];
-	mem.base = mem.stack + len;
-	mem.cc = 0;
-
-	willRun = willRunPC;
-
-	for (unsigned char i = 0; i < 255; ++i) mem.sortedc[i] = i + 1;
-	for (unsigned char i = 0; i < 255; ++i) mem.rc[i] = 0;
-
-	for (int i = 0; i < len; ++i) mem.stack[i] = ((int *)program)[i];
-}
-
-static inline int readRegister(unsigned char reg) {
-	i8 x = (i8){ .sel = 0, .reg = reg };
-	return *(*(&mem.top + x.sel) + x.reg);
-}
-
-static inline Instruction readInstruction() {
-	return *((Instruction *)mem.pc);
-}
 
 static inline unsigned char closure() {
 	return mem.cc < 255 ? mem.sortedc[mem.cc++] : 0;
 }
 
-static inline void retain(unsigned char closure) {
+static inline void retain(const unsigned char closure) {
 	mem.rc[closure] += 1;
 }
 
-static void release(unsigned char closure) {
+static void release(const unsigned char closure) {
 	if ((mem.rc[closure] -= 1) != 0) return;
 
 	mem.cc -= 1;
@@ -133,7 +112,7 @@ static inline int runFunction(const Function function, const int frame) {
 	static int idx = 0;
 	while (idx++ < (1 << 12)) {
 		Instruction inn = *((Instruction *)mem.pc);
-		willRun((int)(long)mem.pc - (int)(long)mem.stack);
+		willRun((u16)(((long)mem.pc - (u16)(long)mem.stack) >> 2), inn);
 
 		switch (inn.op) {
 			case RXI:
@@ -194,4 +173,31 @@ static inline int runFunction(const Function function, const int frame) {
 		mem.pc += 1;
 	}
 	return -1;
+}
+
+static inline int runProgram(const Instruction *const program,
+							 const u16 len,
+							 void (*const willRunInstruction)(const u16, const Instruction)) {
+	if (!len) return -1;
+	const int last = len - 1;
+
+	mem.pc = mem.stack + program[last].yz.u;
+	mem.top = mem.stack + last;
+	mem.closure = mem.closures[0];
+	mem.aux = mem.closures[0];
+	mem.base = mem.stack + last;
+	mem.cc = 0;
+
+	for (unsigned char i = 0; i < 255; ++i) mem.sortedc[i] = i + 1;
+	for (unsigned char i = 0; i < 255; ++i) mem.rc[i] = 0;
+	for (int i = 0; i < last; ++i) mem.stack[i] = ((int *)program)[i];
+
+	willRun = willRunInstruction;
+
+	return runFunction((Function){ .address = program[last].yz.u }, 0);
+}
+
+static inline int readRegister(const u8 reg) {
+	i8 x = (i8){ .sel = 0, .reg = reg };
+	return rx(x);
 }

@@ -5,6 +5,6 @@ public let testProgram = """
 [square int > int = \\x > x * x;
 [xx int = square # 2;
 
-xx = xx + 1
+cnt = xx + 1
 
 """

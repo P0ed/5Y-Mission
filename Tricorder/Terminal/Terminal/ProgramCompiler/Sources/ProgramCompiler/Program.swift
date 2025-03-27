@@ -9,22 +9,23 @@ public struct Program: Hashable {
 }
 
 public extension Program {
-	private nonisolated(unsafe) static var output = "" { didSet { stream(output) } }
+	private nonisolated(unsafe) static var streamTrampoline: String { get { "" } set { stream(newValue) } }
 	private nonisolated(unsafe) static var stream: (String) -> Void = { _ in }
 
-	func run(_ stream: @escaping (String) -> Void) -> String {
+	func run(_ stream: @escaping (String) -> Void) -> Int {
 		Self.stream = stream
-		
-		Self.output = "\nstack trace:"
 
-		let len = Int32(rawData.count)
-		Machine.loadProgram(rawData, len) { pc in
-			Self.output = "\n\t\(pc / 4):\t" + readInstruction().description
+		stream("\nprogram started:\n")
+
+		let ret = Machine.runProgram(rawData, u16(rawData.count)) { pc, inn in
+			Self.streamTrampoline = "\t\(Self.instructionDescription(idx: Int(pc), inn: inn))\n"
 		}
 
-		let fn = Function(address: 3, closure: 0, aux: 0)
-		let ret = Machine.runFunction(fn, 0)
+		let registers = (UInt8.min..<(ret == 0 ? 4 : 0)).reduce(into: "") { r, i in
+			r += "\n\trx[\(i)] = \(readRegister(i))"
+		}
+		stream("\nexit: \(ret)\(registers)\n")
 
-		return ret == 0 ? "success: \(readRegister(0))" : "error: \(ret)"
+		return Int(ret)
 	}
 }

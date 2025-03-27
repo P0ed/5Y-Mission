@@ -22,6 +22,10 @@ public extension Scope {
 		)
 	}
 
+	var size: Int { vars.map(\.type.size).reduce(output.size, +) }
+
+	var offset: Int { parent().map { $0.size + ($0.parent()?.offset ?? 0) } ?? 0 }
+
 	func local(_ id: String) -> Var? { vars.first(where: { $0.name == id }) }
 
 	func resolvedType(_ expr: TypeExpr) throws -> Typ {
@@ -58,13 +62,14 @@ public extension Scope {
 
 	mutating func funcDecl(_ id: String, _ i: Typ, _ o: Typ, _ expr: Expr) throws {
 		if funcs.first(where: { $0.name == id }) == nil {
-			if case let .funktion(labels, exprs) = expr {
+			if case let .funktion(fid, labels, exprs) = expr {
 				let scope = try childScope(output: o, input: i, labels: labels, exprs: exprs)
 
 				let f = Func(
 					offset: funcs.last.map { $0.offset + $0.program.rawData.count } ?? 0,
 					type: .function(i, o),
 					name: id,
+					id: fid,
 					program: try scope.compile()
 				)
 				funcs.append(f)

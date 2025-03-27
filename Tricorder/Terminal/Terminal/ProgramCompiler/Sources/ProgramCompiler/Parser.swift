@@ -1,22 +1,21 @@
-import Foundation
 import Machine
-
-/* Grammar:
- statement		→ expression | typeDecl | varDecl
- expression     → equality ;
- equality       → comparison ( ( "!=" | "==" ) comparison )* ;
- comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
- term           → factor ( ( "-" | "+" ) factor )* ;
- factor         → unary ( ( "/" | "*" ) unary )* ;
- unary          → ( "!" | "-" ) unary | primary ;
- primary        → ID | INT | STR | "(" expression ")" | lambda ;
-*/
 
 struct Parser {
 	var tokens: [Token]
 	var j: Int = 0
+	var id: Int = 0
 }
 
+/* Grammar:
+ statement		→ expression | typeDecl | varDecl ;
+ expression		→ equality ;
+ equality    	→ comparison ( ( "!=" | "==" ) comparison )* ;
+ comparison  	→ term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
+ term        	→ factor ( ( "-" | "+" ) factor )* ;
+ factor      	→ unary ( ( "/" | "*" ) unary )* ;
+ unary       	→ ( "!" | "-" ) unary | primary ;
+ primary     	→ id | int | str | "(" expression ")" | lambda ;
+*/
 extension Parser {
 
 	var isAtEnd: Bool { j == tokens.count }
@@ -101,10 +100,23 @@ extension Parser {
 		if let id = match(\.id) {
 			return .id(id)
 		}
+		if let tks = match(\.tuple) {
+			return try tuple(tks)
+		}
 		if match(symbols(["\\"])) != nil {
 			return try lambda()
 		}
+		if let str = match(\.str) {
+			return .consts(str)
+		}
 		throw err("Invalid primary \(tokens)")
+	}
+
+	func tuple(_ tokens: [Token]) throws -> Expr {
+		try .tuple(tokens.split { $0.symbol == "," }.map {
+			var p = Parser(tokens: Array($0))
+			return try ("", p.expr())
+		})
 	}
 
 	mutating func lambda() throws -> Expr {
@@ -113,10 +125,14 @@ extension Parser {
 		try consume(symbols([">"]), "`>` not found")
 
 		if let tks = match(\.compound) {
-			var p = Parser(tokens: tks)
-			return try .funktion(labels, p.statements())
+			var p = Parser(tokens: tks, id: id)
+			let stmts = try p.statements()
+			id = p.id + 1
+			return .funktion(id - 1, labels, stmts)
 		} else {
-			return try .funktion(labels, [expr()])
+			let stmts = try [expr()]
+			id += 1
+			return .funktion(id - 1, labels, stmts)
 		}
 	}
 
