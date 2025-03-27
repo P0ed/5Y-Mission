@@ -9,3 +9,7 @@ struct Terminal: App {
         }
     }
 }
+
+extension DispatchQueue {
+	static let running = DispatchQueue(label: "running.queue")
+}

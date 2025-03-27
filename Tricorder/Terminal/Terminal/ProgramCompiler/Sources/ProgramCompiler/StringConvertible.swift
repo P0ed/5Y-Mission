@@ -5,11 +5,13 @@ extension OPCode: @retroactive CustomStringConvertible {
 		switch self {
 		case RXI: 	"RXI "
 		case RXU: 	"RXU "
+		case RXRX:	"RXRX"
 		case RXST: 	"RXST"
 		case STRX: 	"STRX"
 		case ADD: 	"ADD "
 		case INC: 	"INC "
 		case MUL: 	"MUL "
+		case PRNT:	"PRNT"
 		case FN: 	"FN  "
 		case FNRX: 	"FNRX"
 		case RET: 	"RET "
@@ -20,6 +22,8 @@ extension OPCode: @retroactive CustomStringConvertible {
 
 extension Instruction: @retroactive CustomStringConvertible {
 	public var description: String { "\(op) \(x.u.hexString) \(y.u.hexString) \(z.u.hexString)" }
+
+	public func description(at idx: Int) -> String { "\(idx.fmt("%02d")): \t\(description)" }
 }
 
 extension Function: @retroactive CustomStringConvertible {
@@ -28,19 +32,16 @@ extension Function: @retroactive CustomStringConvertible {
 
 extension Program: CustomStringConvertible {
 	public var description: String {
-		rawData.enumerated().map(Self.instructionDescription).joined(separator: "\n")
-	}
-	public static func instructionDescription(idx: Int, inn: Instruction) -> String {
-		"\(String(format: "%02d", idx)): \t\(inn)"
+		rawData.enumerated().map { idx, inn in inn.description(at: idx) }.joined(separator: "\n")
 	}
 }
 
 extension Func: CustomStringConvertible {
-	public var description: String { "\(String(format: "%2d", offset)) \t\(name): \(type)\n\(program)" }
+	public var description: String { "\(offset.fmt("%2d")) \t\(name): \(type)\n\(program)" }
 }
 
 extension Var: CustomStringConvertible {
-	public var description: String { "\(String(format: "%2d", offset)) \t\(name): \(type)" }
+	public var description: String { "\(offset.fmt("%2d")) \t\(name): \(type)" }
 }
 
 extension Token: CustomStringConvertible {
@@ -135,4 +136,11 @@ public extension String {
 	var aligned: String { replacingOccurrences(of: "\n", with: "\n\t") }
 }
 
-extension UInt8 { var hexString: String { String(format: "%02X", self) } }
+extension UInt8 {
+	func fmt(_ fmt: String) -> String { String(format: fmt, self) }
+	var hexString: String { fmt("%02X") }
+}
+
+extension Int {
+	func fmt(_ fmt: String) -> String { String(format: fmt, self) }
+}

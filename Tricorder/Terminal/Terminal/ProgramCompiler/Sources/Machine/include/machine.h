@@ -62,9 +62,9 @@ typedef struct {
 	word *aux;
 	word *base;
 
-	unsigned char cc;
-	unsigned char sortedc[255];
-	unsigned char rc[255];
+	u8 cc;
+	u8 sortedc[255];
+	u8 rc[255];
 
 	word closures[256][closure_size];
 	word stack[stack_size];
@@ -79,21 +79,22 @@ typedef struct {
 
 extern Memory mem __attribute__((swift_attr("nonisolated(unsafe)")));
 
-static void (*willRun)(const u16, const Instruction) = 0;
+static s32 (*willRun)(const u16, const Instruction) = 0;
 static void (*prnt)(const char *const) = 0;
+static s32 tick = 0;
 
 #define rx(x) *(*(&mem.top + x.sel) + x.reg)
 #define fn(x) *((Function *)(*(&mem.top + x.sel) + x.reg))
 
-static inline unsigned char closure() {
+static inline u8 closure() {
 	return mem.cc < 255 ? mem.sortedc[mem.cc++] : 0;
 }
 
-static inline void retain(const unsigned char closure) {
+static inline void retain(const u8 closure) {
 	mem.rc[closure] += 1;
 }
 
-static void release(const unsigned char closure) {
+static void release(const u8 closure) {
 	if ((mem.rc[closure] -= 1) != 0) return;
 
 	mem.cc -= 1;
@@ -105,18 +106,18 @@ static void release(const unsigned char closure) {
 	}
 }
 
-static inline int runFunction(const Function function, const int frame) {
+static inline s32 runFunction(const Function function, const s32 frame) {
 	word *const ret = mem.pc;
 	word *const stk = mem.top;
 	mem.top += frame;
 	mem.pc = mem.stack + function.address;
 	mem.closure = mem.closures[function.closure];
 
-	static int idx = 0;
-	while (idx++ < (1 << 12)) {
+	while (tick++ < (1 << 12)) {
 		Instruction inn = *((Instruction *)mem.pc);
 
-		willRun((u16)(((long)mem.pc - (long)mem.stack) >> 2), inn);
+		s32 halt = willRun((u16)(((long)mem.pc - (long)mem.stack) >> 2), inn);
+		if (halt) return halt;
 
 		switch (inn.op) {
 			case RXI:
@@ -182,9 +183,9 @@ static inline int runFunction(const Function function, const int frame) {
 	return -1;
 }
 
-static inline int runProgram(const Instruction *const program,
+static inline s32 runProgram(const Instruction *const program,
 							 const u16 len,
-							 void (*const willRunInstruction)(const u16, const Instruction),
+							 s32 (*const willRunInstruction)(const u16, const Instruction),
 							 void (*const print)(const char *const)) {
 	if (!len) return -1;
 	const int last = len - 1;
@@ -198,10 +199,11 @@ static inline int runProgram(const Instruction *const program,
 
 	for (unsigned char i = 0; i < 255; ++i) mem.sortedc[i] = i + 1;
 	for (unsigned char i = 0; i < 255; ++i) mem.rc[i] = 0;
-	for (int i = 0; i < last; ++i) mem.stack[i] = ((int *)program)[i];
+	for (int i = 0; i < last; ++i) mem.stack[i] = ((word *)program)[i];
 
 	willRun = willRunInstruction;
 	prnt = print;
+	tick = 0;
 
 	return runFunction((Function){ .address = program[last].yz.u }, 0);
 }

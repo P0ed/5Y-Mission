@@ -38,6 +38,9 @@ public extension Scope {
 				if case let .id(id) = fn, let fn = local(id), case let .function(i, o) = fn.type {
 					instructions += try eval(expr: a, type: i, offset: u8(o.size))
 					instructions += [FNRX(x: u8(fn.offset), yz: 0)]
+				} else if case .id("print") = fn {
+					instructions += try eval(expr: a, type: .array(.char, 24), offset: u8(size))
+					instructions += [PRNT(x: u8(size), yz: 0)]
 				} else {
 					throw err("Unknown function expr \(fn)")
 				}
@@ -104,16 +107,25 @@ public extension Scope {
 	}
 
 	func call(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
-		guard case let .id(v) = lhs, let fn = local(v) else {
-			throw err("Unknown id")
+		if case let .id(v) = lhs {
+			if let fn = local(v) {
+				if case .function(type, let i) = fn.type {
+					return try eval(expr: rhs, type: i, offset: ret + u8(type.size)) + [
+						FNRX(x: ret, y: u8(fn.offset), z: 0)
+					]
+				} else {
+					throw err("Type mismatch")
+				}
+			} else if v == "print" {
+				return try eval(expr: rhs, type: .array(.char, 24), offset: u8(size)) + [
+					PRNT(x: u8(size), yz: 0)
+				]
+			} else {
+				throw err("Unknown id")
+			}
+		} else {
+			throw err("Invalid function expression")
 		}
-		guard case .function(type, let i) = fn.type else {
-			throw err("Type mismatch")
-		}
-
-		return try eval(expr: rhs, type: i, offset: ret + u8(type.size)) + [
-			FNRX(x: ret, y: u8(fn.offset), z: 0)
-		]
 	}
 
 	private func eval(expr: Expr, type: Typ, offset: u8) throws -> [Instruction] {
