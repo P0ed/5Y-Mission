@@ -2,19 +2,14 @@ import SwiftUI
 import ProgramCompiler
 
 struct ProgramView: View {
-	@State
-	var program: String = UserDefaults.standard.string(forKey: "program")
+	@State var program: String = UserDefaults.standard.string(forKey: "program")
 		.flatMap { $0.isEmpty ? nil : $0 } ?? testProgram
-	@State
-	var editorHidden = false
-	@State
-	var consoleHidden = false
-	@State
-	var output: String = ""
-	@State
-	var executable: Program?
-	@State
-	var meta: Scope?
+	@State var output: String = ""
+
+	@State var editorHidden = false
+	@State var consoleHidden = false
+	@State var executable: Program?
+	@State var meta: Scope?
 
     var body: some View {
 		VStack(alignment: .leading) {
@@ -68,6 +63,6 @@ struct ProgramView: View {
 
 	func run() {
 		build()
-		_ = executable?.run { output += $0 }
+		_ = executable?.run(meta) { output += $0 }
 	}
 }

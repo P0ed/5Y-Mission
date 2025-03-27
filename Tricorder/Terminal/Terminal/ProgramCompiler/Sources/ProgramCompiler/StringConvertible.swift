@@ -31,16 +31,16 @@ extension Program: CustomStringConvertible {
 		rawData.enumerated().map(Self.instructionDescription).joined(separator: "\n")
 	}
 	public static func instructionDescription(idx: Int, inn: Instruction) -> String {
-		"\(String(format: "%02d", idx)):\t\(inn)"
+		"\(String(format: "%02d", idx)): \t\(inn)"
 	}
 }
 
 extension Func: CustomStringConvertible {
-	public var description: String { "#\(offset)\t\(name): \(type)\n\(program)" }
+	public var description: String { "\(String(format: "%2d", offset)) \t\(name): \(type)\n\(program)" }
 }
 
 extension Var: CustomStringConvertible {
-	public var description: String { "#\(offset)\t\(name): \(type)" }
+	public var description: String { "\(String(format: "%2d", offset)) \t\(name): \(type)" }
 }
 
 extension Token: CustomStringConvertible {
@@ -50,15 +50,16 @@ extension Token: CustomStringConvertible {
 extension Expr: CustomStringConvertible {
 	public var description: String {
 		switch self {
-		case let .consti(c): ".consti \(c)"
-		case let .constu(c): ".constu \(c)"
-		case let .constf(c): ".constf \(c)"
-		case let .consts(c): ".consts \(c)"
-		case let .id(id): ".id \(id)"
+		case let .consti(c): "\(c)"
+		case let .constu(c): String(format: "%04X", c)
+		case let .constf(c): "\(c)f"
+		case let .consts(c): "\"\(c)\""
+		case let .id(id): "`\(id)`"
 		case let .tuple(fs): "(\(fs))"
 		case let .typDecl(id, t): ".typDecl \(id): \(t)"
 		case let .varDecl(id, t, e): ".varDecl \(id): \(t) = \(e)"
-		case let .funktion(fid, l, es): "\\\(fid): \(l.joined(separator: ", ")) > { \(es) }"
+		case let .funktion(fid, l, es):
+			"\(fid): \\`\(l.joined(separator: "`, `"))` > { \(es) }"
 		case let .assignment(l, r): "\(l) = \(r)"
 		case let .call(l, r): "\(l) # \(r)"
 		case let .sum(l, r): "\(l) + \(r)"
@@ -134,4 +135,4 @@ public extension String {
 	var aligned: String { replacingOccurrences(of: "\n", with: "\n\t") }
 }
 
-extension UInt8 { var hexString: String { String(format: "%02x", self) } }
+extension UInt8 { var hexString: String { String(format: "%02X", self) } }

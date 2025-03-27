@@ -78,6 +78,10 @@ public struct CompilationError: Error, CustomStringConvertible {
 
 public extension Typ {
 
+	var resolved: Typ {
+		if case let .type(_, t) = self { return t } else { return self }
+	}
+
 	var size: Int {
 		switch self {
 		case .int, .float, .char, .bool: 1

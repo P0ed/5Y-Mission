@@ -64,7 +64,10 @@ private func tokenize(line: Int, string: String) throws -> [Token] {
 			}
 		case "\"":
 			_ = sc.scanCharacter()
-			if let str = sc.scanUpToString("\"") {
+			if string[sc.currentIndex] == "\"" {
+				tokens.append(Token(line: line, idx: sc.currentIndex.utf16Offset(in: string), value: .string("")))
+				_ = sc.scanCharacter()
+			} else if let str = sc.scanUpToString("\"") {
 				tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .string(str)))
 				_ = sc.scanCharacter()
 			} else {

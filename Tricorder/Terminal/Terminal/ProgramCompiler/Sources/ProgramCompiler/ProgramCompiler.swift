@@ -59,8 +59,12 @@ public extension Scope {
 
 	func sum(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
 		switch (lhs, rhs) {
+		case let (.consti(l), .consti(r)):
+			return [RXI(x: ret, yz: u16(l + r))]
 		case let (.id(id), .consti(c)), let (.consti(c), .id(id)):
 			let v = try local(id).unwraped("Unknown id \(id)")
+			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
+
 			return [
 				RXI(x: u8(size), yz: u16(c)),
 				ADD(x: ret, y: u8(v.offset), z: u8(size))
@@ -68,7 +72,7 @@ public extension Scope {
 		case let (.id(lhs), .id(rhs)):
 			let l = try local(lhs).unwraped("Unknown id \(lhs)")
 			let r = try local(rhs).unwraped("Unknown id \(rhs)")
-			guard l.type == r.type else { throw err("Type mismatch \(l.type) != \(r.type)") }
+			guard l.type.resolved == r.type.resolved else { throw err("Type mismatch \(l.type) != \(r.type)") }
 
 			return [
 				ADD(x: ret, y: u8(l.offset), z: u8(r.offset))
@@ -79,6 +83,16 @@ public extension Scope {
 
 	func mul(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
 		switch (lhs, rhs) {
+		case let (.consti(l), .consti(r)):
+			return [RXI(x: ret, yz: u16(l * r))]
+		case let (.id(id), .consti(c)), let (.consti(c), .id(id)):
+			let v = try local(id).unwraped("Unknown id \(id)")
+			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
+
+			return [
+				RXI(x: u8(size), yz: u16(c)),
+				MUL(x: ret, y: u8(v.offset), z: u8(size))
+			]
 		case let (.id(lID), .id(rID)):
 			guard let l = local(lID) else { throw err("Unknown id") }
 			guard let r = local(rID) else { throw err("Unknown id") }
@@ -117,6 +131,9 @@ public extension Scope {
 			let itemAt: (Int) -> u8 = {
 				$0 < encoded.count ? encoded[$0].magnitude : 0
 			}
+			guard case let .array(.char, cnt) = type, encoded.count < cnt else {
+				throw err("Can't fit \"\(s)\" into \(type)")
+			}
 			instructions += (0..<((encoded.count + 3) / 4)).flatMap { idx in
 				let i: u16 = u16(itemAt(idx * 4 + 0)) | u16(itemAt(idx * 4 + 1)) << 8
 				let u: u16 = u16(itemAt(idx * 4 + 2)) | u16(itemAt(idx * 4 + 3)) << 8
@@ -145,6 +162,12 @@ public extension Scope {
 					r += try eval(expr: e.1.1, type: e.0.type, offset: offset + df)
 					df += u8(e.0.type.size)
 				}
+			} else if case let .array(t, cnt) = type.resolved, fs.count == cnt {
+				var df = 0 as u8
+				instructions += try fs.reduce(into: []) { r, e in
+					r += try eval(expr: e.1, type: t, offset: offset + df)
+					df += u8(t.size)
+				}
 			} else {
 				throw err("Invalid tuple \(fs)")
 			}
@@ -153,10 +176,6 @@ public extension Scope {
 		}
 		return instructions
 	}
-}
-
-extension Typ {
-	var resolved: Typ { if case let .type(_, t) = self { return t } else { return self } }
 }
 
 extension OPCode {

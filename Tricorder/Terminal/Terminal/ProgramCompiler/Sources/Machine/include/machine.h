@@ -21,6 +21,8 @@ typedef enum : unsigned char {
 	SHL,
 	/// `rx[x] = rx[y] >> rx[z]`
 	SHR,
+	/// `print(rx[x])`
+	PRNT,
 	/// `top += yz`
 	FRME,
 	/// `closure = x`
@@ -78,6 +80,7 @@ typedef struct {
 extern Memory mem __attribute__((swift_attr("nonisolated(unsafe)")));
 
 static void (*willRun)(const u16, const Instruction) = 0;
+static void (*prnt)(const char *const) = 0;
 
 #define rx(x) *(*(&mem.top + x.sel) + x.reg)
 #define fn(x) *((Function *)(*(&mem.top + x.sel) + x.reg))
@@ -112,7 +115,8 @@ static inline int runFunction(const Function function, const int frame) {
 	static int idx = 0;
 	while (idx++ < (1 << 12)) {
 		Instruction inn = *((Instruction *)mem.pc);
-		willRun((u16)(((long)mem.pc - (u16)(long)mem.stack) >> 2), inn);
+
+		willRun((u16)(((long)mem.pc - (long)mem.stack) >> 2), inn);
 
 		switch (inn.op) {
 			case RXI:
@@ -147,6 +151,9 @@ static inline int runFunction(const Function function, const int frame) {
 			case SHR:
 				rx(inn.x) = rx(inn.y) >> rx(inn.z);
 				break;
+			case PRNT:
+				prnt((const char *const)&rx(inn.x));
+				break;
 			case FRME:
 				mem.top += inn.yz.s;
 				break;
@@ -177,7 +184,8 @@ static inline int runFunction(const Function function, const int frame) {
 
 static inline int runProgram(const Instruction *const program,
 							 const u16 len,
-							 void (*const willRunInstruction)(const u16, const Instruction)) {
+							 void (*const willRunInstruction)(const u16, const Instruction),
+							 void (*const print)(const char *const)) {
 	if (!len) return -1;
 	const int last = len - 1;
 
@@ -193,6 +201,7 @@ static inline int runProgram(const Instruction *const program,
 	for (int i = 0; i < last; ++i) mem.stack[i] = ((int *)program)[i];
 
 	willRun = willRunInstruction;
+	prnt = print;
 
 	return runFunction((Function){ .address = program[last].yz.u }, 0);
 }
