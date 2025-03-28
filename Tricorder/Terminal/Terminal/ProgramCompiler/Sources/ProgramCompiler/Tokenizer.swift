@@ -1,34 +1,31 @@
 import Foundation
 
-func tokenize(program: String) throws -> [Token] {
-	let lines = program
-		.split(separator: "\n", omittingEmptySubsequences: false)
-		.enumerated()
-		.map {
-			($0 + 1, String(String($1).split(
-				separator: "//",
-				omittingEmptySubsequences: false
-			)[0]))
-		}
+public extension String {
 
-	let tokens = try lines.flatMap { line, value in
-		try tokenize(line: line, string: value)
+	func tokenized() throws -> [Token] {
+		let tokens = try tokenize(self)
+		let cmpnds = try compounds("{", "}", TokenValue.compound, tokens)
+		let tuples = try compounds("(", ")", TokenValue.tuple, cmpnds)
+
+		return tuples
 	}
-
-	let cmpnds = try compounds("{", "}", TokenValue.compound, tokens)
-	let tuples = try compounds("(", ")", TokenValue.tuple, cmpnds)
-
-	return tuples
 }
 
-private func tokenize(line: Int, string: String) throws -> [Token] {
+private func tokenize(_ string: String) throws -> [Token] {
 	let sc = Scanner(string: string)
 	let ids = CharacterSet.letters.union(.decimalDigits).union(["_"])
 	let symbols = CharacterSet(charactersIn: ":;,\\{}()[].=<>+-*/%!~#&|?^'")
 	var tokens = [] as [Token]
 
+	var line = 1
+	var scidx = sc.currentIndex
+	var range: NSRange {
+		let location = scidx.utf16Offset(in: string)
+		return .init(location: location, length: sc.currentIndex.utf16Offset(in: string) - location)
+	}
+
 	while !sc.isAtEnd {
-		let scidx = sc.currentIndex
+		scidx = sc.currentIndex
 		let c = string[scidx]
 
 		switch c {
@@ -36,14 +33,18 @@ private func tokenize(line: Int, string: String) throws -> [Token] {
 			let id = sc.scanCharacters(from: ids) ?? ""
 			tokens.append(Token(
 				line: line,
-				idx: scidx.utf16Offset(in: string),
+				range: range,
 				value: .id(id)
 			))
 		case _ where c.isNumber:
 			if sc.scanString("0x") != nil {
 				let hex = try sc.scanUInt64(representation: .hexadecimal)
 					.unwraped("Can't parse hex '\(c)' at line: \(line) idx: \(tokens.count)")
-				tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .hex(UInt32(hex))))
+				tokens.append(Token(
+					line: line,
+					range: range,
+					value: .hex(UInt32(hex))
+				))
 			} else {
 				sc.currentIndex = scidx
 
@@ -51,38 +52,54 @@ private func tokenize(line: Int, string: String) throws -> [Token] {
 					if sc.scanString(".") != nil {
 						sc.currentIndex = scidx
 						if let float = sc.scanFloat(representation: .decimal) {
-							tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .float(float)))
+							tokens.append(Token(
+								line: line,
+								range: range,
+								value: .float(float)
+							))
 						} else {
 							throw err("Can't parse float '\(c)' at line: \(line) idx: \(tokens.count)")
 						}
 					} else {
-						tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .int(Int32(int))))
+						tokens.append(Token(
+							line: line,
+							range: range,
+							value: .int(Int32(int))
+						))
 					}
 				} else {
 					throw err("Can't parse int '\(c)' at line: \(line) idx: \(tokens.count)")
 				}
 			}
+		case ">" where line != tokens.last?.line:
+			if let comment = sc.scanUpToCharacters(from: .newlines) {
+				tokens.append(Token(line: line, range: range, value: .comment(comment)))
+			} else {
+				throw err("Can't parse comment line '\(c)' at line: \(line) idx: \(tokens.count)")
+			}
 		case "\"":
 			_ = sc.scanCharacter()
 			if string[sc.currentIndex] == "\"" {
-				tokens.append(Token(line: line, idx: sc.currentIndex.utf16Offset(in: string), value: .string("")))
 				_ = sc.scanCharacter()
+				tokens.append(Token(line: line, range: range, value: .string("")))
 			} else if let str = sc.scanUpToString("\"") {
-				tokens.append(Token(line: line, idx: scidx.utf16Offset(in: string), value: .string(str)))
 				_ = sc.scanCharacter()
+				tokens.append(Token(line: line, range: range, value: .string(str)))
 			} else {
-				throw CompilationError(
-					description: "Can't parse string literal '\(c)' at line: \(line) idx: \(tokens.count)"
-				)
+				throw err("Can't parse string literal '\(c)' at line: \(line) idx: \(tokens.count)")
 			}
+		case _ where c.isNewline:
+			line += 1
+			fallthrough
 		case _ where c.isWhitespace:
 			string.indices.formIndex(after: &sc.currentIndex)
 		default:
 			if let symbols = sc.scanCharacters(from: symbols) {
+				let r = range
 				tokens += symbols.enumerated().map {
 					Token(
 						line: line,
-						idx: scidx.utf16Offset(in: string) + $0,
+						range: NSRange(location: r.location + $0, length: 1),
 						value: .symbol(String($1))
 					)
 				}
@@ -103,9 +120,7 @@ private func compounds(_ begin: String, _ end: String, _ make: ([Token]) -> Toke
 			stk += [[]]
 		} else if token.value == .symbol(end) {
 			guard stk.count > 1 else {
-				throw CompilationError(
-					description: "Can't find matching bracket '\(begin)' for token \(token)"
-				)
+				throw err("Can't find matching bracket '\(begin)' for token \(token)")
 			}
 
 			var t = token
@@ -118,9 +133,7 @@ private func compounds(_ begin: String, _ end: String, _ make: ([Token]) -> Toke
 
 	guard stk.count == 1 else {
 		let tkn = (stk.first?.first ?? tokens.last).map(String.init(describing:)) ?? ""
-		throw CompilationError(
-			description: "Can't find matching bracket '\(end)' for token \(tkn)"
-		)
+		throw err("Can't find matching bracket '\(end)' for token \(tkn)")
 	}
 
 	return stk.flatMap { $0 }

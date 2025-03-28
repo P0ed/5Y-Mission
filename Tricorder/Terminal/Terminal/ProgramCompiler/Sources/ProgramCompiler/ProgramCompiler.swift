@@ -7,7 +7,7 @@ public extension Scope {
 
 	init(program: String) throws {
 		self = .empty
-		var p = try Parser(tokens: tokenize(program: program))
+		var p = try Parser(tokens: program.tokenized())
 		exprs = try p.statements()
 
 		try exprs.forEach {

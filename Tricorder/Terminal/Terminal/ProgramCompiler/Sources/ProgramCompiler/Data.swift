@@ -3,7 +3,7 @@ import Machine
 
 public struct Token: Hashable {
 	public var line: Int
-	public var idx: Int
+	public var range: NSRange
 	public var value: TokenValue
 }
 
@@ -16,6 +16,7 @@ public enum TokenValue: Hashable {
 	case symbol(String)
 	case compound([Token])
 	case tuple([Token])
+	case comment(String)
 }
 
 public struct Func: Hashable {

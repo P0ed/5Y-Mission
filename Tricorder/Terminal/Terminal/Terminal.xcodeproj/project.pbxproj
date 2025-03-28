@@ -35,19 +35,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5F5EC4832D773FA90014494C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		5FD700E12D745A62005A9FD1 = {
 			isa = PBXGroup;
 			children = (
 				5FD700FF2D745C8C005A9FD1 /* ProgramCompiler */,
 				5FD700EC2D745A62005A9FD1 /* Terminal */,
-				5F5EC4832D773FA90014494C /* Frameworks */,
 				5FD700EB2D745A62005A9FD1 /* Products */,
 			);
 			sourceTree = "<group>";

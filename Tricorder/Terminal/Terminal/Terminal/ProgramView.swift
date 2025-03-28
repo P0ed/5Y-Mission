@@ -4,8 +4,8 @@ import ProgramCompiler
 struct ProgramView: View {
 	@Environment(\.colorScheme) var colorScheme
 
-	@State var program: String = UserDefaults.standard.string(forKey: "program")
-		.flatMap { $0.isEmpty ? nil : $0 } ?? testProgram
+	@State var program: String = .savedProgram
+	@State var attributes: Attributes?
 	@State var output: String = ""
 	@State var input: String = ""
 
@@ -20,11 +20,38 @@ struct ProgramView: View {
 	@State var programChange: TimeInterval = .zero
 	@State var outputChange: TimeInterval = .zero
 
+	var editorColor: Color { colorScheme == .light ? .editorLight : .editorDark }
 	var consoleColor: Color { colorScheme == .light ? .consoleLight : .consoleDark }
 	var overlayColor: Color { colorScheme == .light ? .overlayLight : .overlayDark }
 	var tintColor: Color { colorScheme == .light ? .amberLight : .amberDark }
 
     var body: some View {
+		VStack(spacing: 0) {
+			toolBar
+			GeometryReader { ctx in
+				let full = editorHidden || consoleHidden
+				let height = ctx.size.height * (full ? 1 : 0.5)
+				let offset = ctx.size.height * (full ? 0.5 : 0.75)
+				if !editorHidden {
+					editor.frame(height: height)
+				}
+				if !consoleHidden {
+					console
+						.position(x: ctx.size.width / 2, y: offset)
+						.frame(height: height)
+				}
+			}
+		}
+		.onAppear {
+			attributes = try? program.highlighted(tokens: program.tokenized())
+		}
+		.onChange(of: program) { _, _ in
+			attributes = try? program.highlighted(tokens: program.tokenized())
+		}
+		.background(editorColor)
+    }
+
+	var toolBar: some View {
 		HStack(spacing: 12) {
 			button("s") { UserDefaults.standard.set(program, forKey: "program") }
 			button("b") { build() }
@@ -36,55 +63,10 @@ struct ProgramView: View {
 			button("t", !consoleHidden) { consoleHidden.toggle(); editorHidden = consoleHidden ? false : editorHidden }
 			button("d", debug, { debug.toggle() })
 		}
-		.padding(.init(top: 8, leading: 16, bottom: editorHidden ? 0 : 8, trailing: 16))
-
-		if !editorHidden {
-			TextEditor(text: $program)
-				.font(.code)
-				.lineSpacing(4)
-				.padding(.vertical, -8)
-		}
-		if !consoleHidden {
-			ScrollView {
-				ScrollViewReader { proxy in
-					Text(output)
-						.id("out")
-						.font(.code)
-						.lineSpacing(4)
-						.onChange(of: output) { _, _ in
-							let time = CACurrentMediaTime()
-							let scroll = { proxy.scrollTo("out", anchor: .bottom) }
-							if time - outputChange > 0.1 {
-								withAnimation { scroll() }
-							} else {
-								scroll()
-							}
-							outputChange = time
-						}
-						.frame(maxWidth: .infinity, alignment: .leading)
-						.padding(4)
-				}
-			}
-			.background(consoleColor)
-			.contentMargins(.bottom, 24, for: .scrollContent)
-			.overlay {
-				VStack {
-					Spacer()
-					ZStack {
-						overlayColor
-							.frame(maxWidth: .infinity, maxHeight: 24, alignment: .bottom)
-
-						TextField("", text: $input)
-							.onSubmit { output += "\n\(input)"; input = "" }
-							.textFieldStyle(.plain)
-							.font(.code)
-							.padding(.horizontal, 12)
-							.frame(maxWidth: .infinity, maxHeight: 24)
-					}
-				}
-			}
-		}
-    }
+		.padding(.init(top: 8, leading: 12, bottom: 8, trailing: 12))
+		.frame(height: 36, alignment: .top)
+		.background(consoleColor)
+	}
 
 	func button(_ key: Character, _ active: Bool = false, _ action: @escaping () -> Void) -> some View {
 		Button(action: action) {
@@ -96,6 +78,55 @@ struct ProgramView: View {
 		.keyboardShortcut(.init(key), modifiers: .command)
 		.background(active ? tintColor : .clear)
 		.background(in: .rect(cornerRadius: 6))
+	}
+
+	var editor: some View {
+		ScrollView {
+			TextEditor(text: $program, attributes: $attributes)
+		}
+	}
+
+	var console: some View {
+		ScrollView {
+			ScrollViewReader { proxy in
+				Text(output)
+					.id("out")
+					.font(.code)
+					.lineSpacing(4)
+					.onChange(of: output) { _, _ in
+						let time = CACurrentMediaTime()
+						let scroll = { proxy.scrollTo("out", anchor: .bottom) }
+						if time - outputChange > 0.1 {
+							withAnimation { scroll() }
+						} else {
+							scroll()
+						}
+						outputChange = time
+					}
+					.frame(maxWidth: .infinity, alignment: .leading)
+					.padding(4)
+			}
+		}
+		.background(consoleColor)
+		.contentMargins(.bottom, 24, for: .scrollContent)
+		.overlay { commandLineInput }
+	}
+
+	var commandLineInput: some View {
+		VStack {
+			Spacer()
+			ZStack {
+				overlayColor
+					.frame(maxWidth: .infinity, maxHeight: 24, alignment: .bottom)
+
+				TextField("", text: $input)
+					.onSubmit { print("\n\(input)"); input = "" }
+					.textFieldStyle(.plain)
+					.font(.code)
+					.padding(.horizontal, 12)
+					.frame(maxWidth: .infinity, maxHeight: 24)
+			}
+		}
 	}
 
 	func build() {
@@ -152,5 +183,13 @@ struct ProgramView: View {
 			let s = output.split(separator: "\n", omittingEmptySubsequences: false)
 			output = "\n" + s.dropFirst(s.count / 2).joined(separator: "\n")
 		}
+	}
+}
+
+private extension String {
+
+	static var savedProgram: String {
+		UserDefaults.standard.string(forKey: "program")
+			.flatMap { $0.isEmpty ? nil : $0 } ?? testProgram
 	}
 }

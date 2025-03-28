@@ -13,7 +13,3 @@ struct Terminal: App {
 extension DispatchQueue {
 	static let running = DispatchQueue(label: "running.queue")
 }
-
-extension Font {
-	static var code: Font { .system(size: 13).monospaced() }
-}
