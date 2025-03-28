@@ -12,11 +12,7 @@ extension String {
 				attrs[.foregroundColor] = e.color
 				r[e.range] = attrs
 			} else {
-				r = subtokens.reduce(into: r) { r, e in
-					var attrs = r[e.range] ?? [:]
-					attrs[.foregroundColor] = e.color
-					r[e.range] = attrs
-				}
+				r.merge(highlighted(tokens: subtokens)) { l, r in r }
 			}
 		}
 	}
@@ -81,52 +77,22 @@ struct RGBA32: Hashable, Codable {
 }
 
 extension RGBA32: ExpressibleByIntegerLiteral {
-	public init(integerLiteral value: Int) {
-		self = RGBA32(hex: value)
-	}
+	public init(integerLiteral value: Int) { self = RGBA32(hex: value) }
 }
 
 extension RGBA32 {
-
-	init(hex value: Int) {
-		self = RGBA32(
-			red: value[byte: 2],
-			green: value[byte: 1],
-			blue: value[byte: 0],
-			alpha: .max
-		)
+	init(hex: Int) {
+		self = RGBA32(red: hex[byte: 2], green: hex[byte: 1], blue: hex[byte: 0], alpha: .max)
 	}
-
 	var hex: Int { Int(red) << 16 | Int(green) << 8 | Int(blue) }
 	var hexString: String { String(format: "%06X", hex) }
 }
 
-extension Int {
+private extension Int {
 	subscript(byte byte: Int) -> UInt8 {
 		let bits = byte * 8
 		let mask = 0xFF << bits
 		let shifted = (self & mask) >> bits
 		return UInt8(shifted)
-	}
-}
-
-
-struct HSBA {
-	var hue: CGFloat
-	var saturation: CGFloat
-	var brightness: CGFloat
-	var alpha: CGFloat
-}
-
-extension NSColor {
-
-	var hsba: HSBA {
-		var hsba = HSBA(hue: 0, saturation: 0, brightness: 0, alpha: 0)
-		getHue(&hsba.hue, saturation: &hsba.saturation, brightness: &hsba.brightness, alpha: &hsba.alpha)
-		return hsba
-	}
-
-	convenience init(hsba: HSBA) {
-		self.init(hue: hsba.hue, saturation: hsba.saturation, brightness: hsba.brightness, alpha: hsba.alpha)
 	}
 }

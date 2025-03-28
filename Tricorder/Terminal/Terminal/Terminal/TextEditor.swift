@@ -5,9 +5,15 @@ struct TextEditor: NSViewRepresentable {
 	@Binding var text: String
 	@Binding var attributes: Attributes?
 
+	var delegate = TextViewDelegate()
+
 	func makeNSView(context: Context) -> NSTextView {
 		let view = NSTextView()
 		view.allowsUndo = true
+		view.delegate = delegate
+		view.drawsBackground = false
+		delegate.textChanged = { attributes = nil; text = $0 }
+
 		return view
 	}
 	
@@ -15,7 +21,7 @@ struct TextEditor: NSViewRepresentable {
 		nsView.textStorage?.beginEditing()
 		defer { nsView.textStorage?.endEditing() }
 
-		nsView.string = text
+		if nsView.string != text { nsView.string = text }
 
 		let str = text as NSString
 		nsView.textStorage?.setAttributes(.code, range: str.range)
@@ -33,11 +39,30 @@ struct TextEditor: NSViewRepresentable {
 	}
 }
 
+//final class ScrollableTextView: NSScrollView {
+//	let textView = NSTextView()
+//
+//	init() {
+//		textView.translatesAutoresizingMaskIntoConstraints = false
+//		addSubview(textView)
+//	}
+//
+//	required init?(coder: NSCoder) { fatalError() }
+//}
+
+final class TextViewDelegate: NSObject, NSTextViewDelegate {
+	var textChanged: (String) -> Void = { _ in }
+
+	func textDidChange(_ notification: Notification) {
+		if let view = notification.object as? NSTextView { textChanged(view.string) }
+	}
+}
+
 typealias Attrs = [NSAttributedString.Key : Any]
 typealias Attributes = [NSRange: Attrs]
 
 extension Attrs {
-	static var code: Attrs { [.font: NSFont.code] }
+	static var code: Attrs { [.font: NSFont.code, .foregroundColor: NSColor.txt0] }
 }
 
 extension Font {

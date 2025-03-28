@@ -79,7 +79,7 @@ private func tokenize(_ string: String) throws -> [Token] {
 			}
 		case "\"":
 			_ = sc.scanCharacter()
-			if string[sc.currentIndex] == "\"" {
+			if !sc.isAtEnd, string[sc.currentIndex] == "\"" {
 				_ = sc.scanCharacter()
 				tokens.append(Token(line: line, range: range, value: .string("")))
 			} else if let str = sc.scanUpToString("\"") {

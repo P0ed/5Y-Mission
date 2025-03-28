@@ -7,7 +7,9 @@ public extension Scope {
 
 	init(program: String) throws {
 		self = .empty
-		var p = try Parser(tokens: program.tokenized())
+		var p = try Parser(tokens: program.tokenized().filter {
+			if case .comment = $0.value { false } else { true }
+		})
 		exprs = try p.statements()
 
 		try exprs.forEach {
