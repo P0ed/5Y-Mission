@@ -1,10 +1,10 @@
 import Machine
 
 public struct Program: Hashable {
-	public var rawData: [Instruction]
+	public var instructions: [Instruction]
 
-	public init(rawData: [Instruction]) {
-		self.rawData = rawData
+	public init(instructions: [Instruction]) {
+		self.instructions = instructions
 	}
 }
 
@@ -28,7 +28,7 @@ public extension Program {
 		print("\nprogram started:\n")
 
 		let ret = Machine.runProgram(
-			rawData, u16(rawData.count),
+			instructions, u16(instructions.count),
 			{ pc, inn in
 				Self.breakpointTrampoline = (pc, inn)
 				return Self.halt

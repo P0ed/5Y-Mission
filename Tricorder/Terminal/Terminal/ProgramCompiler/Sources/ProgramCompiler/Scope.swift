@@ -66,7 +66,7 @@ public extension Scope {
 				let scope = try childScope(output: o, input: i, labels: labels, exprs: exprs)
 
 				let f = Func(
-					offset: funcs.last.map { $0.offset + $0.program.rawData.count } ?? 0,
+					offset: funcs.last.map { $0.offset + $0.program.instructions.count } ?? 0,
 					type: .function(i, o),
 					name: id,
 					id: fid,

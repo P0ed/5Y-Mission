@@ -3,18 +3,18 @@ import Machine
 extension OPCode: @retroactive CustomStringConvertible {
 	public var description: String {
 		switch self {
-		case RXI: 	"RXI "
-		case RXU: 	"RXU "
+		case RXI: 	" RXI"
+		case RXU: 	" RXU"
 		case RXRX:	"RXRX"
 		case RXST: 	"RXST"
 		case STRX: 	"STRX"
-		case ADD: 	"ADD "
-		case INC: 	"INC "
-		case MUL: 	"MUL "
+		case ADD: 	" ADD"
+		case INC: 	" INC"
+		case MUL: 	" MUL"
 		case PRNT:	"PRNT"
-		case FN: 	"FN  "
+		case FN: 	"  FN"
 		case FNRX: 	"FNRX"
-		case RET: 	"RET "
+		case RET: 	" RET"
 		default: rawValue.hexString
 		}
 	}
@@ -32,7 +32,7 @@ extension Function: @retroactive CustomStringConvertible {
 
 extension Program: CustomStringConvertible {
 	public var description: String {
-		rawData.enumerated().map { idx, inn in inn.description(at: idx) }.joined(separator: "\n")
+		instructions.enumerated().map { idx, inn in inn.description(at: idx) }.joined(separator: "\n")
 	}
 }
 

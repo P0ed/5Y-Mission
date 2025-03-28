@@ -19,7 +19,7 @@ public extension Scope {
 	}
 
 	func compile() throws -> Program {
-		let compiledFuncs = funcs.map(\.program.rawData).reduce(into: [], +=)
+		let compiledFuncs = funcs.map(\.program.instructions).reduce(into: [], +=)
 		var instructions = compiledFuncs
 
 		for expr in exprs {
@@ -57,7 +57,7 @@ public extension Scope {
 			instructions.append(FN(x: 0, yz: u16(compiledFuncs.count)))
 		}
 
-		return Program(rawData: instructions)
+		return Program(instructions: instructions)
 	}
 
 	func sum(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
