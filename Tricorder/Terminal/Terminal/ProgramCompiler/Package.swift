@@ -17,6 +17,7 @@ let package = Package(
     ],
     targets: [
 		.target(name: "ProgramCompiler", dependencies: ["Machine"]),
-		.target(name: "Machine")
+		.target(name: "Machine"),
+		.testTarget(name: "CompilerTests", dependencies: ["ProgramCompiler", "Machine"])
     ]
 )

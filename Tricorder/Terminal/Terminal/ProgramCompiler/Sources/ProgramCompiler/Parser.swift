@@ -6,16 +6,6 @@ struct Parser {
 	var id: Int = 0
 }
 
-/* Grammar:
- statement		→ expression | typeDecl | varDecl ;
- expression		→ equality ;
- equality    	→ comparison ( ( "!=" | "==" ) comparison )* ;
- comparison  	→ term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
- term        	→ factor ( ( "-" | "+" ) factor )* ;
- factor      	→ unary ( ( "/" | "*" ) unary )* ;
- unary       	→ ( "!" | "-" ) unary | primary ;
- primary     	→ id | int | str | "(" expression ")" | lambda ;
-*/
 extension Parser {
 
 	var isAtEnd: Bool { j == tokens.count }
@@ -138,6 +128,7 @@ extension Parser {
 
 	mutating func varDecl() throws -> Expr {
 		let id = try consume(\.id, "Expected identifier")
+		try consume({ $0.symbol == ":" }, "Expected colon")
 		let type = try typeExpr(collect { $0.symbol != "=" ? $0 : nil })
 
 		try consume({ $0.symbol == "=" }, "Expected assignment")

@@ -1,5 +1,4 @@
-#### Program language concept:
-==============================
+# Program language concept:
 
 Simple C/Swift inspired language with static typing system,
 executed in VM, written in C that runs on Arduino or similar low spec hardware.
@@ -9,8 +8,7 @@ Closures are preallocated behind the stack and limited in quantity and size (255
 Exceeding closures count is a runtime error. Exceeding closure size is a compile time error.
 Closure size is 64 words. Word size is 32bit.
 
-#### Example code:
-==================
+## Example code:
 
 ```
 // Type def starts with `:` identifer `=` <type>

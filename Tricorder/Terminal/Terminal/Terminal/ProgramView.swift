@@ -185,11 +185,3 @@ struct ProgramView: View {
 		}
 	}
 }
-
-private extension String {
-
-	static var savedProgram: String {
-		UserDefaults.standard.string(forKey: "program")
-			.flatMap { $0.isEmpty ? nil : $0 } ?? testProgram
-	}
-}
