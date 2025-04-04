@@ -39,17 +39,6 @@ struct TextEditor: NSViewRepresentable {
 	}
 }
 
-//final class ScrollableTextView: NSScrollView {
-//	let textView = NSTextView()
-//
-//	init() {
-//		textView.translatesAutoresizingMaskIntoConstraints = false
-//		addSubview(textView)
-//	}
-//
-//	required init?(coder: NSCoder) { fatalError() }
-//}
-
 final class TextViewDelegate: NSObject, NSTextViewDelegate {
 	var textChanged: (String) -> Void = { _ in }
 
@@ -74,5 +63,5 @@ extension NSFont {
 }
 
 extension NSString {
-	var range: NSRange { .init(location: 0, length: length - 1) }
+	var range: NSRange { .init(location: 0, length: max(0, length - 1)) }
 }

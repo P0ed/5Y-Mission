@@ -1,4 +1,15 @@
-typedef enum : unsigned char {
+typedef char s8;
+typedef unsigned char u8;
+typedef short s16;
+typedef unsigned short u16;
+typedef int s32;
+typedef unsigned int u32;
+typedef s32 word;
+
+typedef union { s8 s; u8 u; struct { u8 reg: 6, sel: 2; }; } i8;
+typedef union { s16 s; u16 u; } i16;
+
+typedef enum : u8 {
 	/// `rx[x] = yz`
 	RXI,
 	/// `rx[x] |= yz << 16`
@@ -25,7 +36,7 @@ typedef enum : unsigned char {
 	PRNT,
 	/// `top += yz`
 	FRME,
-	/// `closure = x`
+	/// `aux = closures[x]`
 	CLSR,
 	/// `top += x; runFunction(yz)`
 	FN,
@@ -34,16 +45,6 @@ typedef enum : unsigned char {
 	/// `return`
 	RET
 } OPCode;
-
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned int u32;
-typedef char s8;
-typedef short s16;
-typedef int s32;
-typedef s32 word;
-typedef union { s8 s; u8 u; struct { u8 reg: 6, sel: 2; }; } i8;
-typedef union { s16 s; u16 u; } i16;
 
 typedef struct {
 	OPCode op;
@@ -62,11 +63,16 @@ typedef struct {
 	word *aux;
 	word *base;
 
+	// Number of used closures
 	u8 cc;
+	// Fast array of closure indices
 	u8 sortedc[255];
+	// Reference counters for closures
 	u8 rc[255];
 
+	// Closures data starting from index 1 to 255. Closure 0 is reserved
 	word closures[256][closure_size];
+	// Stack
 	word stack[stack_size];
 
 } Memory;
@@ -79,23 +85,31 @@ typedef struct {
 
 extern Memory mem __attribute__((swift_attr("nonisolated(unsafe)")));
 
+// Breakpoint callback will be called only in debug configuration
 static s32 (*willRun)(const u16, const Instruction) = 0;
+// Print function
 static void (*prnt)(const char *const) = 0;
+// Counter for preventing infinite loops
 static s32 tick = 0;
 
+// Register access
 #define rx(x) *(*(&mem.top + x.sel) + x.reg)
+// Function access
 #define fn(x) *((Function *)(*(&mem.top + x.sel) + x.reg))
 
+// Closure allocation
 static inline u8 closure() {
 	return mem.cc < 255 ? mem.sortedc[mem.cc++] : 0;
 }
 
+// Ref count increase
 static inline void retain(const u8 closure) {
 	mem.rc[closure] += 1;
 }
 
+// Ref count decrease with dealloc if reached zero
 static void release(const u8 closure) {
-	if ((mem.rc[closure] -= 1) != 0) return;
+	if (--(mem.rc[closure]) != 0) return;
 
 	mem.cc -= 1;
 	for (char i = mem.cc; i >= 0; --i) if (mem.sortedc[i] == closure) {
@@ -106,6 +120,7 @@ static void release(const u8 closure) {
 	}
 }
 
+// Runs a function with address function.address and assigns a closure
 static inline s32 runFunction(const Function function, const s32 frame) {
 	word *const ret = mem.pc;
 	word *const stk = mem.top;
@@ -183,6 +198,7 @@ static inline s32 runFunction(const Function function, const s32 frame) {
 	return -1;
 }
 
+// Loads instructions onto stack. Assigns callbacks. Runs the program
 static inline s32 runProgram(const Instruction *const program,
 							 const u16 len,
 							 s32 (*const willRunInstruction)(const u16, const Instruction),
@@ -208,6 +224,7 @@ static inline s32 runProgram(const Instruction *const program,
 	return runFunction((Function){ .address = program[last].yz.u }, 0);
 }
 
+// External access to registers for debug purpuses
 static inline int readRegister(const u8 reg) {
 	i8 x = (i8){ .sel = 0, .reg = reg };
 	return rx(x);

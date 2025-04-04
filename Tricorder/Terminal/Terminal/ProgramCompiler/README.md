@@ -7,6 +7,7 @@ executed in VM, written in C that runs on Arduino or similar low spec hardware.
 Only static allocation out of the box, with a special case for closures.
 Closures are preallocated behind the stack and limited in quantity and size (255 clusures available to user).
 Exceeding closures count is a runtime error. Exceeding closure size is a compile time error.
+Closure size is 64 words. Word size is 32bit.
 
 #### Example code:
 ==================
@@ -25,7 +26,7 @@ Exceeding closures count is a runtime error. Exceeding closure size is a compile
 	email: string
 );
 
-// `[` is a variable declaration
+// `[` is a variable declaration token
 [ quad: int 4 = [0, 0, 0, 0];
 
 // A counter

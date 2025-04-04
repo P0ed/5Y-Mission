@@ -1,15 +1,18 @@
 public let testProgram = """
 : person = (id int, name char 24);
 
-[ id int = 420;
-[ p person = (id, "Kostya");
-
-[arr int 4 = (0, 1, 2, 3);
+[ id int = 255;
+[ p person = (id, "P0ed 420000");
 
 [ count int = 0;
-[ square int > int = \\x > x * x;
+[ square int > int = \\x > {
+	x * x
+};
 
-count = square # 3;
+; [ add int > int > int = \\x > { \\y > { x + y } };
+; count = square # 3;
+
+count = count + 1;
 
 print # "Hello World!"
 

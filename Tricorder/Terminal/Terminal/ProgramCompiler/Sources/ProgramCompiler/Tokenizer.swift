@@ -71,7 +71,7 @@ private func tokenize(_ string: String) throws -> [Token] {
 					throw err("Can't parse int '\(c)' at line: \(line) idx: \(tokens.count)")
 				}
 			}
-		case ">" where line != tokens.last?.line:
+		case ";" where line != tokens.last?.line:
 			if let comment = sc.scanUpToCharacters(from: .newlines) {
 				tokens.append(Token(line: line, range: range, value: .comment(comment)))
 			} else {
