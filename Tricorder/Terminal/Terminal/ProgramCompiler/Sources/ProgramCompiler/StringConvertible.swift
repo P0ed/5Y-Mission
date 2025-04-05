@@ -136,11 +136,11 @@ public extension String {
 	var aligned: String { replacingOccurrences(of: "\n", with: "\n\t") }
 }
 
+public extension Int {
+	func fmt(_ fmt: String) -> String { String(format: fmt, self) }
+}
+
 extension UInt8 {
 	func fmt(_ fmt: String) -> String { String(format: fmt, self) }
 	var hexString: String { fmt("%02X") }
-}
-
-extension Int {
-	func fmt(_ fmt: String) -> String { String(format: fmt, self) }
 }
