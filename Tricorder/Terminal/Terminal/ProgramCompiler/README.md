@@ -44,14 +44,14 @@ cnt = cnt + 1;
 };
 
 ; Function composition for point free notation
-[ inc_by_len: person > void = inc * len;
+[ inc_by_len: person > void = inc • len;
 
 ; Can assign a tuple to struct variable if matches labels and types
 [ p: person = (id: 0xFF, name: "Kostya", email: "kostya@me.com");
 
 ; Equivalent function calls
 inc(len(p));
-(inc * len)(p);
-inc * len # p;
+(inc • len)(p);
+inc • len # p;
 inc # len # p
 ```
