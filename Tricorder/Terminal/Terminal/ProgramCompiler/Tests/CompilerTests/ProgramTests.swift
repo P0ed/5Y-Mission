@@ -3,12 +3,12 @@ import ProgramCompiler
 import Machine
 
 @Suite(.serialized)
-struct Test {
+struct ProgramTests {
 
 	@Test func integerAddition() async throws {
 		let program = """
-		[ count: int = 0;
-		[ inc: int = 1;
+		[ count: int = 100;
+		[ inc: int = 10;
 		count = count + inc
 		"""
 
@@ -16,7 +16,8 @@ struct Test {
 		let executable = try scope.compile()
 		let result = try executable.run(scope: scope)
 
-		#expect(result.registers[0] == 1)
+		#expect(result.registers.count == 2)
+		#expect(result.registers[0] == 110)
 	}
 
 	@Test func helloWorld() async throws {

@@ -3,11 +3,6 @@
 Kung is a simple C/Swift inspired language with static typing system,
 executed in VM, written in C that runs on Arduino or similar low spec hardware.
 
-Only static allocation out of the box, with a special case for closures.
-Closures are preallocated behind the stack and limited in quantity and size (255 clusures available to user).
-Exceeding closures count is a runtime error. Exceeding closure size is a compile time error.
-Closure size is 64 words. Word size is 32bit.
-
 ## Example code:
 
 ```
@@ -36,10 +31,11 @@ Closure size is 64 words. Word size is 32bit.
 [ cnt: int = 0;
 cnt = cnt + 1;
 
-; Function decl and closure assignment
+; Function decl as a lambda expression
 [ inc: int > void = \x > cnt = cnt + x;
 
-; Compound expression closure with flattened struct input.
+; Compound function with flattened struct input,
+; where each member of the struct is accessible by name directly.
 [ len: person > int = \_ > {
 	; `#` is a function call operator with priority
 	; higher than assignment but lower than everything else.
