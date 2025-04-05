@@ -1,5 +1,5 @@
 extension Optional {
-	var arr: [Wrapped] { map { [$0] } ?? [] }
+	var array: [Wrapped] { map { [$0] } ?? [] }
 
 	func unwraped(_ error: @autoclosure () -> String) throws -> Wrapped {
 		if let wrapped = self { return wrapped }

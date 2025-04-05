@@ -1,4 +1,5 @@
 #Grammar:
+
 ```
  typeDecl		→ ":" id "=" typeExpr ;
  typeExpr		→ id ( int )* ;
@@ -12,5 +13,7 @@
  term        	→ factor ( ( "-" | "+" ) factor )* ;
  factor      	→ unary ( ( "/" | "*" ) unary )* ;
  unary       	→ ( "!" | "-" ) unary | primary ;
- primary     	→ id | int | str | "(" expression ")" | lambda ;
+ primary     	→ id | int | str | lambda | "(" expression ")" ;
+ lambda			→ "\" id ">" expression | compound ;
+ compound		→ "{" statement ( ";" statement )* "}"
 ```

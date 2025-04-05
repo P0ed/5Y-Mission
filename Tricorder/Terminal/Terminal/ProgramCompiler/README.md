@@ -1,6 +1,6 @@
-# Program language concept:
+# กุ้ง programming language:
 
-Simple C/Swift inspired language with static typing system,
+Kung is a simple C/Swift inspired language with static typing system,
 executed in VM, written in C that runs on Arduino or similar low spec hardware.
 
 Only static allocation out of the box, with a special case for closures.
@@ -11,44 +11,49 @@ Closure size is 64 words. Word size is 32bit.
 ## Example code:
 
 ```
-// Type def starts with `:` identifer `=` <type>
+; The line that starts with `;` is a comment
+
+; Type def starts with `:` identifer `=` <type>
 : id = int;
 
-// Fixed size array with 32 elements of type `char`
+; Fixed size array with 32 elements of type `char`
 : string = char 32;
 
-// Struct def works by assigning a tuple to an identifier
+; Struct def works by assigning a tuple to an identifier
 : person = (
 	identifier: id,
 	name: string,
 	email: string
 );
 
-// `[` is a variable declaration token
-[ quad: int 4 = [0, 0, 0, 0];
+; `[` is a variable declaration token
+[ quad: int 4 = (0, 0, 0, 0);
 
-// A counter
+; Character literal
+[ letter: char = "A";
+
+; A counter
 [ cnt: int = 0;
-cnt += 1;
+cnt = cnt + 1;
 
-// Function decl and closure assignment
+; Function decl and closure assignment
 [ inc: int > void = \x > cnt = cnt + x;
 
-// Compound expression closure with flattened struct input.
+; Compound expression closure with flattened struct input.
 [ len: person > int = \_ > {
-	// `#` is a function call operator with priority
-	// higher than assignment but lower than everything else.
-	// The last expression is returned
+	; `#` is a function call operator with priority
+	; higher than assignment but lower than everything else.
+	; The last expression is returned
 	count # name + email
 };
 
-// Function composition for point free notation
+; Function composition for point free notation
 [ inc_by_len: person > void = inc * len;
 
-// Can assign a tuple to struct variable if matches labels and types
-[ p: person = (id: 420, name: "Kostya", email: "kostya420@me.com");
+; Can assign a tuple to struct variable if matches labels and types
+[ p: person = (id: 0xFF, name: "Kostya", email: "kostya@me.com");
 
-// Equivalent function calls
+; Equivalent function calls
 inc(len(p));
 (inc * len)(p);
 inc * len # p;
