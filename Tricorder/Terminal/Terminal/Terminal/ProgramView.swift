@@ -153,7 +153,7 @@ struct ProgramView: View {
 
 		DispatchQueue.running.async {
 			_ = executable.run(
-				meta: scope,
+				scope: scope,
 				breakpoint: { pc, inn in
 					var halt = 0 as Int32
 					var throttle = false

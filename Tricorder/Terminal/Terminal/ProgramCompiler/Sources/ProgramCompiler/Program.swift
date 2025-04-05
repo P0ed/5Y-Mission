@@ -21,7 +21,7 @@ public extension Program {
 	private nonisolated(unsafe) static var breakpoint: (u16, Instruction) -> s32 = { _, _ in 0 }
 	private nonisolated(unsafe) static var print: (String) -> Void = { _ in }
 
-	func run(meta: Scope?, breakpoint: @escaping (u16, Instruction) -> s32, print: @escaping (String) -> Void) -> Int {
+	func run(scope: Scope?, breakpoint: @escaping (u16, Instruction) -> s32, print: @escaping (String) -> Void) -> Int {
 		Self.breakpoint = breakpoint
 		Self.print = print
 
@@ -38,16 +38,20 @@ public extension Program {
 			}
 		)
 
-		let rx: (Int) -> String = { i in
-			let v = (meta?.vars ?? []).reversed().first { $0.offset <= i }
-			let name = v.map { $0.name + (($0.type.size > 1) ? "[\(i - $0.offset)]" : "") } ?? ""
+		if let scope, ret == 0 {
 
-			return "Rx\(u8(i).hexString)\t\(name)"
+			let rx: (Int) -> String = { i in
+				let v = scope.vars.reversed().first { $0.offset <= i }
+				let name = v.map { $0.name + (($0.type.size > 1) ? "[\(i - $0.offset)]" : "") } ?? ""
+
+				return "Rx\(u8(i).hexString)\t\(name)"
+			}
+
+			let registers = (u8.min..<u8(scope.size)).reduce(into: "") { r, i in
+				r += "\n\t\(rx(Int(i))) = \(readRegister(i))"
+			}
+			print("\nexit: \(ret)\(registers)\n")
 		}
-		let registers = (u8.min..<(ret == 0 ? u8(meta?.size ?? 4) : 0)).reduce(into: "") { r, i in
-			r += "\n\t\(rx(Int(i))) = \(readRegister(i))"
-		}
-		print("\nexit: \(ret)\(registers)\n")
 
 		return Int(ret)
 	}

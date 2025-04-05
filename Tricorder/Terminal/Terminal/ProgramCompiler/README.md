@@ -57,5 +57,5 @@ cnt = cnt + 1;
 inc(len(p));
 (inc * len)(p);
 inc * len # p;
-inc # len # p;
+inc # len # p
 ```
