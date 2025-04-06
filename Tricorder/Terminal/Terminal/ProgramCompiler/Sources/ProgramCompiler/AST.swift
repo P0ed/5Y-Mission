@@ -13,7 +13,8 @@ public indirect enum Expr {
 		 sum(Expr, Expr),
 		 delta(Expr, Expr),
 		 mul(Expr, Expr),
-		 div(Expr, Expr)
+		 div(Expr, Expr),
+		 comp(Expr, Expr)
 }
 
 public indirect enum TypeExpr {

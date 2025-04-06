@@ -70,6 +70,7 @@ extension Expr: CustomStringConvertible {
 		case let .delta(l, r): "\(l) - \(r)"
 		case let .mul(l, r): "\(l) * \(r)"
 		case let .div(l, r): "\(l) / \(r)"
+		case let .comp(l, r): "\(l) • \(r)"
 		}
 	}
 }

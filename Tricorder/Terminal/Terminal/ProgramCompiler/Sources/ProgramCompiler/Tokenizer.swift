@@ -14,7 +14,7 @@ public extension String {
 private func tokenize(_ string: String) throws -> [Token] {
 	let sc = Scanner(string: string)
 	let ids = CharacterSet.letters.union(.decimalDigits).union(["_"])
-	let symbols = CharacterSet(charactersIn: ":;,\\{}()[].=<>+-*/%!~#&|?^'")
+	let symbols = CharacterSet(charactersIn: ":;,\\{}()[].=<>+-*/%!~#&|?^'•")
 	var tokens = [] as [Token]
 
 	var line = 1

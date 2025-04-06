@@ -13,7 +13,8 @@
  equality    	→ comparison ( ( "!=" | "==" ) comparison )* ;
  comparison  	→ term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
  term        	→ factor ( ( "-" | "+" ) factor )* ;
- factor      	→ unary ( ( "/" | "*" ) unary )* ;
+ factor      	→ composition ( ( "/" | "*" ) composition )* ;
+ composition	→ unary ( "•" unary )* ;
  unary       	→ ( "!" | "-" ) unary | primary ;
  primary     	→ id | int | str | lambda | "(" expression ")" ;
  lambda			→ "\" id ">" expression | compound ;

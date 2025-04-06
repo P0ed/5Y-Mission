@@ -77,7 +77,10 @@ extension Parser {
 		try binary(expr: { try $0.factor() }, map: ["+": Expr.sum, "-": Expr.delta])
 	}
 	mutating func factor() throws -> Expr {
-		try binary(expr: { try $0.call() }, map: ["*": Expr.mul, "/": Expr.div])
+		try binary(expr: { try $0.composition() }, map: ["*": Expr.mul, "/": Expr.div])
+	}
+	mutating func composition() throws -> Expr {
+		try binary(expr: { try $0.call() }, map: ["•": Expr.comp])
 	}
 	mutating func call() throws -> Expr {
 		try binary(expr: { try $0.primary() }, map: ["#": Expr.call])
@@ -103,9 +106,18 @@ extension Parser {
 	}
 
 	func tuple(_ tokens: [Token]) throws -> Expr {
-		try .tuple(tokens.split { $0.symbol == "," }.map {
-			var p = Parser(tokens: Array($0))
-			return try ("", p.expr())
+		try .tuple(tokens.split { $0.symbol == "," }.map { field in
+			let fieldSplit = field.split { $0.symbol == ":" }
+
+			if fieldSplit.count == 1 {
+				var p = Parser(tokens: Array(field))
+				return try ("", p.expr())
+			} else if fieldSplit.count == 2, fieldSplit.first!.count == 1, case let .id(id) = fieldSplit.first!.first!.value {
+				var p = Parser(tokens: Array(fieldSplit.last!))
+				return try (id, p.expr())
+			} else {
+				throw err("Invalid tuple field \(Array(field))")
+			}
 		})
 	}
 
@@ -180,8 +192,8 @@ extension Parser {
 		} else if tokens.count == 1, case let .tuple(tuple) = tokens[0].value {
 			return try .tuple(tuple.split { $0.value == .symbol(",") }
 				.map { ts in
-					if ts.count > 1, case let .id(id) = ts.first?.value {
-						try (id, typeExpr(Array(ts.dropFirst())))
+					if ts.count > 2, case let .id(id) = ts[ts.startIndex].value, ts[ts.startIndex + 1].value == .symbol(":") {
+						try (id, typeExpr(Array(ts.dropFirst(2))))
 					} else {
 						throw err("Invalid type expression \(ts.description)")
 					}

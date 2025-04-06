@@ -62,17 +62,31 @@ public extension Scope {
 		return Program(instructions: instructions)
 	}
 
-	func sum(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
+	func loadInt(rx: u8, value: Int32) -> [Instruction] {
+		[
+			RXI(x: rx, yz: u16(value & 0xFFFF))
+		] + (value > 0xFFFF ? [
+			RXU(x: rx, yz: u16(value >> 16))
+		] : [])
+	}
+
+	func integer(op: OPCode, const: (Int32, Int32) -> Int32, ret: u8, type: Typ, lhs: Expr, rhs: Expr) throws -> [Instruction] {
 		switch (lhs, rhs) {
 		case let (.consti(l), .consti(r)):
-			return [RXI(x: ret, yz: u16(l + r))]
-		case let (.id(id), .consti(c)), let (.consti(c), .id(id)):
+			return loadInt(rx: ret, value: const(l, r))
+		case let (.id(id), .consti(c)):
 			let v = try local(id).unwraped("Unknown id \(id)")
 			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
 
-			return [
-				RXI(x: u8(size), yz: u16(c)),
-				ADD(x: ret, y: u8(v.offset), z: u8(size))
+			return loadInt(rx: u8(size), value: c) + [
+				op(x: ret, y: u8(v.offset), z: u8(size))
+			]
+		case let (.consti(c), .id(id)):
+			let v = try local(id).unwraped("Unknown id \(id)")
+			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
+
+			return loadInt(rx: u8(size), value: c) + [
+				op(x: ret, y: u8(size), z: u8(v.offset))
 			]
 		case let (.id(lhs), .id(rhs)):
 			let l = try local(lhs).unwraped("Unknown id \(lhs)")
@@ -80,32 +94,33 @@ public extension Scope {
 			guard l.type.resolved == r.type.resolved else { throw err("Type mismatch \(l.type) != \(r.type)") }
 
 			return [
-				ADD(x: ret, y: u8(l.offset), z: u8(r.offset))
+				op(x: ret, y: u8(l.offset), z: u8(r.offset))
 			]
-		default: throw err("Invalid sum")
+		case let (_, .id(rhs)):
+			let r = try local(rhs).unwraped("Unknown id \(rhs)")
+
+			return try eval(expr: lhs, type: .int, offset: ret) + [
+				op(x: ret, y: ret, z: u8(r.offset))
+			]
+		case let (_, .consti(c)):
+			return try eval(expr: lhs, type: .int, offset: ret) + loadInt(rx: u8(size), value: c) + [
+				op(x: ret, y: ret, z: u8(size))
+			]
+		default: throw err("Invalid \(op) operation")
 		}
 	}
 
+	func add(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
+		try integer(op: ADD, const: +, ret: ret, type: type, lhs: lhs, rhs: rhs)
+	}
+	func sub(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
+		try integer(op: SUB, const: -, ret: ret, type: type, lhs: lhs, rhs: rhs)
+	}
 	func mul(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
-		switch (lhs, rhs) {
-		case let (.consti(l), .consti(r)):
-			return [RXI(x: ret, yz: u16(l * r))]
-		case let (.id(id), .consti(c)), let (.consti(c), .id(id)):
-			let v = try local(id).unwraped("Unknown id \(id)")
-			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
-
-			return [
-				RXI(x: u8(size), yz: u16(c)),
-				MUL(x: ret, y: u8(v.offset), z: u8(size))
-			]
-		case let (.id(lID), .id(rID)):
-			guard let l = local(lID) else { throw err("Unknown id") }
-			guard let r = local(rID) else { throw err("Unknown id") }
-			return [
-				MUL(x: ret, y: u8(l.offset), z: u8(r.offset))
-			]
-		default: throw err("Invalid mul")
-		}
+		try integer(op: MUL, const: *, ret: ret, type: type, lhs: lhs, rhs: rhs)
+	}
+	func div(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
+		try integer(op: DIV, const: /, ret: ret, type: type, lhs: lhs, rhs: rhs)
 	}
 
 	func call(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
@@ -130,82 +145,12 @@ public extension Scope {
 		}
 	}
 
-	func delta(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
-		switch (lhs, rhs) {
-		case let (.consti(l), .consti(r)):
-			return [RXI(x: ret, yz: u16(l - r))]
-		case let (.id(id), .consti(c)):
-			let v = try local(id).unwraped("Unknown id \(id)")
-			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
-
-			return [
-				RXI(x: ret + 1, yz: u16(c)),
-				SUB(x: ret, y: u8(v.offset), z: ret + 1)
-			]
-		case let (.consti(c), .id(id)):
-			let v = try local(id).unwraped("Unknown id \(id)")
-			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
-
-			return [
-				RXI(x: ret + 1, yz: u16(c)),
-				SUB(x: ret, y: ret + 1, z: u8(v.offset))
-			]
-		case let (.id(lhs), .id(rhs)):
-			let l = try local(lhs).unwraped("Unknown id \(lhs)")
-			let r = try local(rhs).unwraped("Unknown id \(rhs)")
-			guard l.type.resolved == r.type.resolved else { throw err("Type mismatch \(l.type) != \(r.type)") }
-
-			return [
-				SUB(x: ret, y: u8(l.offset), z: u8(r.offset))
-			]
-		default: throw err("Invalid subtraction")
-		}
-	}
-
-	func div(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
-		switch (lhs, rhs) {
-		case let (.consti(l), .consti(r)):
-			guard r != 0 else { throw err("Division by zero") }
-			return [RXI(x: ret, yz: u16(l / r))]
-		case let (.id(id), .consti(c)):
-			guard c != 0 else { throw err("Division by zero") }
-			let v = try local(id).unwraped("Unknown id \(id)")
-			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
-
-			return [
-				RXI(x: ret + 1, yz: u16(c)),
-				DIV(x: ret, y: u8(v.offset), z: ret + 1)
-			]
-		case let (.consti(c), .id(id)):
-			let v = try local(id).unwraped("Unknown id \(id)")
-			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
-
-			return [
-				RXI(x: ret + 1, yz: u16(c)),
-				DIV(x: ret, y: ret + 1, z: u8(v.offset))
-			]
-		case let (.id(lhs), .id(rhs)):
-			let l = try local(lhs).unwraped("Unknown id \(lhs)")
-			let r = try local(rhs).unwraped("Unknown id \(rhs)")
-			guard l.type.resolved == r.type.resolved else { throw err("Type mismatch \(l.type) != \(r.type)") }
-
-			return [
-				DIV(x: ret, y: u8(l.offset), z: u8(r.offset))
-			]
-		default: throw err("Invalid division")
-		}
-	}
-
 	private func eval(expr: Expr, type: Typ, offset: u8) throws -> [Instruction] {
 		var instructions = [] as [Instruction]
 
 		switch expr {
 		case let .consti(int):
-			instructions += [
-				RXI(x: offset, yz: u16(int & 0xFFFF))
-			] + (int > 0xFFFF ? [
-				RXU(x: offset, yz: u16(int >> 16))
-			] : [])
+			instructions += loadInt(rx: offset, value: int)
 		case let .consts(s):
 			let encoded = s.filter(\.isASCII).cString(using: .ascii) ?? []
 			let itemAt: (Int) -> u8 = {
@@ -222,16 +167,15 @@ public extension Scope {
 		case let .id(id):
 			let v = try local(id).unwraped("Unknown id \(id)")
 
-			instructions += [
-				RXI(x: u8(v.offset + v.type.size), yz: u16(0)),
+			instructions += loadInt(rx: u8(v.offset + v.type.size), value: 0) + [
 				ADD(x: offset, y: u8(v.offset + v.type.size), z: u8(v.offset))
 			]
 		case let .call(lhs, rhs):
 			instructions += try call(offset, type, lhs, rhs)
 		case let .sum(lhs, rhs):
-			instructions += try sum(offset, type, lhs, rhs)
+			instructions += try add(offset, type, lhs, rhs)
 		case let .delta(lhs, rhs):
-			instructions += try delta(offset, type, lhs, rhs)
+			instructions += try sub(offset, type, lhs, rhs)
 		case let .mul(lhs, rhs):
 			instructions += try mul(offset, type, lhs, rhs)
 		case let .div(lhs, rhs):
