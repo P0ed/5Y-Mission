@@ -1,5 +1,7 @@
 #WIP Grammar:
 
+!Needs to be fruther refined, not really a source of truth at the moment
+
 ```
  typeDecl		→ ":" id "=" typeExpr ;
  typeExpr		→ id ( int )* ;

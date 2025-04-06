@@ -70,9 +70,8 @@ typedef struct {
 	// Reference counters for closures
 	u8 rc[255];
 
-	// Closures data starting from index 1 to 255. Closure 0 is reserved
+	// User closures from index 1 to 255. Closure 0 is reserved
 	word closures[256][closure_size];
-	// Stack
 	word stack[stack_size];
 
 } Memory;
