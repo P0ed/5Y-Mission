@@ -22,10 +22,16 @@ typedef enum : u8 {
 	STRX,
 	/// `rx[x] = rx[y] + rx[z]`
 	ADD,
+	/// `rx[x] = rx[y] - rx[z]`
+	SUB,
 	/// `rx[x] += yz`
 	INC,
 	/// `rx[x] = rx[y] * rx[z]`
 	MUL,
+	/// `rx[x] = rx[y] / rx[z]`
+	DIV,
+	/// `rx[x] = rx[y] % rx[z]`
+	MOD,
 	/// `rx[x] = ~(rx[y] & rx[z])`
 	NAND,
 	/// `rx[x] = rx[y] << rx[z]`
@@ -151,11 +157,20 @@ static inline s32 runFunction(const Function function, const s32 frame) {
 			case ADD:
 				rx(inn.x) = rx(inn.y) + rx(inn.z);
 				break;
+			case SUB:
+				rx(inn.x) = rx(inn.y) - rx(inn.z);
+				break;
 			case INC:
 				rx(inn.x) += inn.yz.u;
 				break;
 			case MUL:
 				rx(inn.x) = rx(inn.y) * rx(inn.z);
+				break;
+			case DIV:
+				rx(inn.x) = rx(inn.y) / rx(inn.z);
+				break;
+			case MOD:
+				rx(inn.x) = rx(inn.y) % rx(inn.z);
 				break;
 			case NAND:
 				rx(inn.x) = ~(rx(inn.y) & rx(inn.z));

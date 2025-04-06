@@ -130,6 +130,72 @@ public extension Scope {
 		}
 	}
 
+	func delta(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
+		switch (lhs, rhs) {
+		case let (.consti(l), .consti(r)):
+			return [RXI(x: ret, yz: u16(l - r))]
+		case let (.id(id), .consti(c)):
+			let v = try local(id).unwraped("Unknown id \(id)")
+			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
+
+			return [
+				RXI(x: ret + 1, yz: u16(c)),
+				SUB(x: ret, y: u8(v.offset), z: ret + 1)
+			]
+		case let (.consti(c), .id(id)):
+			let v = try local(id).unwraped("Unknown id \(id)")
+			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
+
+			return [
+				RXI(x: ret + 1, yz: u16(c)),
+				SUB(x: ret, y: ret + 1, z: u8(v.offset))
+			]
+		case let (.id(lhs), .id(rhs)):
+			let l = try local(lhs).unwraped("Unknown id \(lhs)")
+			let r = try local(rhs).unwraped("Unknown id \(rhs)")
+			guard l.type.resolved == r.type.resolved else { throw err("Type mismatch \(l.type) != \(r.type)") }
+
+			return [
+				SUB(x: ret, y: u8(l.offset), z: u8(r.offset))
+			]
+		default: throw err("Invalid subtraction")
+		}
+	}
+
+	func div(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
+		switch (lhs, rhs) {
+		case let (.consti(l), .consti(r)):
+			guard r != 0 else { throw err("Division by zero") }
+			return [RXI(x: ret, yz: u16(l / r))]
+		case let (.id(id), .consti(c)):
+			guard c != 0 else { throw err("Division by zero") }
+			let v = try local(id).unwraped("Unknown id \(id)")
+			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
+
+			return [
+				RXI(x: ret + 1, yz: u16(c)),
+				DIV(x: ret, y: u8(v.offset), z: ret + 1)
+			]
+		case let (.consti(c), .id(id)):
+			let v = try local(id).unwraped("Unknown id \(id)")
+			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
+
+			return [
+				RXI(x: ret + 1, yz: u16(c)),
+				DIV(x: ret, y: ret + 1, z: u8(v.offset))
+			]
+		case let (.id(lhs), .id(rhs)):
+			let l = try local(lhs).unwraped("Unknown id \(lhs)")
+			let r = try local(rhs).unwraped("Unknown id \(rhs)")
+			guard l.type.resolved == r.type.resolved else { throw err("Type mismatch \(l.type) != \(r.type)") }
+
+			return [
+				DIV(x: ret, y: u8(l.offset), z: u8(r.offset))
+			]
+		default: throw err("Invalid division")
+		}
+	}
+
 	private func eval(expr: Expr, type: Typ, offset: u8) throws -> [Instruction] {
 		var instructions = [] as [Instruction]
 
@@ -164,8 +230,12 @@ public extension Scope {
 			instructions += try call(offset, type, lhs, rhs)
 		case let .sum(lhs, rhs):
 			instructions += try sum(offset, type, lhs, rhs)
+		case let .delta(lhs, rhs):
+			instructions += try delta(offset, type, lhs, rhs)
 		case let .mul(lhs, rhs):
 			instructions += try mul(offset, type, lhs, rhs)
+		case let .div(lhs, rhs):
+			instructions += try div(offset, type, lhs, rhs)
 		case let .funktion(fid, _, _):
 			let fn = try funcs.first { $0.id == fid }.unwraped("Unknown func \(fid)")
 			instructions += [RXI(x: offset, yz: u16(fn.offset))]
