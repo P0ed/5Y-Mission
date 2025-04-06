@@ -14,7 +14,6 @@ let testProgram = """
 
 count = count + 1;
 
-print # "Hello World!"
-
+print # "Hello, World!"
 
 """

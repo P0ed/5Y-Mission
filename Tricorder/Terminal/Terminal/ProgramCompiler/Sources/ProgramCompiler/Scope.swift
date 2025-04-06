@@ -101,6 +101,13 @@ private extension Scope {
 		}
 		s.exprs = exprs
 
+		try exprs.forEach {
+			if case let .typDecl(id, t) = $0 { try s.typeDecl(id, t) }
+		}
+		try exprs.forEach {
+			if case let .varDecl(id, t, e) = $0 { try s.varDecl(id, t, e) }
+		}
+
 		return s
 	}
 }

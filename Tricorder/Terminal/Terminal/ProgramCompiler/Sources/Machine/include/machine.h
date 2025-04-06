@@ -148,6 +148,7 @@ static inline s32 runFunction(const Function function, const s32 frame) {
 				break;
 			case RXRX:
 				rx(inn.x) = rx(inn.y);
+				break;
 			case RXST:
 				rx(inn.x) = mem.stack[rx(inn.y) + inn.z.u];
 				break;

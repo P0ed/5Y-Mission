@@ -21,7 +21,7 @@ struct ProgramTests {
 
 	@Test func helloWorld() async throws {
 		let program = """
-		print # "Hello World!"
+		print # "Hello, World!"
 		"""
 
 		let scope = try Scope(program: program)
@@ -29,7 +29,7 @@ struct ProgramTests {
 		let result = try executable.run(scope: scope)
 
 		#expect(result.registers.isEmpty)
-		#expect(result.prints == "Hello World!")
+		#expect(result.prints == "Hello, World!")
 	}
 
 	@Test func integerSubtraction() async throws {
@@ -77,7 +77,6 @@ struct ProgramTests {
 		#expect(result.registers[2] == 5)
 	}
 
-	// Variable and Type Tests
 	@Test func arrayDeclaration() async throws {
 		let program = """
 		: numbers = int 3;
@@ -124,7 +123,6 @@ struct ProgramTests {
 		#expect(result.registers[4] == 10)
 	}
 
-	// Function Tests
 	@Test func simpleFunction() async throws {
 		let program = """
 		[ double: int > int = \\x > x * 2;
@@ -153,7 +151,7 @@ struct ProgramTests {
 		let executable = try scope.compile()
 		let result = try executable.run(scope: scope)
 
-		#expect(result.registers[1] == 20) // (5*2)+10 = 20
+		#expect(result.registers[1] == 20) // (5 * 2) + 10 = 20
 	}
 
 	@Test func functionComposition() async throws {
@@ -168,10 +166,9 @@ struct ProgramTests {
 		let executable = try scope.compile()
 		let result = try executable.run(scope: scope)
 
-		#expect(result.registers[2] == 12) // (5+1)*2 = 12
+		#expect(result.registers[2] == 12) // (5 + 1) * 2 = 12
 	}
 
-	// Closure Tests
 	@Test func closureCapture() async throws {
 		let program = """
 		[ base: int = 10;
@@ -202,7 +199,6 @@ struct ProgramTests {
 		#expect(result.registers[2] == 14)
 	}
 
-	// String Tests
 	@Test func stringDeclaration() async throws {
 		let program = """
 		: string = char 32;
@@ -213,9 +209,9 @@ struct ProgramTests {
 		let executable = try scope.compile()
 		let result = try executable.run(scope: scope)
 
-		// Check first few characters (as integers)
-		#expect(result.registers[0] & 0xFF == 72)  // 'H'
-		#expect((result.registers[0] >> 8) & 0xFF == 101)  // 'e'
+		#expect(result.registers[0] & 0xFF == c2i("H"))
+		#expect((result.registers[0] >> 8) & 0xFF == c2i("e"))
+		#expect(result.registers[1] & 0xFF == c2i("o"))
 	}
 
 	@Test func printString() async throws {
@@ -243,6 +239,8 @@ struct ProgramTests {
 		let executable = try scope.compile()
 		let result = try executable.run(scope: scope)
 
-		#expect(result.registers[1] == 65)  // ASCII value of 'A'
+		#expect(result.registers[1] == c2i("A"))
 	}
+
+	private func c2i(_ char: Character) -> Int32 { char.asciiValue.map(Int32.init) ?? 0 }
 }

@@ -24,31 +24,23 @@ public extension Scope {
 		let compiledFuncs = funcs.map(\.program.instructions).reduce(into: [], +=)
 		var instructions = compiledFuncs
 
-		for expr in exprs {
+		let exprsCount = exprs.count
+		for (idx, expr) in exprs.enumerated() {
+			var isLast: Bool { idx == exprsCount - 1 }
+
 			switch expr {
 			case let .varDecl(name, _, rhs):
 				let v = try local(name).unwraped("Unknown id \(name)")
-				instructions += try eval(expr: rhs, type: v.type, offset: u8(v.offset))
+				instructions += try eval(ret: u8(v.offset), expr: rhs, type: v.type)
 			case let .assignment(.id(id), rhs):
 				let v = try local(id).unwraped("Unknown id \(id)")
-				instructions += try eval(expr: rhs, type: v.type, offset: u8(v.offset))
-			case let .mul(.id(lID), .id(rID)):
-				let l = try local(lID).unwraped("Unknown id \(lID)")
-				let r = try local(rID).unwraped("Unknown id \(rID)")
-				instructions += [MUL(x: 0, y: u8(l.offset), z: u8(r.offset))]
-			case let .call(fn, a):
-				if case let .id(id) = fn, let fn = local(id), case let .function(i, o) = fn.type {
-					instructions += try eval(expr: a, type: i, offset: u8(o.size))
-					instructions += [FNRX(x: u8(fn.offset), yz: 0)]
-				} else if case .id("print") = fn {
-					instructions += try eval(expr: a, type: .array(.char, 24), offset: u8(size))
-					instructions += [PRNT(x: u8(size), yz: 0)]
-				} else {
-					throw err("Unknown function expr \(fn)")
-				}
-				break
+				instructions += try eval(ret: u8(v.offset), expr: rhs, type: v.type)
 			default:
-				break
+				instructions += try eval(
+					ret: isLast ? 0 : u8(size),
+					expr: expr,
+					type: isLast ? output : .void
+				)
 			}
 		}
 
@@ -99,11 +91,11 @@ public extension Scope {
 		case let (_, .id(rhs)):
 			let r = try local(rhs).unwraped("Unknown id \(rhs)")
 
-			return try eval(expr: lhs, type: .int, offset: ret) + [
+			return try eval(ret: ret, expr: lhs, type: .int) + [
 				op(x: ret, y: ret, z: u8(r.offset))
 			]
 		case let (_, .consti(c)):
-			return try eval(expr: lhs, type: .int, offset: ret) + loadInt(rx: u8(size), value: c) + [
+			return try eval(ret: ret, expr: lhs, type: .int) + loadInt(rx: u8(size), value: c) + [
 				op(x: ret, y: ret, z: u8(size))
 			]
 		default: throw err("Invalid \(op) operation")
@@ -126,15 +118,16 @@ public extension Scope {
 	func call(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
 		if case let .id(v) = lhs {
 			if let fn = local(v) {
-				if case .function(type, let i) = fn.type {
-					return try eval(expr: rhs, type: i, offset: ret + u8(type.size)) + [
-						FNRX(x: ret, y: u8(fn.offset), z: 0)
+				if case .function(let i, type) = fn.type {
+					return try eval(ret: u8(size) + u8(type.size), expr: rhs, type: i) + [
+						FNRX(x: u8(size), y: u8(fn.offset), z: 0),
+						RXRX(x: ret, y: u8(size), z: 0)
 					]
 				} else {
 					throw err("Type mismatch")
 				}
 			} else if v == "print" {
-				return try eval(expr: rhs, type: .array(.char, 24), offset: u8(size)) + [
+				return try eval(ret: u8(size), expr: rhs, type: .array(.char, 24)) + [
 					PRNT(x: u8(size), yz: 0)
 				]
 			} else {
@@ -145,62 +138,68 @@ public extension Scope {
 		}
 	}
 
-	private func eval(expr: Expr, type: Typ, offset: u8) throws -> [Instruction] {
+	private func eval(ret: u8, expr: Expr, type: Typ) throws -> [Instruction] {
 		var instructions = [] as [Instruction]
 
 		switch expr {
 		case let .consti(int):
-			instructions += loadInt(rx: offset, value: int)
+			instructions += loadInt(rx: ret, value: int)
 		case let .consts(s):
 			let encoded = s.filter(\.isASCII).cString(using: .ascii) ?? []
 			let itemAt: (Int) -> u8 = {
 				$0 < encoded.count ? encoded[$0].magnitude : 0
 			}
-			guard case let .array(.char, cnt) = type, encoded.count < cnt else {
+
+			if type.resolved == .char, encoded.count == 2 {
+				return [RXI(x: ret, yz: u16(itemAt(0)))]
+			}
+
+			guard case let .array(.char, cnt) = type.resolved, encoded.count < cnt else {
 				throw err("Can't fit \"\(s)\" into \(type)")
 			}
 			instructions += (0..<((encoded.count + 3) / 4)).flatMap { idx in
 				let i: u16 = u16(itemAt(idx * 4 + 0)) | u16(itemAt(idx * 4 + 1)) << 8
 				let u: u16 = u16(itemAt(idx * 4 + 2)) | u16(itemAt(idx * 4 + 3)) << 8
-				return [RXI(x: offset + u8(idx), yz: i), RXU(x: offset + u8(idx), yz: u)]
+				return [RXI(x: ret + u8(idx), yz: i), RXU(x: ret + u8(idx), yz: u)]
 			}
 		case let .id(id):
 			let v = try local(id).unwraped("Unknown id \(id)")
 
-			instructions += loadInt(rx: u8(v.offset + v.type.size), value: 0) + [
-				ADD(x: offset, y: u8(v.offset + v.type.size), z: u8(v.offset))
-			]
+			for i in u8.min..<u8(v.type.size) {
+				instructions += [RXRX(x: ret + i, y: u8(v.offset) + i, z: 0)]
+			}
 		case let .call(lhs, rhs):
-			instructions += try call(offset, type, lhs, rhs)
+			instructions += try call(ret, type, lhs, rhs)
 		case let .sum(lhs, rhs):
-			instructions += try add(offset, type, lhs, rhs)
+			instructions += try add(ret, type, lhs, rhs)
 		case let .delta(lhs, rhs):
-			instructions += try sub(offset, type, lhs, rhs)
+			instructions += try sub(ret, type, lhs, rhs)
 		case let .mul(lhs, rhs):
-			instructions += try mul(offset, type, lhs, rhs)
+			instructions += try mul(ret, type, lhs, rhs)
 		case let .div(lhs, rhs):
-			instructions += try div(offset, type, lhs, rhs)
+			instructions += try div(ret, type, lhs, rhs)
 		case let .funktion(fid, _, _):
 			let fn = try funcs.first { $0.id == fid }.unwraped("Unknown func \(fid)")
-			instructions += [RXI(x: offset, yz: u16(fn.offset))]
+			instructions += [RXI(x: ret, yz: u16(fn.offset))]
 		case let .tuple(fs):
 			if case let .tuple(fields) = type.resolved, fields.count == fs.count {
 				var df = 0 as u8
 				instructions += try zip(fields, fs).reduce(into: []) { r, e in
-					r += try eval(expr: e.1.1, type: e.0.type, offset: offset + df)
+					r += try eval(ret: ret + df, expr: e.1.1, type: e.0.type)
 					df += u8(e.0.type.size)
 				}
 			} else if case let .array(t, cnt) = type.resolved, fs.count == cnt {
 				var df = 0 as u8
 				instructions += try fs.reduce(into: []) { r, e in
-					r += try eval(expr: e.1, type: t, offset: offset + df)
+					r += try eval(ret: ret + df, expr: e.1, type: t)
 					df += u8(t.size)
 				}
 			} else {
 				throw err("Invalid tuple \(fs)")
 			}
-		default:
-			throw err("Invalid expression \(expr)")
+		case .comp: throw err("Function composition not implemented yet")
+		case .typDecl: break
+		default: throw err("Invalid expression \(expr)")
 		}
 		return instructions
 	}
