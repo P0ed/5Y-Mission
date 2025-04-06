@@ -1,7 +1,7 @@
 # กุ้ง programming language:
 
 Kung is a simple C/Swift inspired language with static typing system,
-executed in VM, written in C that runs on Arduino or similar low spec hardware.
+running in a VM that runs on Arduino or similar low-spec hardware.
 
 ## Example code:
 
