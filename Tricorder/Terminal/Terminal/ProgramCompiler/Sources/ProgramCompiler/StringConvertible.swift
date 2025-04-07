@@ -65,7 +65,7 @@ extension Expr: CustomStringConvertible {
 		case let .funktion(fid, l, es):
 			"\(fid): \\`\(l.joined(separator: "`, `"))` > { \(es) }"
 		case let .assignment(l, r): "\(l) = \(r)"
-		case let .call(l, r): "\(l) # \(r)"
+		case let .rcall(l, r): "\(l) # \(r)"
 		case let .sum(l, r): "\(l) + \(r)"
 		case let .delta(l, r): "\(l) - \(r)"
 		case let .mul(l, r): "\(l) * \(r)"

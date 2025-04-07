@@ -80,10 +80,10 @@ extension Parser {
 		try binary(expr: { try $0.composition() }, map: ["*": Expr.mul, "/": Expr.div])
 	}
 	mutating func composition() throws -> Expr {
-		try binary(expr: { try $0.call() }, map: ["•": Expr.comp])
+		try binary(expr: { try $0.rcall() }, map: ["•": Expr.comp])
 	}
-	mutating func call() throws -> Expr {
-		try binary(expr: { try $0.primary() }, map: ["#": Expr.call])
+	mutating func rcall() throws -> Expr {
+		try binary(expr: { try $0.primary() }, map: ["#": Expr.rcall])
 	}
 
 	mutating func primary() throws -> Expr {

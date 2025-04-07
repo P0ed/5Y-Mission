@@ -115,7 +115,7 @@ public extension Scope {
 		try integer(op: DIV, const: /, ret: ret, type: type, lhs: lhs, rhs: rhs)
 	}
 
-	func call(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
+	func rcall(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
 		if case let .id(v) = lhs {
 			if let fn = local(v) {
 				if case .function(let i, type) = fn.type {
@@ -168,8 +168,8 @@ public extension Scope {
 			for i in u8.min..<u8(v.type.size) {
 				instructions += [RXRX(x: ret + i, y: u8(v.offset) + i, z: 0)]
 			}
-		case let .call(lhs, rhs):
-			instructions += try call(ret, type, lhs, rhs)
+		case let .rcall(lhs, rhs):
+			instructions += try rcall(ret, type, lhs, rhs)
 		case let .sum(lhs, rhs):
 			instructions += try add(ret, type, lhs, rhs)
 		case let .delta(lhs, rhs):

@@ -1,7 +1,7 @@
 $fn = 24;
 in = 25.4;
 
-include <../Parts/1900/1900.scad>
+include <Knob.scad>
 
 module Banana() {
 	scl = 0.97;
@@ -65,7 +65,7 @@ color("#222222")
 translate([in / 2, in / 2])
 for(x = [0:3]) for(y = [0:0])
 translate([x * in, y * in])
-D1900(holes = false);
+knob();
 
 color("#222222")
 translate([in, in])

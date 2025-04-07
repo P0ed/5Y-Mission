@@ -9,7 +9,7 @@ public indirect enum Expr {
 		 varDecl(String, TypeExpr, Expr),
 		 funktion(Int, [String], [Expr]),
 		 assignment(Expr, Expr),
-		 call(Expr, Expr),
+		 rcall(Expr, Expr),
 		 sum(Expr, Expr),
 		 delta(Expr, Expr),
 		 mul(Expr, Expr),
