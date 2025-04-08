@@ -4,7 +4,7 @@ import ProgramCompiler
 struct ProgramView: View {
 	@Environment(\.colorScheme) var colorScheme
 
-	@State var program: String = .savedProgram
+	@State var program: String = UserDefaults.standard.savedProgram
 	@State var attributes: Attributes?
 	@State var output: String = ""
 	@State var input: String = ""
@@ -12,7 +12,9 @@ struct ProgramView: View {
 	@State var running = false
 	@State var editorHidden = false
 	@State var consoleHidden = true
-	@State var debug = true
+	@State var debug = UserDefaults.standard.debugEnabled {
+		didSet { UserDefaults.standard.debugEnabled = debug }
+	}
 
 	@State var scope: Scope?
 	@State var executable: Program?
@@ -55,7 +57,7 @@ struct ProgramView: View {
 
 	var toolBar: some View {
 		HStack(spacing: 12) {
-			button("s") { UserDefaults.standard.set(program, forKey: "program") }
+			button("s") { UserDefaults.standard.savedProgram = program }
 			button("b") { build() }
 			button("r") { run() }
 			button(".") { stop() }

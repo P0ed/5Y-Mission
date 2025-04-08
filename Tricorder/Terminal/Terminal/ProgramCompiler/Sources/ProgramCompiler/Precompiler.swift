@@ -5,6 +5,9 @@ extension Scope {
 		try declareTypes()
 		try declareVariables()
 	}
+}
+
+private extension Scope {
 
 	mutating func indexFunctions() throws {
 		var id = 0
@@ -15,11 +18,21 @@ extension Scope {
 			}
 		}
 	}
+
+	mutating func collectCaptureList() throws {
+		exprs.mutate { xpr in
+			if case .funktion(_, let labels, let exprs) = xpr {
+				
+			}
+		}
+	}
+
 	mutating func declareTypes() throws {
 		try exprs.forEach {
 			if case let .typDecl(id, t) = $0 { try typeDecl(id, t) }
 		}
 	}
+
 	mutating func declareVariables() throws {
 		try exprs.forEach {
 			if case let .varDecl(id, t, e) = $0 { try varDecl(id, t, e) }

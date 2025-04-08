@@ -1,5 +1,3 @@
-import Machine
-
 struct Parser {
 	var tokens: [Token]
 	var j: Int = 0
@@ -51,6 +49,9 @@ extension Parser {
 		}
 		return l
 	}
+}
+
+extension Parser {
 
 	mutating func stmt() throws -> Expr {
 		if match(symbols(["["])) != nil {

@@ -5,10 +5,14 @@ func err(_ msg: String) -> CompilationError { .init(description: msg) }
 public extension Scope {
 
 	init(program: String) throws {
-		self = .init()
-		var p = try Parser(tokens: program.tokenized().filter {
+		self = try .init(tokens: program.tokenized().filter {
 			if case .comment = $0.value { false } else { true }
 		})
+	}
+
+	init(tokens: [Token]) throws {
+		self = .init()
+		var p = Parser(tokens: tokens)
 		exprs = try p.statements()
 		try precompile()
 	}
@@ -81,14 +85,14 @@ public extension Scope {
 			return [
 				op(x: ret, y: u8(l.offset), z: u8(r.offset))
 			]
-		case let (_, .id(rhs)):
-			let r = try local(rhs).unwraped("Unknown id \(rhs)")
+		case let (expr, .id(id)), let (.id(id), expr):
+			let r = try local(id).unwraped("Unknown id \(id)")
 
-			return try eval(ret: ret, expr: lhs, type: .int) + [
+			return try eval(ret: ret, expr: expr, type: .int) + [
 				op(x: ret, y: ret, z: u8(r.offset))
 			]
-		case let (_, .consti(c)):
-			return try eval(ret: ret, expr: lhs, type: .int) + loadInt(rx: u8(size), value: c) + [
+		case let (expr, .consti(c)), let (.consti(c), expr):
+			return try eval(ret: ret, expr: expr, type: .int) + loadInt(rx: u8(size), value: c) + [
 				op(x: ret, y: ret, z: u8(size))
 			]
 		default: throw err("Invalid \(op) operation")
