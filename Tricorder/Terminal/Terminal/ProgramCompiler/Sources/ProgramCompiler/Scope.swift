@@ -1,29 +1,21 @@
 public struct Scope {
-	public var parent: () -> Scope?
-	public var output: Typ
-	public var input: Typ
-	public var types: [String: Typ]
-	public var funcs: [Func]
-	public var vars: [Var]
-	public var exprs: [Expr]
+	public var parent: () -> Scope? = { nil }
+	public var output: Typ = .void
+	public var input: Typ = .void
+	public var types: [String: Typ] = .default
+	public var funcs: [Func] = []
+	public var vars: [Var] = []
+	public var exprs: [Expr] = []
+}
+
+public extension [String: Typ] {
+	static var `default`: Self {
+		["int": .int, "float": .float, "char": .char, "bool": .bool, "void": .void]
+	}
 }
 
 public extension Scope {
-
-	static var empty: Scope {
-		Scope(
-			parent: { nil },
-			output: .void,
-			input: .void,
-			types: ["int": .int, "float": .float, "char": .char, "bool": .bool, "void": .void],
-			funcs: [],
-			vars: [],
-			exprs: []
-		)
-	}
-
 	var size: Int { vars.map(\.type.size).reduce(output.size, +) }
-
 	var offset: Int { parent().map { $0.size + ($0.parent()?.offset ?? 0) } ?? 0 }
 
 	func local(_ id: String) -> Var? { vars.first(where: { $0.name == id }) }
@@ -85,7 +77,7 @@ public extension Scope {
 private extension Scope {
 
 	func childScope(output: Typ, input: Typ, labels: [String], exprs: [Expr]) throws -> Scope {
-		var s = Self.empty
+		var s = Scope()
 		s.parent = { self }
 		s.output = output
 		s.input = input
@@ -101,12 +93,7 @@ private extension Scope {
 		}
 		s.exprs = exprs
 
-		try exprs.forEach {
-			if case let .typDecl(id, t) = $0 { try s.typeDecl(id, t) }
-		}
-		try exprs.forEach {
-			if case let .varDecl(id, t, e) = $0 { try s.varDecl(id, t, e) }
-		}
+		try s.precompile()
 
 		return s
 	}

@@ -1,14 +1,15 @@
 #Grammar:
 
 ```
+program			→ statement ( ";" statement )* ;
+statement		→ expression | typeDecl | varDecl ;
+typeDecl		→ ":" id "=" typeExpr ;
+varDecl			→ "[" id ":" typeExpr "=" expression ;
+
 typeExpr		→ tupleType ( ">" typeExpr )? ;	
 tupleType		→ "(" tupleElem ( "," tupleElem )* ")" | baseType ;
 tupleElem		→ id ":" typeExpr | typeExpr ;
 baseType		→ id ( int )* ;
-
-typeDecl		→ ":" id "=" typeExpr ;
-varDecl			→ "[" id ":" typeExpr "=" expression ;
-statement		→ expression | typeDecl | varDecl ;
 
 expression		→ assignment ;
 assignment		→ id "=" assignment | rcall ;
@@ -30,6 +31,5 @@ postfix			→ "(" expression? ")"
 				| "[" expression "]"
 
 primary     	→ id | int | str | lambda | "(" expression ")" ;
-lambda			→ "\" id ">" ( expression | compound ) ;
-compound		→ "{" statement ( ";" statement )* "}"
+lambda			→ "\" id ">" ( expression | "{" program "}" ) ;
 ```

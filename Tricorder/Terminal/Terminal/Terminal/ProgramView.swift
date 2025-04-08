@@ -20,11 +20,6 @@ struct ProgramView: View {
 	@State var programChange: TimeInterval = .zero
 	@State var outputChange: TimeInterval = .zero
 
-	var editorColor: Color { colorScheme == .light ? .editorLight : .editorDark }
-	var consoleColor: Color { colorScheme == .light ? .consoleLight : .consoleDark }
-	var overlayColor: Color { colorScheme == .light ? .overlayLight : .overlayDark }
-	var tintColor: Color { colorScheme == .light ? .amberLight : .amberDark }
-
     var body: some View {
 		VStack(spacing: 0) {
 			toolBar
@@ -33,12 +28,14 @@ struct ProgramView: View {
 				let height = ctx.size.height * (full ? 1 : 0.5)
 				let offset = ctx.size.height * (full ? 0.5 : 0.75)
 				if !editorHidden {
-					editor.frame(height: height)
+					TextEditor(text: $program, attributes: $attributes)
+						.frame(height: height)
+						.clipped()
 				}
 				if !consoleHidden {
 					console
 						.position(x: ctx.size.width / 2, y: offset)
-						.frame(height: height)
+						.frame(width: ctx.size.width, height: height)
 				}
 			}
 		}
@@ -46,9 +43,14 @@ struct ProgramView: View {
 			attributes = try? program.highlighted(tokens: program.tokenized())
 		}
 		.onChange(of: program) { _, _ in
-			attributes = try? program.highlighted(tokens: program.tokenized())
+			DispatchQueue.parsing.async { [program] in
+				let attrs = try? program.highlighted(tokens: program.tokenized())
+				DispatchQueue.main.async {
+					attributes = attrs
+				}
+			}
 		}
-		.background(editorColor)
+		.background(colorScheme.editorColor)
     }
 
 	var toolBar: some View {
@@ -65,7 +67,7 @@ struct ProgramView: View {
 		}
 		.padding(.init(top: 8, leading: 12, bottom: 8, trailing: 12))
 		.frame(height: 36, alignment: .top)
-		.background(consoleColor)
+		.background(colorScheme.consoleColor)
 	}
 
 	func button(_ key: Character, _ active: Bool = false, _ action: @escaping () -> Void) -> some View {
@@ -76,14 +78,8 @@ struct ProgramView: View {
 		}
 		.buttonStyle(.accessoryBarAction)
 		.keyboardShortcut(.init(key), modifiers: .command)
-		.background(active ? tintColor : .clear)
+		.background(active ? colorScheme.tintColor : .clear)
 		.background(in: .rect(cornerRadius: 6))
-	}
-
-	var editor: some View {
-		ScrollView {
-			TextEditor(text: $program, attributes: $attributes)
-		}
 	}
 
 	var console: some View {
@@ -107,7 +103,7 @@ struct ProgramView: View {
 					.padding(4)
 			}
 		}
-		.background(consoleColor)
+		.background(colorScheme.consoleColor)
 		.contentMargins(.bottom, 24, for: .scrollContent)
 		.overlay { commandLineInput }
 	}
@@ -116,7 +112,7 @@ struct ProgramView: View {
 		VStack {
 			Spacer()
 			ZStack {
-				overlayColor
+				colorScheme.overlayColor
 					.frame(maxWidth: .infinity, maxHeight: 24, alignment: .bottom)
 
 				TextField("", text: $input)

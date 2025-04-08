@@ -3,7 +3,6 @@ import Machine
 struct Parser {
 	var tokens: [Token]
 	var j: Int = 0
-	var id: Int = 0
 }
 
 extension Parser {
@@ -127,14 +126,12 @@ extension Parser {
 		try consume(symbols([">"]), "`>` not found")
 
 		if let tks = match(\.compound) {
-			var p = Parser(tokens: tks, id: id)
+			var p = Parser(tokens: tks)
 			let stmts = try p.statements()
-			id = p.id + 1
-			return .funktion(id - 1, labels, stmts)
+			return .funktion(0, labels, stmts)
 		} else {
 			let stmts = try [expr()]
-			id += 1
-			return .funktion(id - 1, labels, stmts)
+			return .funktion(0, labels, stmts)
 		}
 	}
 

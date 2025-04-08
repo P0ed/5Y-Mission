@@ -159,7 +159,8 @@ struct ProgramTests {
 		[ inc: int > int = \\x > x + 1;
 		[ double: int > int = \\x > x * 2;
 		[ result: int = 0;
-		result = double • inc # 5
+		[ composed: int > int = double • inc;
+		result = composed # 5
 		"""
 
 		let scope = try Scope(program: program)

@@ -12,6 +12,7 @@ struct Terminal: App {
 }
 
 extension DispatchQueue {
+	static let parsing = DispatchQueue(label: "parsing.queue")
 	static let running = DispatchQueue(label: "running.queue")
 }
 

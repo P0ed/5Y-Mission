@@ -1,5 +1,5 @@
 let testProgram = """
-: person = (id int, name char 24);
+: person = (id: int, name: char 24);
 
 [ id: int = 255;
 [ p: person = (id, "P0ed");

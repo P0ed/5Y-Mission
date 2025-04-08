@@ -1,4 +1,3 @@
-import Foundation
 import Machine
 
 func err(_ msg: String) -> CompilationError { .init(description: msg) }
@@ -6,18 +5,12 @@ func err(_ msg: String) -> CompilationError { .init(description: msg) }
 public extension Scope {
 
 	init(program: String) throws {
-		self = .empty
+		self = .init()
 		var p = try Parser(tokens: program.tokenized().filter {
 			if case .comment = $0.value { false } else { true }
 		})
 		exprs = try p.statements()
-
-		try exprs.forEach {
-			if case let .typDecl(id, t) = $0 { try typeDecl(id, t) }
-		}
-		try exprs.forEach {
-			if case let .varDecl(id, t, e) = $0 { try varDecl(id, t, e) }
-		}
+		try precompile()
 	}
 
 	func compile() throws -> Program {

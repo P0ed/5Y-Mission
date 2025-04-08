@@ -13,3 +13,10 @@ extension Color {
 	static var amberLight: Color { .init(red: 0.8, green: 0.7, blue: 0.2, opacity: 0.2) }
 	static var amberDark: Color { .init(red: 0.8, green: 0.7, blue: 0.1, opacity: 0.3) }
 }
+
+extension ColorScheme {
+	var editorColor: Color { self == .light ? .editorLight : .editorDark }
+	var consoleColor: Color { self == .light ? .consoleLight : .consoleDark }
+	var overlayColor: Color { self == .light ? .overlayLight : .overlayDark }
+	var tintColor: Color { self == .light ? .amberLight : .amberDark }
+}

@@ -5,38 +5,47 @@ struct TextEditor: NSViewRepresentable {
 	@Binding var text: String
 	@Binding var attributes: Attributes?
 
-	var delegate = TextViewDelegate()
+	func makeNSView(context: Context) -> NSTextEditor {
+		let view = NSTextEditor()
+		view.textView.allowsUndo = true
+		view.textView.delegate = view.delegate
+		view.textView.drawsBackground = false
+		view.delegate.textChanged = { attributes = nil; text = $0 }
 
-	func makeNSView(context: Context) -> NSTextView {
-		let view = NSTextView()
-		view.allowsUndo = true
-		view.delegate = delegate
+		view.hasVerticalScroller = true
+		view.hasHorizontalScroller = false
 		view.drawsBackground = false
-		delegate.textChanged = { attributes = nil; text = $0 }
+
+		view.documentView = view.textView
+		view.textView.translatesAutoresizingMaskIntoConstraints = false
+
+		NSLayoutConstraint.activate([
+			view.textView.widthAnchor.constraint(equalTo: view.widthAnchor),
+			view.textView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor),
+		])
 
 		return view
 	}
-	
-	func updateNSView(_ nsView: NSTextView, context: Context) {
-		nsView.textStorage?.beginEditing()
-		defer { nsView.textStorage?.endEditing() }
 
-		if nsView.string != text { nsView.string = text }
+	func updateNSView(_ nsView: NSTextEditor, context: Context) {
+		nsView.textView.textStorage?.beginEditing()
+		defer { nsView.textView.textStorage?.endEditing() }
+
+		if nsView.textView.string != text { nsView.textView.string = text }
 
 		let str = text as NSString
-		nsView.textStorage?.setAttributes(.code, range: str.range)
+		nsView.textView.textStorage?.setAttributes(.code, range: str.range)
 
 		guard let attributes else { return }
 		for (range, attrs) in attributes {
-			nsView.textStorage?.addAttributes(attrs, range: range)
+			nsView.textView.textStorage?.addAttributes(attrs, range: range)
 		}
 	}
+}
 
-	func sizeThatFits(_ proposal: ProposedViewSize, nsView: NSTextView, context: Context) -> CGSize? {
-		guard let lm = nsView.layoutManager, let tc = nsView.textContainer else { return nil }
-		lm.ensureLayout(for: tc)
-		return lm.usedRect(for: tc).size
-	}
+final class NSTextEditor: NSScrollView {
+	let textView = NSTextView()
+	let delegate = TextViewDelegate()
 }
 
 final class TextViewDelegate: NSObject, NSTextViewDelegate {
