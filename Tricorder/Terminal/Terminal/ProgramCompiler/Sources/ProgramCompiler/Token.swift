@@ -22,7 +22,7 @@ public extension Token {
 
 	var lexeme: String {
 		switch value {
-		case let .hex(u): "0x\(Int(u).fmt("%08X"))"
+		case let .hex(u): "0x\(u.hex)"
 		case let .int(s): "\(s)"
 		case let .float(f): "\(f)"
 		case let .string(s): s

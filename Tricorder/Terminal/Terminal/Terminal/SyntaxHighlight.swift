@@ -85,7 +85,6 @@ extension RGBA32 {
 		self = RGBA32(red: hex[byte: 2], green: hex[byte: 1], blue: hex[byte: 0], alpha: .max)
 	}
 	var hex: Int { Int(red) << 16 | Int(green) << 8 | Int(blue) }
-	var hexString: String { String(format: "%06X", hex) }
 }
 
 private extension Int {

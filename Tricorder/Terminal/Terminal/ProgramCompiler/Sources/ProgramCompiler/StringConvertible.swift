@@ -18,13 +18,13 @@ extension OPCode: @retroactive CustomStringConvertible {
 		case FN: 	"  FN"
 		case FNRX: 	"FNRX"
 		case RET: 	" RET"
-		default: rawValue.hexString
+		default: rawValue.hex
 		}
 	}
 }
 
 extension Instruction: @retroactive CustomStringConvertible {
-	public var description: String { "\(op) \(x.u.hexString) \(y.u.hexString) \(z.u.hexString)" }
+	public var description: String { "\(op) \(x.u.hex) \(y.u.hex) \(z.u.hex)" }
 
 	public func description(at idx: Int) -> String { "\(idx.fmt("%02d")): \t\(description)" }
 }
@@ -140,11 +140,7 @@ public extension String {
 	var aligned: String { replacingOccurrences(of: "\n", with: "\n\t") }
 }
 
-public extension Int {
+public extension Numeric where Self: CVarArg {
+	var hex: String { fmt("%0\(MemoryLayout<Self>.size * 2)X") }
 	func fmt(_ fmt: String) -> String { String(format: fmt, self) }
-}
-
-extension UInt8 {
-	func fmt(_ fmt: String) -> String { String(format: fmt, self) }
-	var hexString: String { fmt("%02X") }
 }

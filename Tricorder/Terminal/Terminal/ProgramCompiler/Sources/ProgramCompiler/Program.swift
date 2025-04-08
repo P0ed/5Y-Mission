@@ -44,7 +44,7 @@ public extension Program {
 				let v = scope.vars.reversed().first { $0.offset <= i }
 				let name = v.map { $0.name + (($0.type.size > 1) ? "[\(i - $0.offset)]" : "") } ?? ""
 
-				return "Rx\(u8(i).hexString)\t\(name)"
+				return "Rx\(u8(i).hex)\t\(name)"
 			}
 
 			let registers = (u8.min..<u8(scope.size)).reduce(into: "") { r, i in
