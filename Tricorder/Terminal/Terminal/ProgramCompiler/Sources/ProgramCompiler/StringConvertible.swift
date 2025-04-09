@@ -15,6 +15,8 @@ extension OPCode: @retroactive CustomStringConvertible {
 		case DIV:	" DIV"
 		case MOD:	" MOD"
 		case PRNT:	"PRNT"
+		case CLSR: 	"CLSR"
+		case AUX:	" AUX"
 		case FN: 	"  FN"
 		case FNRX: 	"FNRX"
 		case RET: 	" RET"

@@ -10,45 +10,26 @@ typedef union { s8 s; u8 u; struct { u8 reg: 6, sel: 2; }; } i8;
 typedef union { s16 s; u16 u; } i16;
 
 typedef enum : u8 {
-	/// `rx[x] = yz`
 	RXI,
-	/// `rx[x] |= yz << 16`
 	RXU,
-	///  `rx[x] = rx[y]`
 	RXRX,
-	/// `rx[x] = stack[rx[y] + z]`
 	RXST,
-	/// `stack[rx[x] + y] = rx[z]`
 	STRX,
-	/// `rx[x] = rx[y] + rx[z]`
 	ADD,
-	/// `rx[x] = rx[y] - rx[z]`
 	SUB,
-	/// `rx[x] += yz`
 	INC,
-	/// `rx[x] = rx[y] * rx[z]`
 	MUL,
-	/// `rx[x] = rx[y] / rx[z]`
 	DIV,
-	/// `rx[x] = rx[y] % rx[z]`
 	MOD,
-	/// `rx[x] = ~(rx[y] & rx[z])`
 	NAND,
-	/// `rx[x] = rx[y] << rx[z]`
 	SHL,
-	/// `rx[x] = rx[y] >> rx[z]`
 	SHR,
-	/// `print(rx[x])`
 	PRNT,
-	/// `top += yz`
 	FRME,
-	/// `aux = closures[x]`
 	CLSR,
-	/// `top += x; runFunction(yz)`
+	AUX,
 	FN,
-	/// `top += x; runFunction(rx[y])`
 	FNRX,
-	/// `return`
 	RET
 } OPCode;
 
@@ -103,7 +84,7 @@ static s32 tick = 0;
 #define fn(x) *((Function *)(*(&mem.top + x.sel) + x.reg))
 
 // Closure allocation
-static inline u8 closure() {
+static inline u8 alloc() {
 	return mem.cc < 255 ? mem.sortedc[mem.cc++] : 0;
 }
 
@@ -188,7 +169,13 @@ static inline s32 runFunction(const Function function, const s32 frame) {
 			case FRME:
 				mem.top += inn.yz.s;
 				break;
-			case CLSR:
+			case CLSR: {
+				const u8 closure = alloc();
+				mem.aux = mem.closures[closure];
+				rx(inn.x) = closure << 24 | inn.yz.u;
+				break;
+			}
+			case AUX:
 				mem.aux = mem.closures[inn.x.u];
 				break;
 			case FN: {

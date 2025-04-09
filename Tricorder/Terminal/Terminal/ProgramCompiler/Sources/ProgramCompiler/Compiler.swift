@@ -179,7 +179,7 @@ public extension Scope {
 			instructions += try div(ret, type, lhs, rhs)
 		case let .funktion(fid, _, _):
 			let fn = try funcs.first { $0.id == fid }.unwraped("Unknown func \(fid)")
-			instructions += [RXI(x: ret, yz: u16(fn.offset))]
+			instructions += [CLSR(x: ret, yz: u16(fn.offset))]
 		case let .tuple(fs):
 			if case let .tuple(fields) = type.resolved, fields.count == fs.count {
 				var df = 0 as u8
