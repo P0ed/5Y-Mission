@@ -6,7 +6,7 @@ public indirect enum Typ: Hashable {
 		 array(Typ, Int),
 		 tuple([Field]),
 		 pointer(Typ),
-		 function(Typ, Typ)
+		 function(Arrow)
 }
 
 public struct Field: Hashable {
@@ -25,9 +25,14 @@ public extension Var {
 	var register: u8 { .init(selector: selector, offset: u8(offset)) }
 }
 
+public struct Arrow: Hashable {
+	public var i: Typ
+	public var o: Typ
+}
+
 public struct Func: Hashable {
 	var offset: Int
-	var type: Typ
+	var type: Arrow
 	var name: String
 	var id: Int
 	var program: Program

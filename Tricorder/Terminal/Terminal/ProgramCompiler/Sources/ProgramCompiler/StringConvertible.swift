@@ -102,7 +102,7 @@ extension Typ: CustomStringConvertible {
 		case .bool: "bool"
 		case .void: "void"
 		case let .pointer(t): "ptr<\(t)>"
-		case let .function(i, o): "\(i) > \(o)"
+		case let .function(io): "\(io.i) > \(io.o)"
 		case let .type(name, _): name
 		case let .array(type, len): "\(type.description)[\(len)]"
 		case let .tuple(tuple): "(\(tuple.map { "\($0.name): \($0.type)" }.joined(separator: ", ")))"

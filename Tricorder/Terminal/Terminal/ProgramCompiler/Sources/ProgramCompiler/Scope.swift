@@ -34,7 +34,7 @@ public extension Scope {
 		switch expr {
 		case let .id(id): try types[id].unwraped("Unknown type \(id)")
 		case let .arr(t, c): try .array(resolvedType(t), c)
-		case let .fn(i, o): try .function(resolvedType(i), resolvedType(o))
+		case let .fn(i, o): try .function(Arrow(i: resolvedType(i), o: resolvedType(o)))
 		case let .ptr(t): try .pointer(resolvedType(t))
 		case let .tuple(fs): try .tuple(fs.map { try Field(name: $0.0, type: resolvedType($0.1)) })
 		}
@@ -64,9 +64,7 @@ public extension Scope {
 				scope.input = i
 				scope.output = o
 
-				if i == .void, labels.isEmpty {
-
-				} else if i != .void, labels.count == 1 {
+				if i == .void, labels.isEmpty {} else if i != .void, labels.count == 1 {
 					scope.vars.append(Var(offset: o.size, type: i, name: labels[0]))
 				} else {
 					throw err("Invalid arg list \(i) \(labels)")
@@ -74,7 +72,7 @@ public extension Scope {
 
 				let f = Func(
 					offset: funcs.last.map { $0.offset + $0.program.instructions.count } ?? 0,
-					type: .function(i, o),
+					type: Arrow(i: i, o: o),
 					name: id,
 					id: fid,
 					program: try scope.compile()
