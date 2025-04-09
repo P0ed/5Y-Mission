@@ -18,6 +18,11 @@ public struct Var: Hashable {
 	public var offset: Int
 	public var type: Typ
 	public var name: String
+	public var selector: Int = 0
+}
+
+public extension Var {
+	var register: u8 { u8(offset) | (u8(selector) << 6) }
 }
 
 public struct Func: Hashable {

@@ -50,4 +50,33 @@ extension Expr {
 			self = .binary(op, lhs, rhs)
 		}
 	}
+	
+	/// Finds all references to variables that exist in the parent scope but not in the current scope
+	func findReferencesTo(inParent parentScope: Scope, ofScope currentScope: Scope, addingTo capturedVars: inout [Var]) {
+		switch self {
+		case let .id(name):
+			// If variable isn't in current scope but exists in parent scope, it needs to be captured
+			if currentScope.local(name) == nil, let v = parentScope.local(name) {
+				// Only add if not already in capture list
+				if !capturedVars.contains(where: { $0.name == name }) {
+					let offset = capturedVars.map(\.type.size).reduce(0, +)
+					capturedVars.append(Var(offset: offset, type: v.type, name: name))
+				}
+			}
+		case .consti, .constu, .constf, .consts, .typDecl:
+			break
+		case let .varDecl(_, _, expr):
+			expr.findReferencesTo(inParent: parentScope, ofScope: currentScope, addingTo: &capturedVars)
+		case .funktion:
+			// Skip nested functions as they will be handled separately
+			break
+		case let .binary(_, lhs, rhs):
+			lhs.findReferencesTo(inParent: parentScope, ofScope: currentScope, addingTo: &capturedVars)
+			rhs.findReferencesTo(inParent: parentScope, ofScope: currentScope, addingTo: &capturedVars)
+		case let .tuple(fields):
+			for (_, expr) in fields {
+				expr.findReferencesTo(inParent: parentScope, ofScope: currentScope, addingTo: &capturedVars)
+			}
+		}
+	}
 }

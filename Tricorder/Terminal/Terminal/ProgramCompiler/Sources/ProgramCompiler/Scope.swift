@@ -5,6 +5,7 @@ public struct Scope {
 	public var types: [String: Typ] = .default
 	public var funcs: [Func] = []
 	public var vars: [Var] = []
+	public var closure: [Var] = []
 	public var exprs: [Expr] = []
 }
 
@@ -18,7 +19,9 @@ public extension Scope {
 	var size: Int { vars.map(\.type.size).reduce(output.size, +) }
 	var offset: Int { parent().map { $0.size + ($0.parent()?.offset ?? 0) } ?? 0 }
 
-	func local(_ id: String) -> Var? { vars.first(where: { $0.name == id }) }
+	func local(_ id: String) -> Var? {
+		vars.first(where: { $0.name == id }) ?? closure.first(where: { $0.name == id })
+	}
 
 	func resolvedType(_ expr: TypeExpr) throws -> Typ {
 		switch expr {
@@ -43,10 +46,6 @@ public extension Scope {
 				name: id
 			)
 			vars.append(v)
-
-			if case let .function(i, o) = v.type {
-				try funcDecl(id, i, o, expr)
-			}
 		} else {
 			throw err("Redeclaration of var \(id)")
 		}
