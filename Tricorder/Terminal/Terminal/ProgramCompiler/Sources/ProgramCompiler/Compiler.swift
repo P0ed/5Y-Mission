@@ -177,9 +177,24 @@ public extension Scope {
 			instructions += try mul(ret, type, lhs, rhs)
 		case let .binary(.div, lhs, rhs):
 			instructions += try div(ret, type, lhs, rhs)
-		case let .funktion(fid, _, _):
+		case let .funktion(fid, _, fs):
 			let fn = try funcs.first { $0.id == fid }.unwraped("Unknown func \(fid)")
-			instructions += [CLSR(x: ret, yz: u16(fn.offset))]
+			if fs.closure.isEmpty {
+				instructions += [RXI(x: ret, yz: u16(fn.offset))]
+			} else {
+				instructions += [CLSR(x: ret, yz: u16(fn.offset))]
+
+				for c in fs.closure {
+					let origin = try local(c.name).unwraped("Var \(c.name) not found")
+					for i in u8.min..<u8(c.type.size) {
+						instructions += [RXRX(
+							x: .init(selector: .aux, offset: c.register.offset + i),
+							y: origin.register + i,
+							z: 0
+						)]
+					}
+				}
+			}
 		case let .tuple(fs):
 			if case let .tuple(fields) = type.resolved, fields.count == fs.count {
 				var df = 0 as u8
@@ -211,4 +226,17 @@ extension OPCode {
 	func callAsFunction(x: u8, y: u8, z: u8) -> Instruction {
 		Instruction(op: self, x: i8(u: x), .init(.init(y: i8(u: y), z: i8(u: z))))
 	}
+}
+
+extension u8 {
+	init(selector: u8, offset: u8) {
+		self = selector << 6 | offset & 0x3F
+	}
+	var selector: u8 { self >> 6 }
+	var offset: u8 { self & 0x3F }
+
+	static var top: u8 { 0b00 }
+	static var closure: u8 { 0b01 }
+	static var aux: u8 { 0b10 }
+	static var bottom: u8 { 0b11 }
 }

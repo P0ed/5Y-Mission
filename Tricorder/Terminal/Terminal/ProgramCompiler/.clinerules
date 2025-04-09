@@ -54,7 +54,7 @@ A function can capture a single closure. The same closure may be shared between 
 When function is called, it's closure becomes current. Function is static when `closure == 0`.
 
 Function layout:
-	`address: UInt16, closure: UInt8, reserved: UInt8`
+	`address: UInt16, reserved: UInt8, closure: UInt8`
 
 Capture list is implicit. If any non-root scope variable gets referenced inside a function then it's captured.
 Root scope variables are not going anywhere, so it is safe to reference their stack address.

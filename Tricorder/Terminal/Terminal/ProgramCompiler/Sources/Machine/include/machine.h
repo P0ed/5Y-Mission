@@ -65,8 +65,8 @@ typedef struct {
 
 typedef struct {
 	u16 address;
+	u8 reserved;
 	u8 closure;
-	u8 aux;
 } Function;
 
 extern Memory mem __attribute__((swift_attr("nonisolated(unsafe)")));

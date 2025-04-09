@@ -154,52 +154,6 @@ struct ProgramTests {
 		#expect(result.registers[1] == 20) // (5 * 2) + 10 = 20
 	}
 
-	@Test func functionComposition() async throws {
-		let program = """
-		[ inc: int > int = \\x > x + 1;
-		[ double: int > int = \\x > x * 2;
-		[ result: int = 0;
-		[ composed: int > int = double • inc;
-		result = composed # 5
-		"""
-
-		let scope = try Scope(program: program)
-		let executable = try scope.compile()
-		let result = try executable.run(scope: scope)
-
-		#expect(result.registers[2] == 12) // (5 + 1) * 2 = 12
-	}
-
-	@Test func closureCapture() async throws {
-		let program = """
-		[ base: int = 10;
-		[ add_to_base: int > int = \\x > base + x;
-		[ result: int = 0;
-		result = add_to_base # 5
-		"""
-
-		let scope = try Scope(program: program)
-		let executable = try scope.compile()
-		let result = try executable.run(scope: scope)
-
-		#expect(result.registers[2] == 15)
-	}
-
-	@Test func closureAsParameter() async throws {
-		let program = """
-		[ apply: (int > int) > int > int = \\f > \\x > f # x;
-		[ double: int > int = \\x > x * 2;
-		[ result: int = 0;
-		result = apply # double # 7
-		"""
-
-		let scope = try Scope(program: program)
-		let executable = try scope.compile()
-		let result = try executable.run(scope: scope)
-
-		#expect(result.registers[2] == 14)
-	}
-
 	@Test func stringDeclaration() async throws {
 		let program = """
 		: string = char 32;
@@ -241,6 +195,52 @@ struct ProgramTests {
 		let result = try executable.run(scope: scope)
 
 		#expect(result.registers[1] == c2i("A"))
+	}
+
+	@Test func closureCapture() async throws {
+		let program = """
+		[ base: int = 10;
+		[ add_to_base: int > int = \\x > base + x;
+		[ result: int = 0;
+		result = add_to_base # 5
+		"""
+
+		let scope = try Scope(program: program)
+		let executable = try scope.compile()
+		let result = try executable.run(scope: scope)
+
+		#expect(result.registers[2] == 15)
+	}
+
+	@Test func functionComposition() async throws {
+		let program = """
+		[ inc: int > int = \\x > x + 1;
+		[ double: int > int = \\x > x * 2;
+		[ result: int = 0;
+		[ composed: int > int = double • inc;
+		result = composed # 5
+		"""
+
+		let scope = try Scope(program: program)
+		let executable = try scope.compile()
+		let result = try executable.run(scope: scope)
+
+		#expect(result.registers[2] == 12) // (5 + 1) * 2 = 12
+	}
+
+	@Test func closureAsParameter() async throws {
+		let program = """
+		[ apply: (int > int) > int > int = \\f > \\x > f # x;
+		[ double: int > int = \\x > x * 2;
+		[ result: int = 0;
+		result = apply # double # 7
+		"""
+
+		let scope = try Scope(program: program)
+		let executable = try scope.compile()
+		let result = try executable.run(scope: scope)
+
+		#expect(result.registers[2] == 14)
 	}
 
 	private func c2i(_ char: Character) -> Int32 { char.asciiValue.map(Int32.init) ?? 0 }

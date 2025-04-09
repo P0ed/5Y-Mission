@@ -32,7 +32,7 @@ extension Instruction: @retroactive CustomStringConvertible {
 }
 
 extension Function: @retroactive CustomStringConvertible {
-	public var description: String { "addr: \(address) closure: \(closure) aux: \(aux)" }
+	public var description: String { "addr: \(address) closure: \(closure)" }
 }
 
 extension Program: CustomStringConvertible {
@@ -64,8 +64,8 @@ extension Expr: CustomStringConvertible {
 		case let .tuple(fs): "(\(fs))"
 		case let .typDecl(id, t): ".typDecl \(id): \(t)"
 		case let .varDecl(id, t, e): ".varDecl \(id): \(t) = \(e)"
-		case let .funktion(fid, l, es):
-			"\(fid): \\`\(l.joined(separator: "`, `"))` > { \(es) }"
+		case let .funktion(fid, l, fs):
+			"\(fid): \\`\(l.joined(separator: "`, `"))` > { \(fs.exprs.map(String.init(describing:)).joined(separator: "; ")) }"
 		case let .binary(.assign, l, r): "\(l) = \(r)"
 		case let .binary(.rcall, l, r): "\(l) # \(r)"
 		case let .binary(.sum, l, r): "\(l) + \(r)"
