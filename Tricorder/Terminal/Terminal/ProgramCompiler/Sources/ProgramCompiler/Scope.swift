@@ -1,7 +1,6 @@
-public struct Scope {
-	public var parent: () -> Scope? = { nil }
-	public var output: Typ = .void
-	public var input: Typ = .void
+public final class Scope {
+	public weak var parent: Scope?
+	public var arrow: Arrow = Arrow(i: .void, o: .void)
 	public var types: [String: Typ] = .default
 	public var funcs: [Func] = []
 	public var vars: [Var] = []
@@ -17,15 +16,17 @@ public extension [String: Typ] {
 
 public extension Scope {
 	var size: Int {
-		vars.map(\.type.size).reduce(output.size, +)
+		vars.map(\.type.size).reduce(arrow.o.size, +)
 	}
 	var offset: Int {
-		parent().map { $0.size + ($0.parent()?.offset ?? 0) } ?? 0
+		parent.map { $0.size + ($0.parent?.offset ?? 0) } ?? 0
 	}
 	var temporary: UInt8 {
 		.init(selector: .top, offset: UInt8(size))
 	}
-
+	var root: Scope {
+		parent ?? self
+	}
 	func local(_ id: String) -> Var? {
 		vars.first(where: { $0.name == id }) ?? closure.first(where: { $0.name == id })
 	}
@@ -40,12 +41,12 @@ public extension Scope {
 		}
 	}
 
-	mutating func typeDecl(_ id: String, _ type: TypeExpr) throws {
+	func typeDecl(_ id: String, _ type: TypeExpr) throws {
 		guard types[id] == nil else { throw err("Redeclaration of \(id)") }
 		types[id] = try .type(id, resolvedType(type))
 	}
 
-	mutating func varDecl(_ id: String, _ type: TypeExpr, _ expr: Expr) throws {
+	func varDecl(_ id: String, _ type: TypeExpr, _ expr: Expr) throws {
 		if vars.first(where: { $0.name == id }) == nil {
 			let v = try Var(
 				offset: vars.last.map { $0.offset + $0.type.size } ?? 0,
@@ -58,31 +59,34 @@ public extension Scope {
 		}
 	}
 
-	mutating func funcDecl(_ id: String, _ i: Typ, _ o: Typ, _ expr: Expr) throws {
-		if funcs.first(where: { $0.name == id }) == nil {
-			if case .funktion(let fid, let labels, var scope) = expr {
-				scope.input = i
-				scope.output = o
-
-				if i == .void, labels.isEmpty {} else if i != .void, labels.count == 1 {
-					scope.vars.append(Var(offset: o.size, type: i, name: labels[0]))
-				} else {
-					throw err("Invalid arg list \(i) \(labels)")
-				}
-
-				let f = Func(
-					offset: funcs.last.map { $0.offset + $0.program.instructions.count } ?? 0,
-					type: Arrow(i: i, o: o),
-					name: id,
-					id: fid,
-					program: try scope.compile()
-				)
-				funcs.append(f)
-			} else {
-				throw err("Expected a function")
-			}
-		} else {
+	func bindFunc(id: Int, name: String) throws {
+		if funcs.first(where: { $0.name == name }) != nil {
 			throw err("Redeclaration of func \(id)")
+		} else if let fn = funcs.firstIndex(where: { $0.id == id }) {
+			funcs[fn].name = name
+		} else {
+			throw err("Function \(id) not found")
 		}
+	}
+
+	func funcDecl(id: Int, scope: Scope) throws {
+//		if funcs.first(where: { $0.name == name }) != nil {
+//			throw err("Redeclaration of func \(id)")
+//		} else {
+			//			if case .funktion(let fid, let labels, var scope) = expr {
+//			scope.arrow = arrow
+
+//			if arrow.i == .void, labels.isEmpty {} else if arrow.i != .void, labels.count == 1 {
+//				scope.vars.append(Var(offset: arrow.o.size, type: arrow.i, name: labels[0]))
+//			} else {
+//				throw err("Invalid arg list \(arrow.i) \(labels)")
+//			}
+
+//				funcs.last.map { $0.offset + $0.program.instructions.count }
+//			let f = 
+//		} else {
+//			throw err("Expected a function")
+//		}
+//		}
 	}
 }

@@ -25,16 +25,16 @@ public indirect enum TypeExpr {
 
 extension Scope {
 
-	mutating func traverse(leavesFirst: Bool = false, _ transform: (inout Expr, Scope) -> Bool) {
+	func traverse(leavesFirst: Bool = false, _ transform: (inout Expr, Scope) -> Bool) {
 		for idx in exprs.indices { exprs[idx].traverse(in: self, leavesFirst: leavesFirst, transform: transform) }
 	}
-	mutating func traverseAll(_ transform: (inout Expr, Scope) -> Void) {
+	func traverseAll(_ transform: (inout Expr, Scope) -> Void) {
 		traverse { e, s in transform(&e, s); return false }
 	}
-	mutating func traverseLeavesFirst(_ transform: (inout Expr, Scope) -> Void) {
+	func traverseLeavesFirst(_ transform: (inout Expr, Scope) -> Void) {
 		traverse(leavesFirst: true) { e, s in transform(&e, s); return false }
 	}
-	mutating func traverseExprs(_ transform: (inout Expr, Scope) -> Void) {
+	func traverseExprs(_ transform: (inout Expr, Scope) -> Void) {
 		traverse { e, s in
 			transform(&e, s)
 			return if case .funktion = e { true } else { false }
@@ -53,7 +53,7 @@ extension Expr {
 		case .varDecl(let id, let type, var e):
 			e.traverse(in: scope, transform: transform)
 			self = .varDecl(id, type, e)
-		case .funktion(let id, let labels, var scope):
+		case let .funktion(id, labels, scope):
 			scope.traverse(transform)
 			self = .funktion(id, labels, scope)
 		case .binary(let op, var lhs, var rhs):

@@ -30,12 +30,11 @@ public struct Arrow: Hashable {
 	public var o: Typ
 }
 
-public struct Func: Hashable {
+public struct Func {
 	var offset: Int
-	var type: Arrow
-	var name: String
 	var id: Int
-	var program: Program
+	var name: String
+	unowned var scope: Scope
 }
 
 public struct CompilationError: Error, CustomStringConvertible {

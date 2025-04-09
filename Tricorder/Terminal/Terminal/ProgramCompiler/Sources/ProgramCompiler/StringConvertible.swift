@@ -44,7 +44,7 @@ extension Program: CustomStringConvertible {
 }
 
 extension Func: CustomStringConvertible {
-	public var description: String { "\(offset.fmt("%2d")) \t\(name): \(type)\n\(program)" }
+	public var description: String { "\(offset.fmt("%2d")) \t\(name): \(scope.arrow)\n\(scope.exprs)" }
 }
 
 extension Var: CustomStringConvertible {

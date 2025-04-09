@@ -4,22 +4,31 @@ func err(_ msg: String) -> CompilationError { .init(description: msg) }
 
 public extension Scope {
 
-	init(tokens: [Token]) throws {
-		self = .init()
+	convenience init(tokens: [Token]) throws {
+		self.init()
 		var p = Parser(tokens: tokens)
 		exprs = try p.statements()
 		try precompile()
 	}
 
-	init(program: String) throws {
-		self = try .init(tokens: program.tokenized().filter {
+	convenience init(program: String) throws {
+		try self.init(tokens: program.tokenized().filter {
 			if case .comment = $0.value { false } else { true }
 		})
 	}
 
 	func compile() throws -> Program {
-		let compiledFuncs = funcs.map(\.program.instructions).reduce(into: [], +=)
-		var instructions = compiledFuncs
+		var offset = 0
+		var instructions = [] as [Instruction]
+
+		if parent == nil {
+			for (idx, fn) in funcs.enumerated() {
+				let program = try fn.scope.compile()
+				funcs[idx].offset = offset
+				offset += program.instructions.count
+				instructions += program.instructions
+			}
+		}
 
 		let exprsCount = exprs.count
 		for (idx, expr) in exprs.enumerated() {
@@ -36,12 +45,12 @@ public extension Scope {
 				instructions += try eval(
 					ret: isLast ? 0 : temporary,
 					expr: expr,
-					type: isLast ? output : .void
+					type: isLast ? arrow.o : .void
 				)
 			}
 		}
 
-		if parent() != nil {
+		if parent != nil {
 			instructions += vars.reduce(into: []) { r, v in
 				if case .function = v.type {
 					r += [CLRL(x: v.register.offset)]
@@ -51,9 +60,9 @@ public extension Scope {
 
 		instructions += [RET()]
 
-		if parent() == nil {
+		if parent == nil {
 			guard instructions.count < u16.max else { throw err("Instructions count > UInt16.max") }
-			instructions.append(FN(x: 0, yz: u16(compiledFuncs.count)))
+			instructions.append(FN(x: 0, yz: u16(offset)))
 		}
 
 		return Program(instructions: instructions)
@@ -185,8 +194,8 @@ public extension Scope {
 			instructions += try mul(ret, type, lhs, rhs)
 		case let .binary(.div, lhs, rhs):
 			instructions += try div(ret, type, lhs, rhs)
-		case let .funktion(fid, _, fs):
-			let fn = try funcs.first { $0.id == fid }.unwraped("Unknown func \(fid)")
+		case let .funktion(id, _, fs):
+			let fn = try root.funcs.first { $0.id == id }.unwraped("Unknown func \(id)")
 			if fs.closure.isEmpty {
 				instructions += [RXI(x: ret, yz: u16(fn.offset))]
 			} else {

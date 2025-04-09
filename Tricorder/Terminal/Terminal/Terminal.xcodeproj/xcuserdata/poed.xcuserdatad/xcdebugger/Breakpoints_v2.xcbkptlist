@@ -40,7 +40,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "43051B4F-0C81-4F8A-950F-B8655555071B"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProgramCompiler/Sources/ProgramCompiler/Utilities.swift"
@@ -49,6 +49,52 @@
             startingLineNumber = "6"
             endingLineNumber = "6"
             landmarkName = "unwraped(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "43051B4F-0C81-4F8A-950F-B8655555071B - e3f3d030502d8407"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Swift.Optional.unwraped(@autoclosure () -&gt; Swift.String) throws -&gt; &#x3c4;_0_0"
+                  moduleName = "Terminal.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/poed/Dev/5Y-Mission/Tricorder/Terminal/Terminal/ProgramCompiler/Sources/ProgramCompiler/Utilities.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "6"
+                  endingLineNumber = "6">
+               </Location>
+               <Location
+                  uuid = "43051B4F-0C81-4F8A-950F-B8655555071B - e3f3d030502d8407"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Swift.Optional.unwraped(@autoclosure () -&gt; Swift.String) throws -&gt; &#x3c4;_0_0"
+                  moduleName = "Terminal.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/poed/Dev/5Y-Mission/Tricorder/Terminal/Terminal/ProgramCompiler/Sources/ProgramCompiler/Utilities.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "6"
+                  endingLineNumber = "6">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5AADC1B8-0DCD-4041-ADDA-56531DA07655"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProgramCompiler/Sources/ProgramCompiler/Precompiler.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "collectCaptureList()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
