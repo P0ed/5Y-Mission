@@ -5,7 +5,7 @@
 Kung is a simple C/Swift inspired programming language with static typing system.
 
 Compiler is written in Swift with C Virtual Machine for targeting embedded ARM
-microcontrollers like Arduino C33 200MHz CPU with 512KB SRAM and 16MB Flash.
+microcontrollers like Arduino C33 200MHz CPU with 512KB SRAM.
 
 The goal is to compile text on a laptop/smartphone (macOS/iOS) into bytecode,
 then send the instructions via BLE/WiFi to the microcontroller and execute them there.
@@ -46,7 +46,7 @@ Selectors:
 
 That way it is possible to access any word in current and aux closures,
 and 64 first and last words from the stack in any instruction.
-For complete picture, see `.\Sources\Machine\include\machine.h`.
+For complete picture, see `./Sources/Machine/include/machine.h`.
 
 Closures are reference-counted and have reference semantics. The rest has value semantics.
 
@@ -63,12 +63,22 @@ If a function is escaping, then the context it captures resides in a closure ins
 Compiler needs to detect escaping. Consider returning the function, passing it as an argument to
 another function or storing it to a variable — any of above will mark the function as escaping.
 
-The grammar is specified in `.\GRAMMAR.md`
+The grammar is specified in `./GRAMMAR.md`
+
+### Program Compiler Design
+
+* `Parser` struct is a parser that produces the AST from `[Token]`
+* `Scope` struct represents the AST
+* `Scope.precompile()` function is a place for additional passes with the help of `Scope.traverse`
+* `Scope.compile()` function produces `Program`
+* `Program` struct contains instructions for VM
 
 ## Development Workflow
 
-Check out the `.\TASKS.md` for current tasks. Add tasks representing next development steps
-to the list, but keep total less than 5 at a time. Remove completed tasks from the list
-when it is fully tested.
+Check out the `./TASKS.md` for current tasks.
 
-In Plan mode feel free to suggest architecture changes if you think they will simplify overall implementation.
+In Act mode add tasks representing the next development steps to the list,
+but keep total less than 5 at a time. Remove completed tasks from the list when it is fully tested.
+
+In Plan mode when working on a task, feel free to suggest architecture changes if you think
+they will simplify overall implementation.

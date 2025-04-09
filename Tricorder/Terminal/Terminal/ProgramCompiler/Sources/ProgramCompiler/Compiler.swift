@@ -4,17 +4,17 @@ func err(_ msg: String) -> CompilationError { .init(description: msg) }
 
 public extension Scope {
 
-	init(program: String) throws {
-		self = try .init(tokens: program.tokenized().filter {
-			if case .comment = $0.value { false } else { true }
-		})
-	}
-
 	init(tokens: [Token]) throws {
 		self = .init()
 		var p = Parser(tokens: tokens)
 		exprs = try p.statements()
 		try precompile()
+	}
+
+	init(program: String) throws {
+		self = try .init(tokens: program.tokenized().filter {
+			if case .comment = $0.value { false } else { true }
+		})
 	}
 
 	func compile() throws -> Program {
