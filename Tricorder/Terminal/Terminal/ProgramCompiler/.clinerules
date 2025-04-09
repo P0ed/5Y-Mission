@@ -1,6 +1,10 @@
-We are designing a simple programming language with compiler and VM.
+# Kung Architecture & Development Guide
 
-Compiler is written in Swift and VM is in C for targeting embedded ARM
+## Project Overview
+
+Kung is a simple C/Swift inspired programming language with static typing system.
+
+Compiler is written in Swift with C Virtual Machine for targeting embedded ARM
 microcontrollers like Arduino C33 200MHz CPU with 512KB SRAM and 16MB Flash.
 
 The goal is to compile text on a laptop/smartphone (macOS/iOS) into bytecode,
@@ -11,7 +15,8 @@ Performance wise I'd like to beat Lua while implementing minimum optimisations t
 This project only touches the program compilation and execution,
 leaving aside any means of communication between devices.
 
-The language is C/Swift inspired with static typing system.
+## Architecture Overview
+
 Only static allocation out of the box, with a special case for closures.
 
 Closures are preallocated behind the stack and limited in quantity and size.
@@ -39,7 +44,7 @@ Selectors:
 
 That way it is possible to reference any word in current and aux closures,
 and 64 first and last words from the stack in any instruction.
-For complete picture, see `machine.h`.
+For complete picture, see `.\Sources\Machine\include\machine.h`.
 
 Closures are reference-counted and have reference semantics. The rest has value semantics.
 
@@ -53,5 +58,7 @@ Capture list is implicit. If any non-root scope variable gets referenced inside 
 Root scope variables are not going anywhere, so it is safe to reference their stack address.
 
 If a function is escaping, then the context it captures resides in a closure instead of a stack. 
-Compiler needs to detect escaping. Consider return of the function, passing it as an argument to
+Compiler needs to detect escaping. Consider returning the function, passing it as an argument to
 another function or storing it to a variable — any of above will mark the function as escaping.
+
+The grammar is specified in `.\GRAMMAR.md`
