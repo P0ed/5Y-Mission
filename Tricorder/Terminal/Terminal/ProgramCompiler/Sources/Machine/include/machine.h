@@ -4,6 +4,8 @@ typedef short s16;
 typedef unsigned short u16;
 typedef int s32;
 typedef unsigned int u32;
+typedef long long s64;
+typedef unsigned long long u64;
 typedef s32 word;
 
 typedef union { s8 s; u8 u; struct { u8 reg: 6, sel: 2; }; } i8;
@@ -26,7 +28,9 @@ typedef enum : u8 {
 	SHR,
 	PRNT,
 	FRME,
-	CLSR,
+	CLMK,
+	CLRT,
+	CLRL,
 	AUX,
 	FN,
 	FNRX,
@@ -95,7 +99,7 @@ static inline void retain(const u8 closure) {
 
 // Ref count decrease with dealloc if reached zero
 static void release(const u8 closure) {
-	if (--(mem.rc[closure]) != 0) return;
+	if (closure == 0 || --(mem.rc[closure]) != 0) return;
 
 	mem.cc -= 1;
 	for (char i = mem.cc; i >= 0; --i) if (mem.sortedc[i] == closure) {
@@ -110,6 +114,7 @@ static void release(const u8 closure) {
 static inline s32 runFunction(const Function function, const s32 frame) {
 	word *const ret = mem.pc;
 	word *const stk = mem.top;
+
 	mem.top += frame;
 	mem.pc = mem.stack + function.address;
 	mem.closure = mem.closures[function.closure];
@@ -169,12 +174,18 @@ static inline s32 runFunction(const Function function, const s32 frame) {
 			case FRME:
 				mem.top += inn.yz.s;
 				break;
-			case CLSR: {
+			case CLMK: {
 				const u8 closure = alloc();
 				mem.aux = mem.closures[closure];
 				rx(inn.x) = closure << 24 | inn.yz.u;
 				break;
 			}
+			case CLRT:
+				retain(rx(inn.x) >> 24);
+				break;
+			case CLRL:
+				release(rx(inn.x) >> 24);
+				break;
 			case AUX:
 				mem.aux = mem.closures[inn.x.u];
 				break;

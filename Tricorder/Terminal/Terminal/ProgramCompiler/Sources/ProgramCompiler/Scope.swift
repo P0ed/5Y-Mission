@@ -16,8 +16,15 @@ public extension [String: Typ] {
 }
 
 public extension Scope {
-	var size: Int { vars.map(\.type.size).reduce(output.size, +) }
-	var offset: Int { parent().map { $0.size + ($0.parent()?.offset ?? 0) } ?? 0 }
+	var size: Int {
+		vars.map(\.type.size).reduce(output.size, +)
+	}
+	var offset: Int {
+		parent().map { $0.size + ($0.parent()?.offset ?? 0) } ?? 0
+	}
+	var temporary: UInt8 {
+		.init(selector: .top, offset: UInt8(size))
+	}
 
 	func local(_ id: String) -> Var? {
 		vars.first(where: { $0.name == id }) ?? closure.first(where: { $0.name == id })

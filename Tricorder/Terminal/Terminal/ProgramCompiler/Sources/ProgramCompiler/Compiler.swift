@@ -34,14 +34,22 @@ public extension Scope {
 				instructions += try eval(ret: u8(v.offset), expr: rhs, type: v.type)
 			default:
 				instructions += try eval(
-					ret: isLast ? 0 : u8(size),
+					ret: isLast ? 0 : temporary,
 					expr: expr,
 					type: isLast ? output : .void
 				)
 			}
 		}
 
-		instructions += [RET(x: 0, yz: 0)]
+		if parent() != nil {
+			instructions += vars.reduce(into: []) { r, v in
+				if case .function = v.type {
+					r += [CLRL(x: v.register.offset)]
+				}
+			}
+		}
+
+		instructions += [RET()]
 
 		if parent() == nil {
 			guard instructions.count < u16.max else { throw err("Instructions count > UInt16.max") }
@@ -69,15 +77,15 @@ public extension Scope {
 				throw err("Type mismatch \(v.type) != .int")
 			}
 
-			return loadInt(rx: u8(size), value: c) + [
-				op(x: ret, y: v.register, z: u8(size))
+			return loadInt(rx: temporary, value: c) + [
+				op(x: ret, y: v.register, z: temporary)
 			]
 		case let (.consti(c), .id(id)):
 			let v = try local(id).unwraped("Unknown id \(id)")
 			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
 
-			return loadInt(rx: u8(size), value: c) + [
-				op(x: ret, y: u8(size), z: v.register)
+			return loadInt(rx: temporary, value: c) + [
+				op(x: ret, y: temporary, z: v.register)
 			]
 		case let (.id(lhs), .id(rhs)):
 			let l = try local(lhs).unwraped("Unknown id \(lhs)")
@@ -94,8 +102,8 @@ public extension Scope {
 				op(x: ret, y: ret, z: r.register)
 			]
 		case let (expr, .consti(c)), let (.consti(c), expr):
-			return try eval(ret: ret, expr: expr, type: .int) + loadInt(rx: u8(size), value: c) + [
-				op(x: ret, y: ret, z: u8(size))
+			return try eval(ret: ret, expr: expr, type: .int) + loadInt(rx: temporary, value: c) + [
+				op(x: ret, y: ret, z: temporary)
 			]
 		default: throw err("Invalid \(op) operation")
 		}
@@ -118,16 +126,16 @@ public extension Scope {
 		if case let .id(v) = lhs {
 			if let fn = local(v) {
 				if case .function(let i, type) = fn.type {
-					return try eval(ret: u8(size) + u8(type.size), expr: rhs, type: i) + [
-						FNRX(x: u8(size), y: fn.register, z: 0),
-						RXRX(x: ret, y: u8(size), z: 0)
+					return try eval(ret: temporary + u8(type.size), expr: rhs, type: i) + [
+						FNRX(x: temporary, y: fn.register),
+						RXRX(x: ret, y: temporary)
 					]
 				} else {
 					throw err("Type mismatch")
 				}
 			} else if v == "print" {
-				return try eval(ret: u8(size), expr: rhs, type: .array(.char, 24)) + [
-					PRNT(x: u8(size), yz: 0)
+				return try eval(ret: temporary, expr: rhs, type: .array(.char, 24)) + [
+					PRNT(x: temporary)
 				]
 			} else {
 				throw err("Unknown id")
@@ -165,7 +173,7 @@ public extension Scope {
 			let v = try local(id).unwraped("Unknown id \(id)")
 
 			for i in u8.min..<u8(v.type.size) {
-				instructions += [RXRX(x: ret + i, y: v.register + i, z: 0)]
+				instructions += [RXRX(x: ret + i, y: v.register + i)]
 			}
 		case let .binary(.rcall, lhs, rhs):
 			instructions += try rcall(ret, type, lhs, rhs)
@@ -182,7 +190,7 @@ public extension Scope {
 			if fs.closure.isEmpty {
 				instructions += [RXI(x: ret, yz: u16(fn.offset))]
 			} else {
-				instructions += [CLSR(x: ret, yz: u16(fn.offset))]
+				instructions += [CLMK(x: ret, yz: u16(fn.offset))]
 
 				for c in fs.closure {
 					let origin = try local(c.name).unwraped("Var \(c.name) not found")
@@ -220,10 +228,10 @@ public extension Scope {
 }
 
 extension OPCode {
-	func callAsFunction(x: u8, yz: u16) -> Instruction {
+	func callAsFunction(x: u8 = 0, yz: u16 = 0) -> Instruction {
 		Instruction(op: self, x: i8(u: x), .init(yz: i16(u: yz)))
 	}
-	func callAsFunction(x: u8, y: u8, z: u8) -> Instruction {
+	func callAsFunction(x: u8, y: u8, z: u8 = 0) -> Instruction {
 		Instruction(op: self, x: i8(u: x), .init(.init(y: i8(u: y), z: i8(u: z))))
 	}
 }

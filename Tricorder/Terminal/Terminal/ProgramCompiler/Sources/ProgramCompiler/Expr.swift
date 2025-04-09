@@ -42,14 +42,14 @@ extension Expr {
 		case .consti, .constu, .constf, .consts, .id, .tuple, .typDecl:
 			break
 		case .varDecl(let id, let type, var e):
-			transform(&e, scope)
+			e.traverse(in: scope, transform)
 			self = .varDecl(id, type, e)
 		case .funktion(let id, let labels, var scope):
 			scope.traverse(transform)
 			self = .funktion(id, labels, scope)
 		case .binary(let op, var lhs, var rhs):
-			transform(&lhs, scope)
-			transform(&rhs, scope)
+			lhs.traverse(in: scope, transform)
+			rhs.traverse(in: scope, transform)
 			self = .binary(op, lhs, rhs)
 		}
 	}
