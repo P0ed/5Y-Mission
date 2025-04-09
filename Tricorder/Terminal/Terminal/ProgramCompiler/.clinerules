@@ -19,15 +19,17 @@ leaving aside any means of communication between devices.
 
 Only static allocation out of the box, with a special case for closures.
 
+Word size is 32-bit.
+
+Pointers are 16-bit and minimum offset is a word. Stack size is 256 * 256 * 4 bytes `256KB`.
+Closures take up an additional 64 * 256 * 4 bytes `64KB`. Leaving the rest `192KB` to the C runtime.
+Pointers can only reference stack. It is not possible to make a pointer to the closures space.
+
 Closures are preallocated behind the stack and limited in quantity and size.
 There are 256 total closures (255 user-allocatable + 1 reserved).
 
 Exceeding closures count is a runtime error. Exceeding closure size is a compile-time error.
-Closure size is 64 words. Word size is 32-bit.
-
-Pointers are 16-bit and minimum offset is a word. Stack size is 256 * 256 * 4 bytes `256KB`.
-Closures take up an additional 64 * 256 * 4 bytes `64KB`. Leaving the rest `192KB` to the C runtime.
-Pointers can only reference stack. It is not possible to make a pointer to the closures space. 
+Closure size is 64 words.
 
 Instructions are 32-bits wide, with the following layout:
 	`opcode: UInt8, x: UInt8, y: UInt8, z: UInt8`.
@@ -42,14 +44,14 @@ Selectors:
 * 0b10 —> auxilary closure
 * 0b11 —> bottom of the stack
 
-That way it is possible to reference any word in current and aux closures,
+That way it is possible to access any word in current and aux closures,
 and 64 first and last words from the stack in any instruction.
 For complete picture, see `.\Sources\Machine\include\machine.h`.
 
 Closures are reference-counted and have reference semantics. The rest has value semantics.
 
 A function can capture a single closure. The same closure may be shared between multiple functions.
-When function is called, it's closure, becomes current. Function is static when `closure == 0`.
+When function is called, it's closure becomes current. Function is static when `closure == 0`.
 
 Function layout:
 	`address: UInt16, closure: UInt8, reserved: UInt8`
@@ -62,3 +64,11 @@ Compiler needs to detect escaping. Consider returning the function, passing it a
 another function or storing it to a variable — any of above will mark the function as escaping.
 
 The grammar is specified in `.\GRAMMAR.md`
+
+## Development Workflow
+
+Check out the `.\TASKS.md` for current tasks. Add tasks representing next development steps
+to the list, but keep total less than 5 at a time. Remove completed tasks from the list
+when it is fully tested.
+
+In Plan mode feel free to suggest architecture changes if you think they will simplify overall implementation.
