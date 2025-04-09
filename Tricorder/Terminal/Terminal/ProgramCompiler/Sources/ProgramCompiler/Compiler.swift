@@ -29,7 +29,7 @@ public extension Scope {
 			case let .varDecl(name, _, rhs):
 				let v = try local(name).unwraped("Unknown id \(name)")
 				instructions += try eval(ret: u8(v.offset), expr: rhs, type: v.type)
-			case let .assignment(.id(id), rhs):
+			case let .binary(.assign, .id(id), rhs):
 				let v = try local(id).unwraped("Unknown id \(id)")
 				instructions += try eval(ret: u8(v.offset), expr: rhs, type: v.type)
 			default:
@@ -65,7 +65,9 @@ public extension Scope {
 			return loadInt(rx: ret, value: const(l, r))
 		case let (.id(id), .consti(c)):
 			let v = try local(id).unwraped("Unknown id \(id)")
-			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
+			guard v.type.resolved == .int else {
+				throw err("Type mismatch \(v.type) != .int")
+			}
 
 			return loadInt(rx: u8(size), value: c) + [
 				op(x: ret, y: u8(v.offset), z: u8(size))
@@ -165,15 +167,15 @@ public extension Scope {
 			for i in u8.min..<u8(v.type.size) {
 				instructions += [RXRX(x: ret + i, y: u8(v.offset) + i, z: 0)]
 			}
-		case let .rcall(lhs, rhs):
+		case let .binary(.rcall, lhs, rhs):
 			instructions += try rcall(ret, type, lhs, rhs)
-		case let .sum(lhs, rhs):
+		case let .binary(.sum, lhs, rhs):
 			instructions += try add(ret, type, lhs, rhs)
-		case let .delta(lhs, rhs):
+		case let .binary(.sub, lhs, rhs):
 			instructions += try sub(ret, type, lhs, rhs)
-		case let .mul(lhs, rhs):
+		case let .binary(.mul, lhs, rhs):
 			instructions += try mul(ret, type, lhs, rhs)
-		case let .div(lhs, rhs):
+		case let .binary(.div, lhs, rhs):
 			instructions += try div(ret, type, lhs, rhs)
 		case let .funktion(fid, _, _):
 			let fn = try funcs.first { $0.id == fid }.unwraped("Unknown func \(fid)")
@@ -194,7 +196,7 @@ public extension Scope {
 			} else {
 				throw err("Invalid tuple \(fs)")
 			}
-		case .comp: throw err("Function composition not implemented yet")
+		case .binary(.comp, _, _): throw err("Function composition not implemented yet")
 		case .typDecl: break
 		default: throw err("Invalid expression \(expr)")
 		}

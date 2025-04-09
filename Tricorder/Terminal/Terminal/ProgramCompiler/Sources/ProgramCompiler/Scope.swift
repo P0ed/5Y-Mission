@@ -54,8 +54,17 @@ public extension Scope {
 
 	mutating func funcDecl(_ id: String, _ i: Typ, _ o: Typ, _ expr: Expr) throws {
 		if funcs.first(where: { $0.name == id }) == nil {
-			if case let .funktion(fid, labels, exprs) = expr {
-				let scope = try childScope(output: o, input: i, labels: labels, exprs: exprs)
+			if case .funktion(let fid, let labels, var scope) = expr {
+				scope.input = i
+				scope.output = o
+
+				if i == .void, labels.isEmpty {
+
+				} else if i != .void, labels.count == 1 {
+					scope.vars.append(Var(offset: o.size, type: i, name: labels[0]))
+				} else {
+					throw err("Invalid arg list \(i) \(labels)")
+				}
 
 				let f = Func(
 					offset: funcs.last.map { $0.offset + $0.program.instructions.count } ?? 0,
@@ -71,30 +80,5 @@ public extension Scope {
 		} else {
 			throw err("Redeclaration of func \(id)")
 		}
-	}
-}
-
-private extension Scope {
-
-	func childScope(output: Typ, input: Typ, labels: [String], exprs: [Expr]) throws -> Scope {
-		var s = Scope()
-		s.parent = { self }
-		s.output = output
-		s.input = input
-
-		if input == .void, labels.isEmpty {
-			
-		} else if input != .void, labels.count == 1 {
-			s.vars.append(
-				Var(offset: output.size, type: input, name: labels[0])
-			)
-		} else {
-			throw err("Invalid arg list \(input) \(labels)")
-		}
-		s.exprs = exprs
-
-		try s.precompile()
-
-		return s
 	}
 }

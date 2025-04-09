@@ -38,14 +38,15 @@ extension Parser {
 	mutating func binary(
 		expr: (inout Parser) throws -> Expr,
 		rhs: Optional<(inout Parser) throws -> Expr> = nil,
-		map: [String: (Expr, Expr) -> Expr]
+		map: [String: Operator]
 	) throws -> Expr {
 		var l = try expr(&self)
 
 		let predicate = symbols(map.map { $0.key })
 		while let symbol = match(predicate) {
 			let r = try rhs?(&self) ?? expr(&self)
-			l = try map[symbol].unwraped("Unknown symbol: \(symbol)")(l, r)
+			let op = try map[symbol].unwraped("Unknown symbol: \(symbol)")
+			l = .binary(op, l, r)
 		}
 		return l
 	}
@@ -70,20 +71,20 @@ extension Parser {
 		try binary(
 			expr: { try $0.term() },
 			rhs: { try $0.assign() },
-			map: ["=": Expr.assignment]
+			map: ["=": .assign]
 		)
 	}
 	mutating func term() throws -> Expr {
-		try binary(expr: { try $0.factor() }, map: ["+": Expr.sum, "-": Expr.delta])
+		try binary(expr: { try $0.factor() }, map: ["+": .sum, "-": .sub])
 	}
 	mutating func factor() throws -> Expr {
-		try binary(expr: { try $0.composition() }, map: ["*": Expr.mul, "/": Expr.div])
+		try binary(expr: { try $0.composition() }, map: ["*": .mul, "/": .div])
 	}
 	mutating func composition() throws -> Expr {
-		try binary(expr: { try $0.rcall() }, map: ["•": Expr.comp])
+		try binary(expr: { try $0.rcall() }, map: ["•": .comp])
 	}
 	mutating func rcall() throws -> Expr {
-		try binary(expr: { try $0.primary() }, map: ["#": Expr.rcall])
+		try binary(expr: { try $0.primary() }, map: ["#": .rcall])
 	}
 
 	mutating func primary() throws -> Expr {
@@ -127,12 +128,12 @@ extension Parser {
 		try consume(symbols([">"]), "`>` not found")
 
 		if let tks = match(\.compound) {
-			var p = Parser(tokens: tks)
-			let stmts = try p.statements()
-			return .funktion(0, labels, stmts)
+			let scope = try Scope(tokens: tks)
+			return .funktion(0, labels, scope)
 		} else {
-			let stmts = try [expr()]
-			return .funktion(0, labels, stmts)
+			var scope = Scope()
+			scope.exprs = try [expr()]
+			return .funktion(0, labels, scope)
 		}
 	}
 

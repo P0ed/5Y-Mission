@@ -11,18 +11,19 @@ private extension Scope {
 
 	mutating func indexFunctions() throws {
 		var id = 0
-		exprs.mutate { xpr in
-			if case .funktion(_, let labels, let exprs) = xpr {
-				xpr = .funktion(id, labels, exprs)
+		traverse { xpr, scope in
+			if case .funktion(_, let labels, var fs) = xpr {
+				fs.parent = { scope }
+				xpr = .funktion(id, labels, fs)
 				id += 1
 			}
 		}
 	}
 
 	mutating func collectCaptureList() throws {
-		exprs.mutate { xpr in
-			if case .funktion(_, let labels, let exprs) = xpr {
-				
+		traverse { xpr, scope in
+			if case .funktion(_, let labels, let fs) = xpr {
+
 			}
 		}
 	}

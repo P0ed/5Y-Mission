@@ -64,13 +64,14 @@ extension Expr: CustomStringConvertible {
 		case let .varDecl(id, t, e): ".varDecl \(id): \(t) = \(e)"
 		case let .funktion(fid, l, es):
 			"\(fid): \\`\(l.joined(separator: "`, `"))` > { \(es) }"
-		case let .assignment(l, r): "\(l) = \(r)"
-		case let .rcall(l, r): "\(l) # \(r)"
-		case let .sum(l, r): "\(l) + \(r)"
-		case let .delta(l, r): "\(l) - \(r)"
-		case let .mul(l, r): "\(l) * \(r)"
-		case let .div(l, r): "\(l) / \(r)"
-		case let .comp(l, r): "\(l) • \(r)"
+		case let .binary(.assign, l, r): "\(l) = \(r)"
+		case let .binary(.rcall, l, r): "\(l) # \(r)"
+		case let .binary(.sum, l, r): "\(l) + \(r)"
+		case let .binary(.sub, l, r): "\(l) - \(r)"
+		case let .binary(.mul, l, r): "\(l) * \(r)"
+		case let .binary(.div, l, r): "\(l) / \(r)"
+		case let .binary(.mod, l, r): "\(l) % \(r)"
+		case let .binary(.comp, l, r): "\(l) • \(r)"
 		}
 	}
 }
