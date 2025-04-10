@@ -79,3 +79,6 @@ Keep in mind `./GOALS.md`.
 
 In Plan mode when working on a task, feel free to suggest architecture changes if you think
 they will simplify overall implementation.
+
+In Act mode run tests to ensure all features are implemented correctly before finishing task.
+Write new tests for untested features.
