@@ -48,7 +48,13 @@ extension Program: CustomStringConvertible {
 }
 
 extension Func: CustomStringConvertible {
-	public var description: String { "\(offset.fmt("%2d")) \t\(name): \(scope.arrow)\n\(scope.exprs)" }
+	public var description: String {
+		"\(offset.fmt("%2d")) \t\(name): \(scope.arrow)\n\(scope.exprs.description)"
+	}
+}
+
+extension [Expr] {
+	public var description: String { map(String.init(describing:)).joined(separator: "; ") }
 }
 
 extension Var: CustomStringConvertible {
@@ -66,12 +72,12 @@ extension Expr: CustomStringConvertible {
 		case let .constu(c): String(format: "%04X", c)
 		case let .constf(c): "\(c)f"
 		case let .consts(c): "\"\(c)\""
-		case let .id(id): "`\(id)`"
+		case let .id(id): "\(id)"
 		case let .tuple(fs): "(\(fs))"
 		case let .typDecl(id, t): ".typDecl \(id): \(t)"
 		case let .varDecl(id, t, e): ".varDecl \(id): \(t) = \(e)"
 		case let .funktion(fid, l, fs):
-			"\(fid): \\`\(l.joined(separator: "`, `"))` > [\(fs.arrow)] { \(fs.exprs.map(String.init(describing:)).joined(separator: "; ")) }"
+			"\(fid): [\(fs.arrow)] \\\(l.joined(separator: ", ")) > { \(fs.exprs.description) }"
 		case let .binary(.assign, l, r): "\(l) = \(r)"
 		case let .binary(.rcall, l, r): "\(l) # \(r)"
 		case let .binary(.sum, l, r): "\(l) + \(r)"
@@ -112,7 +118,7 @@ extension TypeExpr: CustomStringConvertible {
 		case let .arr(t, c): "\(t)[\(c)]"
 		case let .fn(i, o): "\(i) > \(o)"
 		case let .ptr(t): "\(t) *"
-		case let .tuple(fs): "(\(fs.map { "\($0): \($1)" }.joined(separator: ", ")))"
+		case let .tuple(fs): "(\(fs.map { $0.isEmpty ? "\($1)" : "\($0): \($1)" }.joined(separator: ", ")))"
 		}
 	}
 }
@@ -130,12 +136,12 @@ extension Typ: CustomStringConvertible {
 		case let .function(io): "\(io.i) > \(io.o)"
 		case let .type(name, _): name
 		case let .array(type, len): "\(type.description)[\(len)]"
-		case let .tuple(tuple): "(\(tuple.map { "\($0.name): \($0.type)" }.joined(separator: ", ")))"
+		case let .tuple(tuple): "(\(tuple.map { $0.name.isEmpty ? "\($0.type)" : "\($0.name): \($0.type)" }.joined(separator: ", ")))"
 		}
 	}
 }
 
-extension Array where Element == Token {
+extension [Token] {
 
 	var description: String {
 		isEmpty ? "[]" : "line: \(self[0].line) [" + map(\.value)

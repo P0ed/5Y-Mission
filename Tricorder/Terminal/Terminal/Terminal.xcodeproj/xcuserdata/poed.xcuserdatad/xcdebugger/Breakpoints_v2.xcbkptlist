@@ -34,6 +34,36 @@
             endingLineNumber = "143"
             landmarkName = "rcall(_:_:_:_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4A90E7BF-629D-442E-976E-4194DF0A9DF5 - 88e3035d6470f054"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProgramCompiler.Scope.rcall(Swift.UInt8, ProgramCompiler.Typ, ProgramCompiler.Expr, ProgramCompiler.Expr) throws -&gt; Swift.Array&lt;__C.Instruction&gt;"
+                  moduleName = "Terminal.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/poed/Dev/5Y-Mission/Tricorder/Terminal/Terminal/ProgramCompiler/Sources/ProgramCompiler/Compiler.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "143"
+                  endingLineNumber = "143">
+               </Location>
+               <Location
+                  uuid = "4A90E7BF-629D-442E-976E-4194DF0A9DF5 - a9b5439a6b0a93c8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProgramCompiler.Scope.rcall(Swift.UInt8, ProgramCompiler.Typ, ProgramCompiler.Expr, ProgramCompiler.Expr) throws -&gt; Swift.Array&lt;__C.Instruction&gt;"
+                  moduleName = "CompilerTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/poed/Dev/5Y-Mission/Tricorder/Terminal/Terminal/ProgramCompiler/Sources/ProgramCompiler/Compiler.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "143"
+                  endingLineNumber = "143">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
