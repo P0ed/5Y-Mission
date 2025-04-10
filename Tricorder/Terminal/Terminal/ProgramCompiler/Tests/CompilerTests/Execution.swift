@@ -27,7 +27,7 @@ extension Program {
 		guard ret == 0 else { throw ExecutionError(statusCode: Int(ret)) }
 
 		return ExecutionResult(
-			registers: (u8.min..<u8(scope.size)).map(readRegister),
+			registers: (u8.min..<u8(scope.size)).map { readRegister(0, $0) },
 			prints: Self.prints
 		)
 	}

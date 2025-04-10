@@ -12,7 +12,22 @@ public indirect enum Expr {
 }
 
 public enum Operator {
-	case assign, rcall, sum, sub, mul, div, mod, comp
+	// Assignment
+	case assign
+	// Function composition and application
+	case rcall, comp
+	// Arithmetic
+	case sum, sub, mul, div, mod
+	// Logical
+	case or, and, not
+	// Comparison
+	case eq, neq, gt, gte, lt, lte
+	// Control flow
+	case ctrl
+	// Unary
+	case deref, ref, neg
+	// Postfix
+	case call, dot, index
 }
 
 public indirect enum TypeExpr {
@@ -25,18 +40,20 @@ public indirect enum TypeExpr {
 
 extension Scope {
 
-	func traverse(leavesFirst: Bool = false, _ transform: (inout Expr, Scope) -> Bool) {
-		for idx in exprs.indices { exprs[idx].traverse(in: self, leavesFirst: leavesFirst, transform: transform) }
+	func traverse(leavesFirst: Bool = false, _ transform: (inout Expr, Scope) throws -> Bool) rethrows {
+		for idx in exprs.indices {
+			try exprs[idx].traverse(in: self, leavesFirst: leavesFirst, transform: transform)
+		}
 	}
-	func traverseAll(_ transform: (inout Expr, Scope) -> Void) {
-		traverse { e, s in transform(&e, s); return false }
+	func traverseAll(_ transform: (inout Expr, Scope) throws -> Void) rethrows {
+		try traverse { e, s in try transform(&e, s); return false }
 	}
-	func traverseLeavesFirst(_ transform: (inout Expr, Scope) -> Void) {
-		traverse(leavesFirst: true) { e, s in transform(&e, s); return false }
+	func traverseLeavesFirst(_ transform: (inout Expr, Scope) throws -> Void) rethrows {
+		try traverse(leavesFirst: true) { e, s in try transform(&e, s); return false }
 	}
-	func traverseExprs(_ transform: (inout Expr, Scope) -> Void) {
-		traverse { e, s in
-			transform(&e, s)
+	func traverseExprs(_ transform: (inout Expr, Scope) throws -> Void) rethrows {
+		try traverse { e, s in
+			try transform(&e, s)
 			return if case .funktion = e { true } else { false }
 		}
 	}
@@ -44,24 +61,24 @@ extension Scope {
 
 extension Expr {
 
-	mutating func traverse(in scope: Scope, leavesFirst: Bool = false, transform: (inout Expr, Scope) -> Bool) {
-		if !leavesFirst, transform(&self, scope) { return }
+	mutating func traverse(in scope: Scope, leavesFirst: Bool = false, transform: (inout Expr, Scope) throws -> Bool) rethrows {
+		if !leavesFirst, try transform(&self, scope) { return }
 
 		switch self {
 		case .consti, .constu, .constf, .consts, .id, .tuple, .typDecl:
 			break
 		case .varDecl(let id, let type, var e):
-			e.traverse(in: scope, transform: transform)
+			try e.traverse(in: scope, transform: transform)
 			self = .varDecl(id, type, e)
 		case let .funktion(id, labels, scope):
-			scope.traverse(transform)
+			try scope.traverse(transform)
 			self = .funktion(id, labels, scope)
 		case .binary(let op, var lhs, var rhs):
-			lhs.traverse(in: scope, transform: transform)
-			rhs.traverse(in: scope, transform: transform)
+			try lhs.traverse(in: scope, transform: transform)
+			try rhs.traverse(in: scope, transform: transform)
 			self = .binary(op, lhs, rhs)
 		}
 
-		if leavesFirst { _ = transform(&self, scope) }
+		if leavesFirst { _ = try transform(&self, scope) }
 	}
 }

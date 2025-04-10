@@ -44,7 +44,9 @@ public struct CompilationError: Error, CustomStringConvertible {
 public extension Typ {
 
 	var resolved: Typ {
-		if case let .type(_, t) = self { return t } else { return self }
+		if case let .type(_, t) = self { return t.resolved }
+		if case let .tuple(f) = self, f.count == 1, f[0].name.isEmpty { return f[0].type.resolved }
+		return self
 	}
 
 	var size: Int {
@@ -72,5 +74,13 @@ extension Instruction: @retroactive Hashable {
 		hasher.combine(op.rawValue)
 		hasher.combine(x.u)
 		hasher.combine(yz.u)
+	}
+}
+
+public struct Program: Hashable {
+	public var instructions: [Instruction]
+
+	public init(instructions: [Instruction]) {
+		self.instructions = instructions
 	}
 }

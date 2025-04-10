@@ -37,6 +37,10 @@ extension Function: @retroactive CustomStringConvertible {
 	public var description: String { "addr: \(address) closure: \(closure)" }
 }
 
+extension Arrow: CustomStringConvertible {
+	public var description: String { "\(i) > \(o)" }
+}
+
 extension Program: CustomStringConvertible {
 	public var description: String {
 		instructions.enumerated().map { idx, inn in inn.description(at: idx) }.joined(separator: "\n")
@@ -67,7 +71,7 @@ extension Expr: CustomStringConvertible {
 		case let .typDecl(id, t): ".typDecl \(id): \(t)"
 		case let .varDecl(id, t, e): ".varDecl \(id): \(t) = \(e)"
 		case let .funktion(fid, l, fs):
-			"\(fid): \\`\(l.joined(separator: "`, `"))` > { \(fs.exprs.map(String.init(describing:)).joined(separator: "; ")) }"
+			"\(fid): \\`\(l.joined(separator: "`, `"))` > [\(fs.arrow)] { \(fs.exprs.map(String.init(describing:)).joined(separator: "; ")) }"
 		case let .binary(.assign, l, r): "\(l) = \(r)"
 		case let .binary(.rcall, l, r): "\(l) # \(r)"
 		case let .binary(.sum, l, r): "\(l) + \(r)"
@@ -76,6 +80,27 @@ extension Expr: CustomStringConvertible {
 		case let .binary(.div, l, r): "\(l) / \(r)"
 		case let .binary(.mod, l, r): "\(l) % \(r)"
 		case let .binary(.comp, l, r): "\(l) • \(r)"
+		// Logical
+		case let .binary(.or, l, r): "\(l) | \(r)"
+		case let .binary(.and, l, r): "\(l) & \(r)"
+		case let .binary(.not, _, r): "!\(r)"
+		// Comparison
+		case let .binary(.eq, l, r): "\(l) == \(r)"
+		case let .binary(.neq, l, r): "\(l) != \(r)"
+		case let .binary(.gt, l, r): "\(l) > \(r)"
+		case let .binary(.gte, l, r): "\(l) >= \(r)"
+		case let .binary(.lt, l, r): "\(l) < \(r)"
+		case let .binary(.lte, l, r): "\(l) <= \(r)"
+		// Control flow
+		case let .binary(.ctrl, l, r): "\(l) ? \(r)"
+		// Unary
+		case let .binary(.deref, _, r): "*\(r)"
+		case let .binary(.ref, _, r): "&\(r)"
+		case let .binary(.neg, _, r): "-\(r)"
+		// Postfix
+		case let .binary(.call, l, r): "\(l)(\(r))"
+		case let .binary(.dot, l, r): "\(l).\(r)"
+		case let .binary(.index, l, r): "\(l)[\(r)]"
 		}
 	}
 }

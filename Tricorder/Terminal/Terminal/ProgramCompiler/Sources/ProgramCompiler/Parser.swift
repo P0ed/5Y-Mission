@@ -68,11 +68,33 @@ extension Parser {
 		try assign()
 	}
 	mutating func assign() throws -> Expr {
+		let sj = j
+		if let id = match(\.id), match(symbols(["="])) != nil, let value = try? assign() {
+			return .binary(.assign, .id(id), value)
+		}
+		j = sj
+		return try rcall()
+	}
+
+	mutating func rcall() throws -> Expr {
 		try binary(
-			expr: { try $0.term() },
-			rhs: { try $0.assign() },
-			map: ["=": .assign]
+			expr: { try $0.or() },
+			rhs: { try $0.rcall() },
+			map: ["#": .rcall]
 		)
+	}
+
+	mutating func or() throws -> Expr {
+		try binary(expr: { try $0.and() }, map: ["|": .or])
+	}
+	mutating func and() throws -> Expr {
+		try binary(expr: { try $0.equality() }, map: ["&": .and])
+	}
+	mutating func equality() throws -> Expr {
+		try binary(expr: { try $0.comparison() }, map: ["==": .eq, "!=": .neq])
+	}
+	mutating func comparison() throws -> Expr {
+		try binary(expr: { try $0.term() }, map: [">": .gt, ">=": .gte, "<": .lt, "<=": .lte])
 	}
 	mutating func term() throws -> Expr {
 		try binary(expr: { try $0.factor() }, map: ["+": .sum, "-": .sub])
@@ -80,11 +102,62 @@ extension Parser {
 	mutating func factor() throws -> Expr {
 		try binary(expr: { try $0.composition() }, map: ["*": .mul, "/": .div])
 	}
+
 	mutating func composition() throws -> Expr {
-		try binary(expr: { try $0.rcall() }, map: ["•": .comp])
+		try binary(
+			expr: { try $0.control() },
+			rhs: { try $0.composition() },
+			map: ["•": .comp]
+		)
 	}
-	mutating func rcall() throws -> Expr {
-		try binary(expr: { try $0.primary() }, map: ["#": .rcall])
+
+	mutating func control() throws -> Expr {
+		try binary(
+			expr: { try $0.unary() },
+			rhs: { try $0.control() },
+			map: ["?": .ctrl]
+		)
+	}
+
+	mutating func unary() throws -> Expr {
+		if let op = match(symbols(["*", "&", "!", "-"])) {
+			let right = try unary()
+			switch op {
+			case "*": return .binary(.deref, .consti(0), right)
+			case "&": return .binary(.ref, .consti(0), right)
+			case "!": return .binary(.not, .consti(0), right)
+			case "-": return .binary(.neg, .consti(0), right)
+			default: throw err("Unknown unary operator: \(op)")
+			}
+		}
+		return try call()
+	}
+
+	mutating func call() throws -> Expr {
+		var expr = try primary()
+
+		while true {
+			if match(symbols(["("])) != nil {
+				if match(symbols([")"])) != nil {
+					// Function call with no arguments
+					expr = .binary(.call, expr, .tuple([]))
+				} else {
+					let arg = try self.expr()
+					try consume(symbols([")"]), "Expected closing parenthesis")
+					expr = .binary(.call, expr, arg)
+				}
+			} else if match(symbols(["."])) != nil {
+				let field = try consume(\.id, "Expected identifier after '.'")
+				expr = .binary(.dot, expr, .id(field))
+			} else if match(symbols(["["])) != nil {
+				let index = try self.expr()
+				try consume(symbols(["]"]), "Expected closing bracket")
+				expr = .binary(.index, expr, index)
+			} else {
+				break
+			}
+		}
+		return expr
 	}
 
 	mutating func primary() throws -> Expr {
@@ -131,7 +204,7 @@ extension Parser {
 			let scope = try Scope(tokens: tks)
 			return .funktion(0, labels, scope)
 		} else {
-			var scope = Scope()
+			let scope = Scope()
 			scope.exprs = try [expr()]
 			return .funktion(0, labels, scope)
 		}
@@ -182,7 +255,7 @@ extension Parser {
 
 		if fn.count > 1 {
 			let ts = try fn.map { ts in try typeExpr(Array(ts)) }
-			let rs = ts.dropFirst().reduce(ts.first!) { r, e in .fn(r, e) }
+			let rs = ts.reversed().dropFirst().reduce(ts.last!) { r, e in .fn(e, r) }
 			return rs
 		} else if tokens.count == 1, case let .id(id) = tokens[0].value {
 			return .id(id)
@@ -194,11 +267,11 @@ extension Parser {
 					if ts.count > 2, case let .id(id) = ts[ts.startIndex].value, ts[ts.startIndex + 1].value == .symbol(":") {
 						try (id, typeExpr(Array(ts.dropFirst(2))))
 					} else {
-						throw err("Invalid type expression \(ts.description)")
+						try ("", typeExpr(Array(ts)))
 					}
 				})
 		} else {
-			throw err("Invalid type expression \(tokens.description)")
+			throw err("Invalid type expression \(tokens)")
 		}
 	}
 }

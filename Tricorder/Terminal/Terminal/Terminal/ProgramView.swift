@@ -62,6 +62,10 @@ struct ProgramView: View {
 			button("r") { run() }
 			button(".") { stop() }
 			Spacer()
+			button("p") {
+				NSPasteboard.general.declareTypes([.string], owner: nil)
+				NSPasteboard.general.setString(output, forType: .string)
+			}
 			button("k") { output = "" }
 			button("e", !editorHidden) { editorHidden.toggle(); consoleHidden = editorHidden ? false : consoleHidden }
 			button("t", !consoleHidden) { consoleHidden.toggle(); editorHidden = consoleHidden ? false : editorHidden }

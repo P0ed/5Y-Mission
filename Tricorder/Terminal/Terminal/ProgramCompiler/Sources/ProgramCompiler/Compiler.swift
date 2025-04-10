@@ -22,7 +22,7 @@ public extension Scope {
 		var instructions = [] as [Instruction]
 
 		if parent == nil {
-			for (idx, fn) in funcs.enumerated() {
+			for (idx, fn) in funcs.enumerated().reversed() {
 				let program = try fn.scope.compile()
 				funcs[idx].offset = offset
 				offset += program.instructions.count
@@ -134,7 +134,7 @@ public extension Scope {
 	func rcall(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
 		if case let .id(v) = lhs {
 			if let fn = local(v) {
-				if case let .function(arrow) = fn.type, arrow.o == type {
+				if case let .function(arrow) = fn.type.resolved, arrow.o == type {
 					return try eval(ret: temporary + u8(type.size), expr: rhs, type: arrow.i) + [
 						FNRX(x: temporary, y: fn.register),
 						RXRX(x: ret, y: temporary)

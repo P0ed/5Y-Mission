@@ -114,6 +114,7 @@ static void release(const u8 closure) {
 static inline s32 runFunction(const Function function, const s32 frame) {
 	word *const ret = mem.pc;
 	word *const stk = mem.top;
+	word *const clr = mem.closure;
 
 	mem.top += frame;
 	mem.pc = mem.stack + function.address;
@@ -201,6 +202,7 @@ static inline s32 runFunction(const Function function, const s32 frame) {
 			case RET:
 				mem.pc = ret;
 				mem.top = stk;
+				mem.closure = clr;
 				return 0;
 			default:
 				return -2;
@@ -238,7 +240,7 @@ static inline s32 runProgram(const Instruction *const program,
 }
 
 // External access to registers for debug purpuses
-static inline int readRegister(const u8 reg) {
-	i8 x = (i8){ .sel = 0, .reg = reg };
+static inline int readRegister(const u8 sel, const u8 reg) {
+	i8 x = (i8){ .sel = sel, .reg = reg };
 	return rx(x);
 }

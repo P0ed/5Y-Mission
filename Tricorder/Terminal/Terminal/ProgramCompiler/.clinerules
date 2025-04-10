@@ -75,10 +75,7 @@ The grammar is specified in `./GRAMMAR.md`
 
 ## Development Workflow
 
-Check out the `./TASKS.md` for current tasks.
-
-In Act mode add tasks representing the next development steps to the list,
-but keep total less than 5 at a time. Remove completed tasks from the list when it is fully tested.
+Keep in mind `./GOALS.md`.
 
 In Plan mode when working on a task, feel free to suggest architecture changes if you think
 they will simplify overall implementation.

@@ -232,15 +232,16 @@ struct ProgramTests {
 		let program = """
 		[ apply: (int > int) > int > int = \\f > \\x > f # x;
 		[ double: int > int = \\x > x * 2;
+		[ applied: int > int = apply # double;
 		[ result: int = 0;
-		result = apply # double # 7
+		result = applied # 7
 		"""
 
 		let scope = try Scope(program: program)
 		let executable = try scope.compile()
 		let result = try executable.run(scope: scope)
 
-		#expect(result.registers[2] == 14)
+		#expect(result.registers[3] == 14)
 	}
 
 	private func c2i(_ char: Character) -> Int32 { char.asciiValue.map(Int32.init) ?? 0 }
