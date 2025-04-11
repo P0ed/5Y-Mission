@@ -244,5 +244,168 @@ struct ProgramTests {
 		#expect(result.registers[3] == 14)
 	}
 
+	@Test func nestedFunctions() async throws {
+		let program = """
+		[ outerFn: int > int = \\x > {
+			[ innerFn: int > int = \\y > x * y;
+			innerFn # 2
+		};
+		[ result: int = 0;
+		result = outerFn # 5
+		"""
+
+		let scope = try Scope(program: program)
+		let executable = try scope.compile()
+		let result = try executable.run(scope: scope)
+
+		#expect(result.registers[1] == 10) // 5 * 2
+	}
+
+	@Test func multiLevelNestedFunctions() async throws {
+		let program = """
+		[ level1: int > int = \\x > {
+			[ level2: int > int = \\y > {
+				[ level3: int > int = \\z > x * y * z;
+				level3 # 3
+			};
+			level2 # 2
+		};
+		[ result: int = 0;
+		result = level1 # 5
+		"""
+
+		let scope = try Scope(program: program)
+		let executable = try scope.compile()
+		let result = try executable.run(scope: scope)
+
+		#expect(result.registers[1] == 30) // 5 * 2 * 3
+	}
+
+	@Test func returningNestedFunction() async throws {
+		let program = """
+		[ makeAdder: int > int > int = \\base > {
+			\\x > base + x
+		};
+		[ add5: int > int = makeAdder # 5;
+		[ result: int = 0;
+		result = add5 # 10
+		"""
+
+		let scope = try Scope(program: program)
+		let executable = try scope.compile()
+		let result = try executable.run(scope: scope)
+
+		#expect(result.registers[2] == 15) // 5 + 10
+	}
+
+	@Test func multipleCaptureContexts() async throws {
+		let program = """
+		[ x: int = 10;
+		[ y: int = 20;
+		[ makeMultiplier: int > int > int = \\factor > {
+			\\n > x * y * factor * n
+		};
+		[ multiply: int > int = makeMultiplier # 2;
+		[ result: int = 0;
+		result = multiply # 3
+		"""
+
+		let scope = try Scope(program: program)
+		let executable = try scope.compile()
+		let result = try executable.run(scope: scope)
+
+		#expect(result.registers[5] == 1200) // 10 * 20 * 2 * 3 = 1200
+	}
+
+	@Test func capturingMutableVariable() async throws {
+		let program = """
+		[ counter: int = 0;
+		[ increment: int > int = \\step > {
+			counter = counter + step;
+			counter
+		};
+		[ first: int = increment # 1;
+		[ second: int = increment # 2;
+		[ third: int = increment # 3
+		"""
+
+		let scope = try Scope(program: program)
+		let executable = try scope.compile()
+		let result = try executable.run(scope: scope)
+
+		#expect(result.registers[1] == 1)  // First call returns 1
+		#expect(result.registers[2] == 3)  // Second call returns 1+2=3
+		#expect(result.registers[3] == 6)  // Third call returns 3+3=6
+	}
+
+	@Test func functionWithMultipleParameters() async throws {
+		let program = """
+		[ add3: int > int > int > int = \\a > \\b > \\c > a + b + c;
+		[ partialAdd: int > int > int = add3 # 5;
+		[ morePartial: int > int = partialAdd # 10;
+		[ result: int = 0;
+		result = morePartial # 15
+		"""
+
+		let scope = try Scope(program: program)
+		let executable = try scope.compile()
+		let result = try executable.run(scope: scope)
+
+		#expect(result.registers[3] == 30) // 5 + 10 + 15
+	}
+
+	@Test func nestedTypeWithClosure() async throws {
+		let program = """
+		: transformer = int > int;
+		: processor = (input: int, transform: transformer);
+		[ double: transformer = \\x > x * 2;
+		[ process: processor = (input: 21, transform: double);
+		[ result: int = 0;
+		result = process.transform # process.input
+		"""
+
+		let scope = try Scope(program: program)
+		let executable = try scope.compile()
+		let result = try executable.run(scope: scope)
+
+		#expect(result.registers[4] == 42) // 21 * 2
+	}
+
+	@Test func recursiveFunction() async throws {
+		let program = """
+		[ sumToN: int > int = \\n > {
+			[ result: int = 0;
+			result = n == 0 ? 0 : n + sumToN # (n - 1);
+			result
+		};
+		[ result: int = sumToN # 5
+		"""
+
+		let scope = try Scope(program: program)
+		let executable = try scope.compile()
+		let result = try executable.run(scope: scope)
+
+		#expect(result.registers[1] == 15) // 5 + 4 + 3 + 2 + 1 + 0 = 15
+	}
+
+	@Test func multipleClosuresDifferentTypes() async throws {
+		let program = """
+		[ strLen: char 32 > int = \\s > 5; // Simplified - just returns length 5
+		[ intToStr: int > char 32 = \\i > "Number";
+		[ processor: (int > char 32) > (char 32 > int) > int > int = \\f > \\g > \\x > {
+			[ s: char 32 = f # x;
+			g # s
+		};
+		[ result: int = 0;
+		result = processor # intToStr # strLen # 42
+		"""
+
+		let scope = try Scope(program: program)
+		let executable = try scope.compile()
+		let result = try executable.run(scope: scope)
+
+		#expect(result.registers[6] == 5) // intToStr converts 42 to "Number", strLen returns 5
+	}
+
 	private func c2i(_ char: Character) -> Int32 { char.asciiValue.map(Int32.init) ?? 0 }
 }
