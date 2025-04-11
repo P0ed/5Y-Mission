@@ -41,6 +41,17 @@ public extension Scope {
 		}
 	}
 
+	func inferredType(_ expr: Expr) throws -> Typ {
+		let type: Typ? = switch expr {
+		case .consti, .constu: .int
+		case .constf: .float
+		case let .consts(string): .array(.char, string.lengthOfBytes(using: .ascii))
+		case let .id(name): local(name)?.type
+		default: .none
+		}
+		return try type.unwraped("Can't infer type of \(expr)")
+	}
+
 	func typeDecl(_ id: String, _ type: TypeExpr) throws {
 		guard types[id] == nil else { throw err("Redeclaration of \(id)") }
 		types[id] = try .type(id, resolvedType(type))
@@ -57,36 +68,5 @@ public extension Scope {
 		} else {
 			throw err("Redeclaration of var \(id)")
 		}
-	}
-
-	func bindFunc(id: Int, name: String) throws {
-		if funcs.first(where: { $0.name == name }) != nil {
-			throw err("Redeclaration of func \(id)")
-		} else if let fn = funcs.firstIndex(where: { $0.id == id }) {
-			funcs[fn].name = name
-		} else {
-			throw err("Function \(id) not found")
-		}
-	}
-
-	func funcDecl(id: Int, scope: Scope) throws {
-//		if funcs.first(where: { $0.name == name }) != nil {
-//			throw err("Redeclaration of func \(id)")
-//		} else {
-			//			if case .funktion(let fid, let labels, var scope) = expr {
-//			scope.arrow = arrow
-
-//			if arrow.i == .void, labels.isEmpty {} else if arrow.i != .void, labels.count == 1 {
-//				scope.vars.append(Var(offset: arrow.o.size, type: arrow.i, name: labels[0]))
-//			} else {
-//				throw err("Invalid arg list \(arrow.i) \(labels)")
-//			}
-
-//				funcs.last.map { $0.offset + $0.program.instructions.count }
-//			let f = 
-//		} else {
-//			throw err("Expected a function")
-//		}
-//		}
 	}
 }

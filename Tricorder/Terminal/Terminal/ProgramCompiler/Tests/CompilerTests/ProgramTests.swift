@@ -127,7 +127,7 @@ struct ProgramTests {
 		let program = """
 		[ double: int > int = \\x > x * 2;
 		[ result: int = 0;
-		result = double # 21
+		result = double(21)
 		"""
 
 		let scope = try Scope(program: program)

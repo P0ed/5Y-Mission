@@ -143,7 +143,9 @@ struct ProgramView: View {
 
 			print("\(scp)\n\nprogram:\n\t\(program.description.aligned)\n")
 		} catch {
-			print("error:\n\t\(error)\n")
+			var scp = ""
+			if let scope { scp = "\(scope)\n" }
+			print("\(scp)error:\n\t\(error)\n")
 		}
 	}
 

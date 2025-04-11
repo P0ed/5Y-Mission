@@ -7,32 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "82D11259-F3DF-45E4-A1F1-AC1062D2715A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ProgramCompiler/Sources/ProgramCompiler/Compiler.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "compile()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4A90E7BF-629D-442E-976E-4194DF0A9DF5"
+            uuid = "C5506663-10B9-40B7-8676-387AF7F965D9"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ProgramCompiler/Sources/ProgramCompiler/Compiler.swift"
+            filePath = "Terminal/Program.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
-            landmarkName = "rcall(_:_:_:_:)"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "run(scope:breakpoint:print:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

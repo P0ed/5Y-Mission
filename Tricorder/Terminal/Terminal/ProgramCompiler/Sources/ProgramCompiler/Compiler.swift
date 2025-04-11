@@ -131,9 +131,9 @@ public extension Scope {
 		try integer(op: DIV, const: /, ret: ret, type: type, lhs: lhs, rhs: rhs)
 	}
 
-	func rcall(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
-		if case let .id(v) = lhs {
-			if let fn = local(v) {
+	func call(_ ret: u8, _ type: Typ, _ lhs: Expr, _ rhs: Expr) throws -> [Instruction] {
+		if case let .id(name) = lhs {
+			if let fn = local(name) {
 				if case let .function(arrow) = fn.type.resolved, arrow.o == type {
 					return try eval(ret: temporary + u8(type.size), expr: rhs, type: arrow.i) + [
 						FNRX(x: temporary, y: fn.register),
@@ -142,7 +142,7 @@ public extension Scope {
 				} else {
 					throw err("Type mismatch")
 				}
-			} else if v == "print" {
+			} else if name == "print" {
 				return try eval(ret: temporary, expr: rhs, type: .array(.char, 24)) + [
 					PRNT(x: temporary)
 				]
@@ -150,7 +150,14 @@ public extension Scope {
 				throw err("Unknown id")
 			}
 		} else {
-			throw err("Invalid function expression")
+			let arrow = try Arrow(i: inferredType(rhs), o: type)
+			let functionInstructions = try eval(ret: temporary, expr: lhs, type: .function(arrow))
+			let argInstructions = try eval(ret: temporary + 1 + u8(type.size), expr: rhs, type: arrow.i)
+
+			return functionInstructions + argInstructions + [
+				FNRX(x: temporary + 1, y: temporary),
+				RXRX(x: ret, y: temporary + 1)
+			]
 		}
 	}
 
@@ -184,8 +191,8 @@ public extension Scope {
 			for i in u8.min..<u8(v.type.size) {
 				instructions += [RXRX(x: ret + i, y: v.register + i)]
 			}
-		case let .binary(.rcall, lhs, rhs):
-			instructions += try rcall(ret, type, lhs, rhs)
+		case let .binary(.call, lhs, rhs), let .binary(.rcall, lhs, rhs):
+			instructions += try call(ret, type, lhs, rhs)
 		case let .binary(.sum, lhs, rhs):
 			instructions += try add(ret, type, lhs, rhs)
 		case let .binary(.sub, lhs, rhs):
@@ -213,7 +220,9 @@ public extension Scope {
 				}
 			}
 		case let .tuple(fs):
-			if case let .tuple(fields) = type.resolved, fields.count == fs.count {
+			if fs.count == 1, fs[0].0.isEmpty {
+				instructions += try eval(ret: ret, expr: fs[0].1, type: type)
+			} else if case let .tuple(fields) = type.resolved, fields.count == fs.count {
 				var df = 0 as u8
 				instructions += try zip(fields, fs).reduce(into: []) { r, e in
 					r += try eval(ret: ret + df, expr: e.1.1, type: e.0.type)

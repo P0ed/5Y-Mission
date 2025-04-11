@@ -34,7 +34,8 @@ typedef enum : u8 {
 	AUX,
 	FN,
 	FNRX,
-	RET
+	RET,
+	BREK
 } OPCode;
 
 typedef struct {
@@ -204,6 +205,8 @@ static inline s32 runFunction(const Function function, const s32 frame) {
 				mem.top = stk;
 				mem.closure = clr;
 				return 0;
+			case BREK:
+				break;
 			default:
 				return -2;
 		}

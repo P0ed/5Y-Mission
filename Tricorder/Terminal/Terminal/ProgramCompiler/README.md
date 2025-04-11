@@ -5,7 +5,7 @@ running in a VM that runs on Arduino or similar low-spec hardware.
 
 ## Example code:
 
-```
+```Kung
 ; The line that starts with `;` is a comment
 
 ; Type def starts with `:` identifer `=` <type>
@@ -53,5 +53,13 @@ cnt = cnt + 1;
 inc(len(p));
 (inc • len)(p);
 inc • len # p;
-inc # len # p
+inc # len # p;
+
+; Control expression is a binary `?` operator that takes two functions of `void > A`,
+; and returns `bool > A` function
+[ choose_one: bool > int = \> { 1 } ? \> { 0 };
+
+; A map operator `<#>` is used for looping
+[ incremented: int 4 = quad <#> \x > x + 1
+
 ```

@@ -22,6 +22,7 @@ extension OPCode: @retroactive CustomStringConvertible {
 		case FN: 	"  FN"
 		case FNRX: 	"FNRX"
 		case RET: 	" RET"
+		case BREK:	"BREK"
 		default: rawValue.hex
 		}
 	}

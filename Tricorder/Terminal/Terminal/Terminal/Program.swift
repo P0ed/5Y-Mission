@@ -24,6 +24,9 @@ extension Program {
 			instructions, u16(instructions.count),
 			{ pc, inn in
 				Self.breakpointTrampoline = (pc, inn)
+				if inn.op == BREK {
+					
+				}
 				return Self.halt
 			},
 			{ cString in
