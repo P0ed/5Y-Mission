@@ -75,7 +75,7 @@ private extension Scope {
 		try traverseExprs { e, s in
 			if case let .varDecl(_, .fn(i, o), x) = e,
 			   case let .funktion(_, _, fs) = x {
-				fs.arrow = try .init(i: resolvedType(i), o: resolvedType(o))
+				fs.arrow = try resolvedType(i) => resolvedType(o)
 			}
 		}
 		traverseAll { e, s in

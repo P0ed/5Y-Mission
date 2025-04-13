@@ -20,5 +20,51 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AD500D78-957D-425D-BF93-2359FDDEC8E5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProgramCompiler/Sources/ProgramCompiler/Utilities.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "6"
+            endingLineNumber = "6"
+            landmarkName = "unwraped(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AD500D78-957D-425D-BF93-2359FDDEC8E5 - e3f3d030502d8407"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Swift.Optional.unwraped(@autoclosure () -&gt; Swift.String) throws -&gt; &#x3c4;_0_0"
+                  moduleName = "Terminal.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/poed/Dev/5Y-Mission/Tricorder/Terminal/Terminal/ProgramCompiler/Sources/ProgramCompiler/Utilities.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "6"
+                  endingLineNumber = "6">
+               </Location>
+               <Location
+                  uuid = "AD500D78-957D-425D-BF93-2359FDDEC8E5 - e3f3d030502d8407"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Swift.Optional.unwraped(@autoclosure () -&gt; Swift.String) throws -&gt; &#x3c4;_0_0"
+                  moduleName = "Terminal.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/poed/Dev/5Y-Mission/Tricorder/Terminal/Terminal/ProgramCompiler/Sources/ProgramCompiler/Utilities.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "6"
+                  endingLineNumber = "6">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

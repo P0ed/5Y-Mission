@@ -1,6 +1,6 @@
 public final class Scope {
 	public weak var parent: Scope?
-	public var arrow: Arrow = Arrow(i: .void, o: .void)
+	public var arrow: Arrow = .void => .void
 	public var types: [String: Typ] = .default
 	public var funcs: [Func] = []
 	public var vars: [Var] = []
@@ -15,6 +15,9 @@ public extension [String: Typ] {
 }
 
 public extension Scope {
+
+	var root: Scope { parent?.root ?? self }
+
 	var size: Int {
 		vars.map(\.type.size).reduce(arrow.o.size, +)
 	}
@@ -24,9 +27,7 @@ public extension Scope {
 	var temporary: UInt8 {
 		.init(selector: .top, offset: UInt8(size))
 	}
-	var root: Scope {
-		parent ?? self
-	}
+
 	func local(_ id: String) -> Var? {
 		vars.first(where: { $0.name == id }) ?? closure.first(where: { $0.name == id })
 	}
@@ -35,7 +36,7 @@ public extension Scope {
 		switch expr {
 		case let .id(id): try types[id].unwraped("Unknown type \(id)")
 		case let .arr(t, c): try .array(resolvedType(t), c)
-		case let .fn(i, o): try .function(Arrow(i: resolvedType(i), o: resolvedType(o)))
+		case let .fn(i, o): try .function(resolvedType(i) => resolvedType(o))
 		case let .ptr(t): try .pointer(resolvedType(t))
 		case let .tuple(fs): try .tuple(fs.map { try Field(name: $0.0, type: resolvedType($0.1)) })
 		}

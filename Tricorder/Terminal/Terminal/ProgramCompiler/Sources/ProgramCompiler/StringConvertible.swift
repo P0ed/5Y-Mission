@@ -69,10 +69,12 @@ extension Token: CustomStringConvertible {
 extension Expr: CustomStringConvertible {
 	public var description: String {
 		switch self {
+		// Literal
 		case let .consti(c): "\(c)"
 		case let .constu(c): String(format: "%04X", c)
 		case let .constf(c): "\(c)f"
 		case let .consts(c): "\"\(c)\""
+		
 		case let .id(id): "\(id)"
 		case let .tuple(fs): "(\(fs))"
 		case let .typDecl(id, t): ".typDecl \(id): \(t)"
@@ -81,12 +83,13 @@ extension Expr: CustomStringConvertible {
 			"\(fid): [\(fs.arrow)] \\\(l.joined(separator: ", ")) > { \(fs.exprs.description) }"
 		case let .binary(.assign, l, r): "\(l) = \(r)"
 		case let .binary(.rcall, l, r): "\(l) # \(r)"
+		case let .binary(.comp, l, r): "\(l) • \(r)"
+
 		case let .binary(.sum, l, r): "\(l) + \(r)"
 		case let .binary(.sub, l, r): "\(l) - \(r)"
 		case let .binary(.mul, l, r): "\(l) * \(r)"
 		case let .binary(.div, l, r): "\(l) / \(r)"
 		case let .binary(.mod, l, r): "\(l) % \(r)"
-		case let .binary(.comp, l, r): "\(l) • \(r)"
 		// Logical
 		case let .binary(.or, l, r): "\(l) | \(r)"
 		case let .binary(.and, l, r): "\(l) & \(r)"

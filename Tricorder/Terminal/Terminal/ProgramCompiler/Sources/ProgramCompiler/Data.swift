@@ -84,3 +84,19 @@ public struct Program: Hashable {
 		self.instructions = instructions
 	}
 }
+
+extension u8 {
+	init(selector: u8, offset: u8) {
+		self = selector << 6 | offset & 0x3F
+	}
+	var selector: u8 { self >> 6 }
+	var offset: u8 { self & 0x3F }
+
+	static var top: u8 { 0b00 }
+	static var closure: u8 { 0b01 }
+	static var aux: u8 { 0b10 }
+	static var bottom: u8 { 0b11 }
+}
+
+infix operator =>
+func => (input: Typ, output: Typ) -> Arrow { Arrow(i: input, o: output) }

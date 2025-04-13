@@ -10,6 +10,7 @@ struct TextEditor: NSViewRepresentable {
 		view.textView.allowsUndo = true
 		view.textView.delegate = view.delegate
 		view.textView.drawsBackground = false
+		view.textView.font = .code
 		view.delegate.textChanged = { attributes = nil; text = $0 }
 
 		view.hasVerticalScroller = true

@@ -53,7 +53,7 @@ public extension Scope {
 		if parent != nil {
 			instructions += vars.reduce(into: []) { r, v in
 				if case .function = v.type {
-					r += [CLRL(x: v.register.offset)]
+					r += []//[CLRL(x: v.register.offset)]
 				}
 			}
 		}
@@ -82,9 +82,7 @@ public extension Scope {
 			return loadInt(rx: ret, value: const(l, r))
 		case let (.id(id), .consti(c)):
 			let v = try local(id).unwraped("Unknown id \(id)")
-			guard v.type.resolved == .int else {
-				throw err("Type mismatch \(v.type) != .int")
-			}
+			guard v.type.resolved == .int else { throw err("Type mismatch \(v.type) != .int") }
 
 			return loadInt(rx: temporary, value: c) + [
 				op(x: ret, y: v.register, z: temporary)
@@ -142,15 +140,11 @@ public extension Scope {
 				} else {
 					throw err("Type mismatch")
 				}
-			} else if name == "print" {
-				return try eval(ret: temporary, expr: rhs, type: .array(.char, 24)) + [
-					PRNT(x: temporary)
-				]
 			} else {
-				throw err("Unknown id")
+				return try builtin(name: name, args: rhs)
 			}
 		} else {
-			let arrow = try Arrow(i: inferredType(rhs), o: type)
+			let arrow = try inferredType(rhs) => type
 			let functionInstructions = try eval(ret: temporary, expr: lhs, type: .function(arrow))
 			let argInstructions = try eval(ret: temporary + 1 + u8(type.size), expr: rhs, type: arrow.i)
 
@@ -158,6 +152,17 @@ public extension Scope {
 				FNRX(x: temporary + 1, y: temporary),
 				RXRX(x: ret, y: temporary + 1)
 			]
+		}
+	}
+
+	func builtin(name: String, args: Expr) throws -> [Instruction] {
+		switch name {
+		case "print":
+			try eval(ret: temporary, expr: args, type: .array(.char, 24)) + [
+				PRNT(x: temporary)
+			]
+		default:
+			throw err("Unknown function \(name)")
 		}
 	}
 
@@ -252,17 +257,4 @@ extension OPCode {
 	func callAsFunction(x: u8, y: u8, z: u8 = 0) -> Instruction {
 		Instruction(op: self, x: i8(u: x), .init(.init(y: i8(u: y), z: i8(u: z))))
 	}
-}
-
-extension u8 {
-	init(selector: u8, offset: u8) {
-		self = selector << 6 | offset & 0x3F
-	}
-	var selector: u8 { self >> 6 }
-	var offset: u8 { self & 0x3F }
-
-	static var top: u8 { 0b00 }
-	static var closure: u8 { 0b01 }
-	static var aux: u8 { 0b10 }
-	static var bottom: u8 { 0b11 }
 }
