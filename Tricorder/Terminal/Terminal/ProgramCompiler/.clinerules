@@ -80,7 +80,9 @@ Keep in mind `./GOALS.md`.
 In Plan mode when working on a task, feel free to suggest architecture changes if you think
 they will simplify overall implementation.
 
-In Act mode run tests to ensure all features are implemented correctly before finishing task. Write new tests for untested features.
+In Act mode run tests to ensure all features are implemented correctly before finishing task.
+Write new tests for untested features.
 
-Learn the project codebase. Adapt your coding style.
-Use comments only when you are unsure of implementation or when implementing an unusual pattern. The code should be self-documenting and easy to understand without comments.
+Learn the project codebase. Adapt your coding style. Comments considered harmful.
+Use comments only when you are unsure of implementation or when implementing an unusual pattern.
+The code should be self-documenting and easy to understand without comments.

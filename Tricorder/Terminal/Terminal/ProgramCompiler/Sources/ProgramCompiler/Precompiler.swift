@@ -88,7 +88,7 @@ private extension Scope {
 	}
 
 	func resolveInput() throws {
-		try traverseAll { e, s in
+		try traverseExprs { e, s in
 			if case let .funktion(_, labels, fs) = e {
 				if fs.arrow.i == .void, labels.isEmpty {} else if fs.arrow.i != .void, labels.count == 1 {
 					fs.vars.append(Var(offset: fs.arrow.o.size, type: fs.arrow.i, name: labels[0]))

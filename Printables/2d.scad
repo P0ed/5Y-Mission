@@ -38,6 +38,14 @@ module XLR() {
 	translate([hd / 2, -d / 2]) circle(d=3.2, $fn=16);
 }
 
+module LED5() {
+	circle(d=5.1, $fn=24);
+}
+
+module M3() {
+	circle(d = 3.2, $fn=24);
+}
+
 module miniXLR() {
 	d = 11.2;
 

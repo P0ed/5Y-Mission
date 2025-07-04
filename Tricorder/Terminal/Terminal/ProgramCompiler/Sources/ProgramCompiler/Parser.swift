@@ -140,17 +140,7 @@ extension Parser {
 			if let tks = match(\.tuple) {
 				let tuple = try tuple(tks)
 				expr = .binary(.call, expr, tuple)
-			}
-//			else if match(symbols(["("])) != nil {
-//				if match(symbols([")"])) != nil {
-//					expr = .binary(.call, expr, .tuple([]))
-//				} else {
-//					let arg = try self.expr()
-//					try consume(symbols([")"]), "Expected closing parenthesis")
-//					expr = .binary(.call, expr, arg)
-//				}
-//			}
-			else if match(symbols(["."])) != nil {
+			} else if match(symbols(["."])) != nil {
 				let field = try consume(\.id, "Expected identifier after '.'")
 				expr = .binary(.dot, expr, .id(field))
 			} else if match(symbols(["["])) != nil {

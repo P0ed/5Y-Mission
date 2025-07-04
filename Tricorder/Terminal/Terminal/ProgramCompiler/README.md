@@ -1,4 +1,4 @@
-# กุ้ง programming language:
+# กุ้ง programming language
 
 Kung is a simple C/Swift inspired language with static typing system,
 running in a VM that runs on Arduino or similar low-spec hardware.
@@ -14,7 +14,7 @@ running in a VM that runs on Arduino or similar low-spec hardware.
 ; Fixed size array with 32 elements of type `char`
 : string = char 32;
 
-; Struct def works by assigning a tuple to an identifier
+; Struct def
 : person = (
 	identifier: id,
 	name: string,
