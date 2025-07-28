@@ -30,14 +30,19 @@ Capacitors SMT: TDK C0G 50V 1206 E6
 Resistors THT: Vishay MBA0204 1% 0.4W E6  
 Capacitors THT: TDK C0G 50V P:5mm E6  
 
+Board connectors:  
+Power: MTA156  
+Signal male: 1-826629-6 female:  1-215297-6  
+
 Case connectors:  
 Power: AG4MCC  
 Audio: AG3MCC  
 Controls: AG5MCC  
 
-Board connectors:  
-Power: MTA156  
-Signal male: 1-826629-6 female:  1-215297-6  
+LEMO connectors:  
+FGG.0B.303.CLAD42  
+EGG.0B.303.CLL  
+PHG.0B.303.CLLD42  
 
 ### OSHWLab:
 * [PCB panel](https://oshwlab.com/com.poed/panel-typ-i)
