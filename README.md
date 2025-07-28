@@ -1,20 +1,15 @@
 # 5Y-Mission
 4U modular analog synthesizer
 
-<img width="640" alt="UI" src="https://github.com/P0ed/5Y-Mission/assets/5844101/a92c6793-bd27-4dff-a935-6d1c097b11fe">
+![DO01010100](https://github.com/user-attachments/assets/a179f3bf-0e48-4b2a-aabe-40f20e4d5fc2)
+![DO01010097](https://github.com/user-attachments/assets/ccfddc11-c55d-440f-ba04-e2dde9375894)
+![DO01010093](https://github.com/user-attachments/assets/e63438fa-7d7e-4901-8d84-6e5fb9a56464)
+![DO01010075](https://github.com/user-attachments/assets/7f628598-0f29-4e7c-9a73-57b15dd39904)
 
-The panel contains 4 submodules with identical UI. Each unit has:
-* 8 banana jacks and 4 potentiometers laid out in a 4x3 grid
-* 2 5mm LED
-* 2 toggle switches
-
-IO board fits two modules:
-
-<img width="640" alt="Motherboard" src="https://github.com/P0ed/5Y-Mission/assets/5844101/11c4f1fd-bfec-46fb-9dcc-5b9ce0917704">
-
-The modules are installed via two 1x16 pin headers:
-
-<img width="640" alt="HWUpdate" src="https://github.com/P0ed/5Y-Mission/assets/5844101/26d908db-daf7-460a-9f88-5ef2dae9aab0">
+The panel contains 4 submodules with identical UI. Each unit has:  
+* 8 banana jacks and 4 potentiometers laid out in a 4x3 grid  
+* 2 5mm LED  
+* 2 toggle switches  
 
 ### OSHWLab:
 * [PCB panel](https://oshwlab.com/com.poed/panel-typ-i)
