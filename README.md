@@ -1,10 +1,10 @@
 # 5Y-Mission
 4U modular analog synthesizer
 
-![DO01010100](https://github.com/user-attachments/assets/a179f3bf-0e48-4b2a-aabe-40f20e4d5fc2)
-![DO01010097](https://github.com/user-attachments/assets/ccfddc11-c55d-440f-ba04-e2dde9375894)
-![DO01010093](https://github.com/user-attachments/assets/e63438fa-7d7e-4901-8d84-6e5fb9a56464)
-![DO01010075](https://github.com/user-attachments/assets/7f628598-0f29-4e7c-9a73-57b15dd39904)
+![bw00](https://github.com/user-attachments/assets/3dffbfd8-39b4-42dc-83f8-bf450c438b85)
+![bw01](https://github.com/user-attachments/assets/6789aeb7-354c-4cf8-ae0d-6024286c73cd)
+![bw10](https://github.com/user-attachments/assets/b951afed-1b53-4868-aeeb-1b0cb7761051)
+![c11](https://github.com/user-attachments/assets/27c5e152-50bb-497e-89a3-c63674a7315d)
 
 The panel contains 4 submodules with identical UI. Each unit has:  
 * 8 banana jacks and 4 potentiometers laid out in a 4x3 grid  
