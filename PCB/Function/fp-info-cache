@@ -1,4 +1,25 @@
-27099798849563743
+27108665918469171
+5Y
+Bourns_51
+Molex KK-254 Interconnect System, old/engineering part number: AE-6410-03A example for new part number: 22-27-2031, 3 Pins (http://www.molex.com/pdm_docs/sd/022272021_sd.pdf), generated with kicad-footprint-generator
+connector Molex KK-254 vertical
+0
+3
+3
+5Y
+MBNF15
+Molex KK 396 Interconnect System, old/engineering part number: 5273-03A example for new part number: 09-65-2038, 3 Pins (https://www.molex.com/pdm_docs/sd/009652028_sd.pdf), generated with kicad-footprint-generator
+connector Molex KK-396 vertical
+0
+3
+3
+5Y
+MTA156-3
+Molex KK 396 Interconnect System, old/engineering part number: 5273-03A example for new part number: 09-65-2038, 3 Pins (https://www.molex.com/pdm_docs/sd/009652028_sd.pdf), generated with kicad-footprint-generator
+connector Molex KK-396 vertical
+0
+3
+3
 5Y
 Pomona-1581
 4mm banana connector
@@ -6,6 +27,20 @@ jack
 0
 1
 1
+5Y
+SOIC-8
+SOIC, 8 Pin (JEDEC MS-012AA, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_narrow-r/r_8.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SOIC SO
+0
+8
+8
+5Y
+SOIC-14
+SOIC, 14 Pin (JEDEC MS-012AB, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_narrow-r/r_14.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SOIC SO
+0
+14
+14
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)

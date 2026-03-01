@@ -1,0 +1,102 @@
+(footprint "MTA156-3"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "Molex KK 396 Interconnect System, old/engineering part number: 5273-03A example for new part number: 09-65-2038, 3 Pins (https://www.molex.com/pdm_docs/sd/009652028_sd.pdf), generated with kicad-footprint-generator")
+	(tags "connector Molex KK-396 vertical")
+	(property "Reference" "REF**"
+		(at 0 -6.858 0)
+		(layer "F.SilkS")
+		(uuid "c15f5780-8039-4a65-a5dc-bfe73c9a1652")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "MTA156-3"
+		(at 0 7.112 0)
+		(layer "F.Fab")
+		(uuid "fd0173c1-4f76-42b0-af3d-b7680868fbc6")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "b738b322-71cd-48fd-96df-1fbf9e68816c")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "67870a69-ca02-4576-9c7b-fe5634fd9f9a")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_text user "${REFERENCE}"
+		(at 3.937 0 90)
+		(layer "F.Fab")
+		(uuid "48684ba6-8cd1-47b1-bd99-d374550d4e1d")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole oval
+		(at 0 -3.96 270)
+		(size 3 4.2)
+		(drill 1.7)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "8f64904e-06de-475d-ab6e-52b66cdd5652")
+	)
+	(pad "2" thru_hole oval
+		(at 0 0 270)
+		(size 3 4.2)
+		(drill 1.7)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "26618f99-effc-4c11-bbb0-d7e417d72f8c")
+	)
+	(pad "3" thru_hole oval
+		(at 0 3.96 270)
+		(size 3 4.2)
+		(drill 1.7)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "0508504c-29b9-4a6d-abf8-448693152928")
+	)
+	(embedded_fonts no)
+	(model "${KICAD9_3DMODEL_DIR}/Connector_Molex.3dshapes/Molex_KK-396_5273-03A_1x03_P3.96mm_Vertical.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

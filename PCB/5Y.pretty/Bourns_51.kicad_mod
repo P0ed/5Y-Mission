@@ -1,0 +1,102 @@
+(footprint "Bourns_51"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "Molex KK-254 Interconnect System, old/engineering part number: AE-6410-03A example for new part number: 22-27-2031, 3 Pins (http://www.molex.com/pdm_docs/sd/022272021_sd.pdf), generated with kicad-footprint-generator")
+	(tags "connector Molex KK-254 vertical")
+	(property "Reference" "REF**"
+		(at 0 -4.12 0)
+		(layer "F.SilkS")
+		(uuid "8f56a246-a56a-4731-bdbf-791c5330701a")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Bourns_51"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "383f51be-9226-4f76-bd3f-a527e777c284")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "947dbabb-8cf4-43d9-aff8-5a1fd3046b34")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8cc6c408-7b12-4244-aa3e-8d98368c85b4")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_text user "${REFERENCE}"
+		(at 0 -2.22 0)
+		(layer "F.Fab")
+		(uuid "3fa21ce1-7ef8-476f-9db1-d40f972dfdf3")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole oval
+		(at -2.54 -7)
+		(size 1.74 2.19)
+		(drill 1.19)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "851fe48e-7988-4deb-8219-22f0267311f4")
+	)
+	(pad "2" thru_hole oval
+		(at 0 -7)
+		(size 1.74 2.19)
+		(drill 1.19)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "f166d932-c54b-45b5-9144-e15ec31324f5")
+	)
+	(pad "3" thru_hole oval
+		(at 2.54 -7)
+		(size 1.74 2.19)
+		(drill 1.19)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "ef765541-2473-4be7-b3ed-aeab2fbee826")
+	)
+	(embedded_fonts no)
+	(model "${KICAD9_3DMODEL_DIR}/Connector_Molex.3dshapes/Molex_KK-254_AE-6410-03A_1x03_P2.54mm_Vertical.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)
