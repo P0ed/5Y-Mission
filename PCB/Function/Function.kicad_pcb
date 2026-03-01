@@ -91,12 +91,10 @@
 	(net 8 "unconnected-(J**8-Pad1)")
 	(net 9 "unconnected-(J**9-Pad1)")
 	(net 10 "unconnected-(J**10-Pad1)")
-	(net 11 "unconnected-(J**11-Pad1)")
-	(net 12 "unconnected-(J**12-Pad1)")
 	(footprint "5Y:Pomona-1581"
 		(layer "F.Cu")
 		(uuid "01f39e09-b14b-4ec2-880b-ea6a2c191be4")
-		(at 114.3 63.5)
+		(at 63.5 88.9)
 		(descr "4mm banana connector")
 		(tags "jack")
 		(property "Reference" "J**8"
@@ -193,7 +191,7 @@
 	(footprint "5Y:Pomona-1581"
 		(layer "F.Cu")
 		(uuid "283fd53a-9599-46da-8229-c299f15a7c12")
-		(at 38.1 63.5)
+		(at 88.9 63.5)
 		(descr "4mm banana connector")
 		(tags "jack")
 		(property "Reference" "J**5"
@@ -290,7 +288,7 @@
 	(footprint "5Y:Pomona-1581"
 		(layer "F.Cu")
 		(uuid "67d14f0c-4d6c-4af1-a1b7-0219da18bbf1")
-		(at 63.5 88.9)
+		(at 114.3 88.9)
 		(descr "4mm banana connector")
 		(tags "jack")
 		(property "Reference" "J**10"
@@ -387,7 +385,7 @@
 	(footprint "5Y:Pomona-1581"
 		(layer "F.Cu")
 		(uuid "719c956b-4cf8-43fb-80c3-04453cf855ae")
-		(at 63.5 38.1)
+		(at 88.9 38.1)
 		(descr "4mm banana connector")
 		(tags "jack")
 		(property "Reference" "J**2"
@@ -483,105 +481,8 @@
 	)
 	(footprint "5Y:Pomona-1581"
 		(layer "F.Cu")
-		(uuid "83b3c7ec-d7e4-4422-828c-f3d14b5260a3")
-		(at 88.9 88.9)
-		(descr "4mm banana connector")
-		(tags "jack")
-		(property "Reference" "J**11"
-			(at 0 -0.5 0)
-			(unlocked yes)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "cf1a537b-1b79-46c0-b154-41a6346972ce")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.1)
-				)
-			)
-		)
-		(property "Value" "Pomona_1581"
-			(at 0 1 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0b1a4e43-d2ff-438d-8da7-d9f4f42e8d9d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "4b941016-c623-4448-9733-47b56821184b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "4mm banana jack"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "29b2685a-5506-41c3-88a7-90c6fd8dd5f0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property ki_fp_filters "Pin*")
-		(path "/9aa33efb-8b57-44b3-a9c3-9e261bb3d45e")
-		(sheetname "/")
-		(sheetfile "Function.kicad_sch")
-		(attr through_hole exclude_from_bom)
-		(fp_circle
-			(center 0 0)
-			(end 3.175 0)
-			(stroke
-				(width 0.2)
-				(type default)
-			)
-			(fill no)
-			(layer "F.Cu")
-			(uuid "949c8a38-6767-48f0-8481-e31b01942f09")
-		)
-		(pad "1" thru_hole circle
-			(at 0 0)
-			(size 9.53 9.53)
-			(drill 6.35)
-			(layers "*.Cu" "*.Mask")
-			(remove_unused_layers no)
-			(net 11 "unconnected-(J**11-Pad1)")
-			(pintype "passive")
-			(teardrops
-				(best_length_ratio 0.5)
-				(max_length 1)
-				(best_width_ratio 1)
-				(max_width 2)
-				(curved_edges no)
-				(filter_ratio 0.9)
-				(enabled yes)
-				(allow_two_segments yes)
-				(prefer_zone_connections yes)
-			)
-			(uuid "de9656d0-8513-470c-af4e-19366592c81f")
-		)
-		(embedded_fonts no)
-	)
-	(footprint "5Y:Pomona-1581"
-		(layer "F.Cu")
 		(uuid "ad442999-31c7-48f0-976b-040fe91cf988")
-		(at 63.5 63.5)
+		(at 114.3 63.5)
 		(descr "4mm banana connector")
 		(tags "jack")
 		(property "Reference" "J**6"
@@ -678,7 +579,7 @@
 	(footprint "5Y:Pomona-1581"
 		(layer "F.Cu")
 		(uuid "b380fb39-3735-4165-a0af-118d9db5acd5")
-		(at 88.9 63.5)
+		(at 38.1 88.9)
 		(descr "4mm banana connector")
 		(tags "jack")
 		(property "Reference" "J**7"
@@ -775,7 +676,7 @@
 	(footprint "5Y:Pomona-1581"
 		(layer "F.Cu")
 		(uuid "bad136d1-842b-4459-be74-d26e77c66f2f")
-		(at 38.1 88.9)
+		(at 88.9 88.9)
 		(descr "4mm banana connector")
 		(tags "jack")
 		(property "Reference" "J**9"
@@ -872,7 +773,7 @@
 	(footprint "5Y:Pomona-1581"
 		(layer "F.Cu")
 		(uuid "c244b9ff-70b3-4fa5-bc0b-e715972bf810")
-		(at 114.3 38.1)
+		(at 63.5 63.5)
 		(descr "4mm banana connector")
 		(tags "jack")
 		(property "Reference" "J**4"
@@ -969,7 +870,7 @@
 	(footprint "5Y:Pomona-1581"
 		(layer "F.Cu")
 		(uuid "d037ec1d-fe8f-4f15-9c41-0c95135e4e22")
-		(at 38.1 38.1)
+		(at 63.5 38.1)
 		(descr "4mm banana connector")
 		(tags "jack")
 		(property "Reference" "J**1"
@@ -1065,105 +966,8 @@
 	)
 	(footprint "5Y:Pomona-1581"
 		(layer "F.Cu")
-		(uuid "d622bfb3-4e12-448c-9b2f-a7d58023f289")
-		(at 114.3 88.9)
-		(descr "4mm banana connector")
-		(tags "jack")
-		(property "Reference" "J**12"
-			(at 0 -0.5 0)
-			(unlocked yes)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "5580ebfe-ddce-46be-856e-f1a81c492e64")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.1)
-				)
-			)
-		)
-		(property "Value" "Pomona_1581"
-			(at 0 1 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "76fb0fd7-742b-4de4-b324-05196a7bdbd5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9a9726ae-f50a-4d79-8266-f6e225ea639f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "4mm banana jack"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "1f2cf458-be7c-4cda-b424-9804d666302d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property ki_fp_filters "Pin*")
-		(path "/ba7933a2-6b24-4520-8353-533b76c04bdd")
-		(sheetname "/")
-		(sheetfile "Function.kicad_sch")
-		(attr through_hole exclude_from_bom)
-		(fp_circle
-			(center 0 0)
-			(end 3.175 0)
-			(stroke
-				(width 0.2)
-				(type default)
-			)
-			(fill no)
-			(layer "F.Cu")
-			(uuid "518d230e-84cb-459a-90bb-1f3e9ac90cba")
-		)
-		(pad "1" thru_hole circle
-			(at 0 0)
-			(size 9.53 9.53)
-			(drill 6.35)
-			(layers "*.Cu" "*.Mask")
-			(remove_unused_layers no)
-			(net 12 "unconnected-(J**12-Pad1)")
-			(pintype "passive")
-			(teardrops
-				(best_length_ratio 0.5)
-				(max_length 1)
-				(best_width_ratio 1)
-				(max_width 2)
-				(curved_edges no)
-				(filter_ratio 0.9)
-				(enabled yes)
-				(allow_two_segments yes)
-				(prefer_zone_connections yes)
-			)
-			(uuid "37bb9b73-57ce-4f2f-9999-5f1773150271")
-		)
-		(embedded_fonts no)
-	)
-	(footprint "5Y:Pomona-1581"
-		(layer "F.Cu")
 		(uuid "e470ec24-b682-44f4-aa18-8e53f2ccf92e")
-		(at 88.9 38.1)
+		(at 38.1 63.5)
 		(descr "4mm banana connector")
 		(tags "jack")
 		(property "Reference" "J**3"

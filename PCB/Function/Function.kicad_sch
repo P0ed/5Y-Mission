@@ -3,8 +3,449 @@
 	(generator "eeschema")
 	(generator_version "9.0")
 	(uuid "411f1d4c-f349-4d7d-a3c5-8d89173dd9dc")
-	(paper "A4")
+	(paper "A2")
 	(lib_symbols
+		(symbol "5Y:AD823"
+			(pin_names
+				(offset 0.127)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "AD823"
+				(at 0 -5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm358.pdf"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Dual Operational Amplifiers, DIP-8/SOIC-8/TSSOP-8/VSSOP-8"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "analog-devices opamp"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SOIC*3.9x4.9mm*P1.27mm* MSOP*3x3mm*P0.65mm*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "AD823_1_1"
+				(polyline
+					(pts
+						(xy -5.08 5.08) (xy 5.08 0) (xy -5.08 -5.08) (xy -5.08 5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin input line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 -2.54 0)
+					(length 2.54)
+					(name "-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "AD823_2_1"
+				(polyline
+					(pts
+						(xy -5.08 5.08) (xy 5.08 0) (xy -5.08 -5.08) (xy -5.08 5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin input line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 -2.54 0)
+					(length 2.54)
+					(name "-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "AD823_3_1"
+				(pin power_in line
+					(at -2.54 7.62 270)
+					(length 3.81)
+					(name "V+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -2.54 -7.62 90)
+					(length 3.81)
+					(name "V-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "5Y:LED5"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "D"
+				(at 0.508 1.778 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "LED5"
+				(at -1.016 -2.794 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 4.445 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at -1.27 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "LED 5mm THT"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "LED"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "TO?18*Window*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "LED5_0_1"
+				(polyline
+					(pts
+						(xy -2.54 1.27) (xy -2.54 -1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.413 1.651) (xy -0.889 3.175) (xy -0.889 2.667) (xy -0.889 3.175) (xy -1.397 3.175)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.143 1.651) (xy 0.381 3.175) (xy 0.381 2.667)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 1.27) (xy 0 -1.27) (xy -2.54 0) (xy 0 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy -2.54 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.381 3.175) (xy -0.127 3.175)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "LED5_1_1"
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 0 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "5Y:Pomona_1581"
 			(pin_numbers
 				(hide yes)
@@ -112,138 +553,1510 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector_Generic:Conn_01x03"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x03"
+				(at 0 -5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Conn_01x03_1_1"
+				(rectangle
+					(start -1.27 3.81)
+					(end 1.27 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(rectangle
+					(start -1.27 2.667)
+					(end 0 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 2.54 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:C"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "C_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.762) (xy 2.032 0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Reference_Voltage:LM4040DBZ-5"
+			(pin_names
+				(offset 0.0254)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at 0 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "LM4040DBZ-5"
+				(at 0 -3.175 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+				(at 0 -5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm4040-n.pdf"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "5.000V Precision Micropower Shunt Voltage Reference, SOT-23"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "diode device voltage reference shunt"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SOT?23*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "LM4040DBZ-5_0_1"
+				(polyline
+					(pts
+						(xy -1.27 0) (xy 0 0) (xy 1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 -1.27) (xy 0.635 0) (xy -1.27 1.27) (xy -1.27 -1.27)
+					)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -1.27) (xy 0.635 -1.27) (xy 0.635 1.27) (xy 1.27 1.27)
+					)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "LM4040DBZ-5_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin no_connect line
+					(at -1.27 0 0)
+					(length 2.54)
+					(hide yes)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
-	(symbol
-		(lib_id "5Y:Pomona_1581")
-		(at 76.2 50.8 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
+	(junction
+		(at 60.96 381)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "095cf46b-aac5-40a8-9c4e-cfff124b578d")
+	)
+	(junction
+		(at 71.12 381)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2156e93a-245b-40c9-ac20-802863a11e56")
+	)
+	(junction
+		(at 175.26 88.9)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2abd6bfd-5cc6-4179-9261-dc3985a58835")
+	)
+	(junction
+		(at 207.01 72.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9030c0d9-c2f0-4155-8e6e-ca20d8ff6eb0")
+	)
+	(junction
+		(at 195.58 86.36)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b7743d30-55ea-4f10-a8c0-c78e9e8c0dee")
+	)
+	(junction
+		(at 60.96 373.38)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d26532db-6341-447e-a3d7-ab57ecba0030")
+	)
+	(junction
+		(at 71.12 373.38)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d646f28e-b46f-4366-81e7-1cb074b1e229")
+	)
+	(junction
+		(at 177.8 71.12)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e115278e-a589-4aac-afbf-f31da2a37662")
+	)
+	(junction
+		(at 102.87 373.38)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e3293c0d-d3d0-4e70-b9d5-88066560ba5f")
+	)
+	(junction
+		(at 30.48 381)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ea84ea36-2989-4cb1-a650-d50dd8c609af")
+	)
+	(junction
+		(at 60.96 388.62)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "fea13b09-ad47-40c5-95d4-0a9f99cef277")
+	)
+	(wire
+		(pts
+			(xy 186.69 101.6) (xy 195.58 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "005e9e65-a2ed-4c6c-a8da-e52746f8b50e")
+	)
+	(wire
+		(pts
+			(xy 44.45 127) (xy 50.8 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "00ab1e58-5773-40f9-a21c-8ab342988365")
+	)
+	(wire
+		(pts
+			(xy 195.58 101.6) (xy 195.58 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0745c756-918a-4828-80b4-42d3d0e41659")
+	)
+	(wire
+		(pts
+			(xy 207.01 83.82) (xy 210.82 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "087b3d9e-39bd-403c-baa5-9de031eceddc")
+	)
+	(wire
+		(pts
+			(xy 175.26 88.9) (xy 180.34 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0b6a3b3d-193c-45e9-a261-84afd3314435")
+	)
+	(wire
+		(pts
+			(xy 207.01 54.61) (xy 207.01 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0d395047-42ba-43af-92ef-7d7ff6e8bc2a")
+	)
+	(wire
+		(pts
+			(xy 58.42 373.38) (xy 60.96 373.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "20f3a19a-02c2-4e1d-8566-c85ff51f6f68")
+	)
+	(wire
+		(pts
+			(xy 58.42 381) (xy 60.96 381)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "23f3ba72-2a0d-4e3e-8bb9-8a03c12e6429")
+	)
+	(wire
+		(pts
+			(xy 60.96 388.62) (xy 71.12 388.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2554eb4d-5bde-4a54-8c2e-51b6bf2f8b4e")
+	)
+	(wire
+		(pts
+			(xy 213.36 72.39) (xy 207.01 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2576a3dd-7b86-44c4-b156-d1ee8aed9fb8")
+	)
+	(wire
+		(pts
+			(xy 177.8 83.82) (xy 177.8 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "27c8b79b-1396-4fa6-a0dc-7e903aff2246")
+	)
+	(wire
+		(pts
+			(xy 58.42 388.62) (xy 60.96 388.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "27c99ae8-035b-4f82-bb87-5a49f85d92fa")
+	)
+	(wire
+		(pts
+			(xy 35.56 381) (xy 30.48 381)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2bff7ce0-9b04-413f-89ab-bde055287cec")
+	)
+	(wire
+		(pts
+			(xy 166.37 88.9) (xy 166.37 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2e0d559b-7636-4259-81e7-b2a928a885a6")
+	)
+	(wire
+		(pts
+			(xy 179.07 101.6) (xy 175.26 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "311cc8d5-83bf-4076-aa2c-77a1b2e36355")
+	)
+	(wire
+		(pts
+			(xy 207.01 88.9) (xy 210.82 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "357e93c6-8d89-4c1d-a72a-0ee654d81141")
+	)
+	(wire
+		(pts
+			(xy 173.99 88.9) (xy 175.26 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "419e487c-9880-4f7f-a74d-8f4b709d3d2d")
+	)
+	(wire
+		(pts
+			(xy 120.65 127) (xy 127 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4240dc78-7715-4bbb-a53e-95641e604da4")
+	)
+	(wire
+		(pts
+			(xy 30.48 382.27) (xy 30.48 381)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "458df148-8b85-4e26-93c6-f9480bca50ae")
+	)
+	(wire
+		(pts
+			(xy 111.76 377.19) (xy 111.76 373.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5a0cd444-a686-404f-b7db-91656e75473d")
+	)
+	(wire
+		(pts
+			(xy 60.96 381) (xy 71.12 381)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5cccb3a5-7b63-4180-aac1-f77bbd11c02d")
+	)
+	(wire
+		(pts
+			(xy 111.76 388.62) (xy 102.87 388.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6e06ae26-0eaf-4379-aa0b-46b9ec13f60d")
+	)
+	(wire
+		(pts
+			(xy 111.76 373.38) (xy 102.87 373.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "73834249-66de-46c9-bd75-d233724ddf80")
+	)
+	(wire
+		(pts
+			(xy 60.96 373.38) (xy 71.12 373.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "74564120-40e6-4bc3-a056-972feac947d4")
+	)
+	(wire
+		(pts
+			(xy 30.48 379.73) (xy 30.48 381)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "75a7651c-3a84-4f0b-8bb3-e905405dcade")
+	)
+	(wire
+		(pts
+			(xy 207.01 67.31) (xy 207.01 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7b403a2d-052a-4ac6-abb5-31cd563b1624")
+	)
+	(wire
+		(pts
+			(xy 30.48 370.84) (xy 30.48 372.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7c1470a8-bcfa-4599-9f75-4af88d399f19")
+	)
+	(wire
+		(pts
+			(xy 207.01 72.39) (xy 207.01 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "82567321-2079-4998-83af-836750641abe")
+	)
+	(wire
+		(pts
+			(xy 166.37 99.06) (xy 166.37 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8d40662d-2ad5-4a0e-8a32-81507956bb31")
+	)
+	(wire
+		(pts
+			(xy 180.34 83.82) (xy 177.8 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "91eddec6-76b4-4e1c-908c-49a6d1d1729b")
+	)
+	(wire
+		(pts
+			(xy 175.26 101.6) (xy 175.26 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9752d894-c140-46f6-8393-c7e9a25cbbba")
+	)
+	(wire
+		(pts
+			(xy 111.76 384.81) (xy 111.76 388.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "99d07dc2-b0fb-4111-9226-46e704231960")
+	)
+	(wire
+		(pts
+			(xy 195.58 68.58) (xy 195.58 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9f4d5d20-4314-490e-83de-0a0fcf34230d")
+	)
+	(wire
+		(pts
+			(xy 229.87 86.36) (xy 229.87 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a5278705-f1c7-4407-bfd3-d5140b187525")
+	)
+	(wire
+		(pts
+			(xy 30.48 389.89) (xy 30.48 391.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aba99230-f6b9-4726-8304-854499ac3c8b")
+	)
+	(wire
+		(pts
+			(xy 165.1 71.12) (xy 167.64 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b091e7fc-c51f-4068-a751-8258d33b80d5")
+	)
+	(wire
+		(pts
+			(xy 187.96 71.12) (xy 190.5 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c891a22e-3e27-4b9b-9961-aa45c93e3603")
+	)
+	(wire
+		(pts
+			(xy 177.8 71.12) (xy 180.34 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "de848105-c5fd-4e0e-8e20-c96f0e7b2888")
+	)
+	(wire
+		(pts
+			(xy 220.98 72.39) (xy 229.87 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e780efc8-eaee-47ac-b507-1f84afd0d98f")
+	)
+	(wire
+		(pts
+			(xy 226.06 86.36) (xy 229.87 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eabc4dd1-a0ab-433d-870f-e232c29c28fc")
+	)
+	(wire
+		(pts
+			(xy 175.26 71.12) (xy 177.8 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f48c9235-e0eb-4324-8cf1-09e2c2340777")
+	)
+	(wire
+		(pts
+			(xy 71.12 373.38) (xy 102.87 373.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fb8bd3ab-6d16-4b30-b48d-d3b24712d3e6")
+	)
+	(global_label "VCC"
+		(shape bidirectional)
+		(at 127 129.54 180)
 		(fields_autoplaced yes)
-		(uuid "06630eff-e883-4611-8e38-bccf0d0c5c68")
-		(property "Reference" "J**2"
-			(at 77.47 49.5299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify right)
 		)
-		(property "Value" "Pomona_1581"
-			(at 77.47 52.0699 0)
+		(uuid "08bd3f39-e680-4702-ac45-74b3cff13d20")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 119.2749 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "5Y:Pomona-1581"
-			(at 81.28 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
+				(justify right)
 				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 81.28 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "4mm banana jack"
-			(at 76.2 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "07d13407-d4d2-4ac0-bf27-b0b373226028")
-		)
-		(instances
-			(project "Function"
-				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
-					(reference "J**2")
-					(unit 1)
-				)
 			)
 		)
 	)
-	(symbol
-		(lib_id "5Y:Pomona_1581")
-		(at 50.8 50.8 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 111.76 388.62 0)
 		(fields_autoplaced yes)
-		(uuid "1e43e6e0-a83f-4f54-b2c2-802269ed4914")
-		(property "Reference" "J**1"
-			(at 52.07 49.5299 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "294dc990-d251-4ce3-86fe-4078f0b25d25")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 119.727 388.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
-		(property "Value" "Pomona_1581"
-			(at 52.07 52.0699 0)
+	)
+	(global_label "REF"
+		(shape bidirectional)
+		(at 190.5 71.12 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2db0c6ef-755b-46d6-9890-77c9427314f7")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 190.5 63.5159 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
-		(property "Footprint" "5Y:Pomona-1581"
-			(at 55.88 50.8 0)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 58.42 381 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4b285fd6-271d-4303-b064-4655019805b4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 50.453 381 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify right)
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 55.88 50.8 0)
+	)
+	(global_label "VCC"
+		(shape bidirectional)
+		(at 30.48 370.84 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5d201e7a-eb96-4e7e-8d75-0f434abbc49d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 30.48 363.1149 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 				(hide yes)
 			)
 		)
-		(property "Description" "4mm banana jack"
-			(at 50.8 50.8 0)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 120.65 127 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "624a9c01-2af1-4f5f-99ab-f80cb7e8fc04")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 112.683 127 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify right)
 				(hide yes)
 			)
 		)
-		(pin "1"
-			(uuid "afae519e-a4ba-44c0-bce3-58928586f1d8")
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 30.48 391.16 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
 		)
-		(instances
-			(project ""
-				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
-					(reference "J**1")
-					(unit 1)
+		(uuid "68a908f7-192f-4167-aa04-51f3e89b97ba")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 30.48 399.127 90)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 166.37 101.6 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "68cc3e0c-09e3-4a5a-9343-cba1933f638a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 166.37 109.567 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "TRIG"
+		(shape bidirectional)
+		(at 195.58 68.58 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6fe5047a-8654-4d91-9bab-6628a4c80928")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 203.7889 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 207.01 54.61 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "731d3056-686d-4790-9f99-234d270769ca")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 199.043 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "LP"
+		(shape bidirectional)
+		(at 207.01 88.9 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7c9c745d-bec4-45bf-b462-09c2d1273c14")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 200.6154 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 44.45 127 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "adab448b-0882-400f-b10e-5c6c75e1a3d4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 36.483 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VCC"
+		(shape bidirectional)
+		(at 58.42 373.38 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c59938d6-a08c-4db3-916b-6b13e8fab8d8")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 50.6949 373.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VEE"
+		(shape bidirectional)
+		(at 58.42 388.62 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cdf27462-fa3d-43eb-a378-16033551bf97")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 50.9369 388.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VEE"
+		(shape bidirectional)
+		(at 50.8 124.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "da34bf4c-34ff-4be4-98a7-6fad235128f5")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 43.3169 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 165.1 71.12 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f78b38b2-716c-4ba2-91b2-118f41a74412")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 165.1 79.087 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VEE"
+		(shape bidirectional)
+		(at 127 124.46 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f90a8f89-b9b5-477c-892d-a70ec2d48643")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 119.5169 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "REF"
+		(shape bidirectional)
+		(at 35.56 381 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "fd08204c-cc1b-4c54-9c94-a82ec1328d11")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 43.1641 381 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VCC"
+		(shape bidirectional)
+		(at 50.8 129.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "febc3aed-7eee-400e-a130-5b8b9072f01e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 43.0749 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
 			)
 		)
 	)
@@ -256,8 +2069,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "3607c20c-3cec-4366-ad52-16f9b9cd9a84")
-		(property "Reference" "J**3"
+		(uuid "06630eff-e883-4611-8e38-bccf0d0c5c68")
+		(property "Reference" "J**2"
 			(at 102.87 49.5299 0)
 			(effects
 				(font
@@ -303,29 +2116,29 @@
 			)
 		)
 		(pin "1"
-			(uuid "568ef7e0-55b3-4ba8-9dca-df54dfdbf3fc")
+			(uuid "07d13407-d4d2-4ac0-bf27-b0b373226028")
 		)
 		(instances
 			(project "Function"
 				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
-					(reference "J**3")
+					(reference "J**2")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "5Y:Pomona_1581")
-		(at 101.6 76.2 0)
+		(lib_id "Device:R")
+		(at 207.01 63.5 0)
 		(unit 1)
 		(exclude_from_sim no)
-		(in_bom no)
+		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "4c096d06-d041-459a-8e49-19e0d4f3736a")
-		(property "Reference" "J**7"
-			(at 102.87 74.9299 0)
+		(uuid "11648396-2394-483b-909f-46f3ab24f552")
+		(property "Reference" "R1"
+			(at 209.55 62.2299 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -333,8 +2146,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Pomona_1581"
-			(at 102.87 77.4699 0)
+		(property "Value" "4K7"
+			(at 209.55 64.7699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -342,8 +2155,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "5Y:Pomona-1581"
-			(at 106.68 76.2 0)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
+			(at 205.232 63.5 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -351,8 +2164,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 106.68 76.2 0)
+		(property "Datasheet" ""
+			(at 207.01 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -360,8 +2173,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "4mm banana jack"
-			(at 101.6 76.2 0)
+		(property "Description" "Resistor"
+			(at 207.01 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -370,29 +2183,118 @@
 			)
 		)
 		(pin "1"
-			(uuid "f4621564-039f-46a5-850f-95f0e55b330f")
+			(uuid "50f1bd1d-aac4-4757-98a3-febd4a0caef8")
+		)
+		(pin "2"
+			(uuid "edc07fa9-8bf0-4645-a133-81a40e9741a2")
 		)
 		(instances
-			(project "Function"
+			(project ""
 				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
-					(reference "J**7")
+					(reference "R1")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "5Y:Pomona_1581")
-		(at 127 50.8 0)
-		(unit 1)
+		(lib_id "5Y:AD823")
+		(at 218.44 86.36 0)
+		(mirror x)
+		(unit 2)
 		(exclude_from_sim no)
-		(in_bom no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "15dd58b5-d6be-4159-ba56-4c17d37c029f")
+		(property "Reference" "U1"
+			(at 218.44 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AD823"
+			(at 218.44 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 218.44 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm358.pdf"
+			(at 218.44 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Dual Operational Amplifiers, DIP-8/SOIC-8/TSSOP-8/VSSOP-8"
+			(at 218.44 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "6d8d5586-6943-4607-99db-796d9e89711f")
+		)
+		(pin "8"
+			(uuid "ef5dece9-d706-4d72-8b8e-f757889c607a")
+		)
+		(pin "7"
+			(uuid "1958a1c3-84c1-43b7-a553-8938ab701c04")
+		)
+		(pin "6"
+			(uuid "da2e8482-02b8-44a1-9c7f-485de44691cb")
+		)
+		(pin "5"
+			(uuid "d7be45c3-4a0a-4b11-b168-c12e5c87f738")
+		)
+		(pin "1"
+			(uuid "be497faa-8839-47a2-a703-d55b99361082")
+		)
+		(pin "2"
+			(uuid "b74169c9-b3bd-4f47-869b-d06d791a79d6")
+		)
+		(pin "3"
+			(uuid "e2a1485c-c4db-47b2-b0ad-df36b20d9d25")
+		)
+		(instances
+			(project ""
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "U1")
+					(unit 2)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5Y:AD823")
+		(at 105.41 381 0)
+		(unit 3)
+		(exclude_from_sim no)
+		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "73e2c5da-997e-4e92-8a93-475a83ecce50")
-		(property "Reference" "J**4"
-			(at 128.27 49.5299 0)
+		(uuid "16b88364-3995-4cf4-be0b-86ec7f5891fd")
+		(property "Reference" "U1"
+			(at 104.14 379.7299 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -400,8 +2302,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Pomona_1581"
-			(at 128.27 52.0699 0)
+		(property "Value" "AD823"
+			(at 104.14 382.2699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -409,8 +2311,95 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "5Y:Pomona-1581"
-			(at 132.08 50.8 0)
+		(property "Footprint" ""
+			(at 105.41 381 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm358.pdf"
+			(at 105.41 381 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Dual Operational Amplifiers, DIP-8/SOIC-8/TSSOP-8/VSSOP-8"
+			(at 105.41 381 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "6d8d5586-6943-4607-99db-796d9e89711f")
+		)
+		(pin "8"
+			(uuid "ef5dece9-d706-4d72-8b8e-f757889c607a")
+		)
+		(pin "7"
+			(uuid "1958a1c3-84c1-43b7-a553-8938ab701c04")
+		)
+		(pin "6"
+			(uuid "da2e8482-02b8-44a1-9c7f-485de44691cb")
+		)
+		(pin "5"
+			(uuid "d7be45c3-4a0a-4b11-b168-c12e5c87f738")
+		)
+		(pin "1"
+			(uuid "be497faa-8839-47a2-a703-d55b99361082")
+		)
+		(pin "2"
+			(uuid "b74169c9-b3bd-4f47-869b-d06d791a79d6")
+		)
+		(pin "3"
+			(uuid "e2a1485c-c4db-47b2-b0ad-df36b20d9d25")
+		)
+		(instances
+			(project ""
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "U1")
+					(unit 3)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 60.96 377.19 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "171e002d-59db-40bb-8b80-7c5c0b9cfdd8")
+		(property "Reference" "C1"
+			(at 63.754 375.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "4u7"
+			(at 63.754 378.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 61.9252 381 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -419,7 +2408,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 132.08 50.8 0)
+			(at 60.96 377.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -427,22 +2416,25 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "4mm banana jack"
-			(at 127 50.8 0)
+		(property "Description" "Unpolarized capacitor"
+			(at 60.96 377.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "2"
+			(uuid "51b7de5d-6493-4766-ab0d-7b19b655de56")
 		)
 		(pin "1"
-			(uuid "2ff510ce-9647-44ff-a508-1c8a21a780e8")
+			(uuid "e75b6d07-1af0-4ca5-828f-f74314560439")
 		)
 		(instances
-			(project "Function"
+			(project ""
 				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
-					(reference "J**4")
+					(reference "C1")
 					(unit 1)
 				)
 			)
@@ -450,16 +2442,16 @@
 	)
 	(symbol
 		(lib_id "5Y:Pomona_1581")
-		(at 101.6 101.6 0)
+		(at 76.2 50.8 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "9aa33efb-8b57-44b3-a9c3-9e261bb3d45e")
-		(property "Reference" "J**11"
-			(at 102.87 100.3299 0)
+		(uuid "1e43e6e0-a83f-4f54-b2c2-802269ed4914")
+		(property "Reference" "J**1"
+			(at 77.47 49.5299 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -468,7 +2460,7 @@
 			)
 		)
 		(property "Value" "Pomona_1581"
-			(at 102.87 102.8699 0)
+			(at 77.47 52.0699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -477,7 +2469,7 @@
 			)
 		)
 		(property "Footprint" "5Y:Pomona-1581"
-			(at 106.68 101.6 0)
+			(at 81.28 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -486,7 +2478,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 106.68 101.6 0)
+			(at 81.28 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -495,7 +2487,7 @@
 			)
 		)
 		(property "Description" "4mm banana jack"
-			(at 101.6 101.6 0)
+			(at 76.2 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -504,47 +2496,45 @@
 			)
 		)
 		(pin "1"
-			(uuid "c5d8611a-7e44-41d5-a45d-37035460c0c4")
+			(uuid "afae519e-a4ba-44c0-bce3-58928586f1d8")
 		)
 		(instances
-			(project "Function"
+			(project ""
 				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
-					(reference "J**11")
+					(reference "J**1")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "5Y:Pomona_1581")
-		(at 127 76.2 0)
+		(lib_id "5Y:LED5")
+		(at 218.44 72.39 0)
 		(unit 1)
 		(exclude_from_sim no)
-		(in_bom no)
+		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "9d3e6b3f-b822-4f3d-854e-5ed36a351299")
-		(property "Reference" "J**8"
-			(at 128.27 74.9299 0)
+		(uuid "275945ee-933d-4df9-a944-c9e24a9ece81")
+		(property "Reference" "D1"
+			(at 217.297 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "Pomona_1581"
-			(at 128.27 77.4699 0)
+		(property "Value" "LED5"
+			(at 217.297 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Footprint" "5Y:Pomona-1581"
-			(at 132.08 76.2 0)
+		(property "Footprint" ""
+			(at 218.44 67.945 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -552,8 +2542,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 132.08 76.2 0)
+		(property "Datasheet" ""
+			(at 217.17 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -561,290 +2551,25 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "4mm banana jack"
-			(at 127 76.2 0)
+		(property "Description" "LED 5mm THT"
+			(at 218.44 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "2"
+			(uuid "e261a928-a145-4c4d-8f3b-2e84f911e17d")
 		)
 		(pin "1"
-			(uuid "d3ec416a-be21-4842-a9ea-472c6f67aec1")
+			(uuid "0242f0b0-e560-43be-84d8-04ef1a34b5bb")
 		)
 		(instances
-			(project "Function"
+			(project ""
 				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
-					(reference "J**8")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "5Y:Pomona_1581")
-		(at 76.2 101.6 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a6ff0d16-98d8-451c-945c-b2ee779240b9")
-		(property "Reference" "J**10"
-			(at 77.47 100.3299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Pomona_1581"
-			(at 77.47 102.8699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "5Y:Pomona-1581"
-			(at 81.28 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 81.28 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "4mm banana jack"
-			(at 76.2 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "47474e91-90dc-4e8b-86b5-b055d8013dc1")
-		)
-		(instances
-			(project "Function"
-				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
-					(reference "J**10")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "5Y:Pomona_1581")
-		(at 127 101.6 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ba7933a2-6b24-4520-8353-533b76c04bdd")
-		(property "Reference" "J**12"
-			(at 128.27 100.3299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Pomona_1581"
-			(at 128.27 102.8699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "5Y:Pomona-1581"
-			(at 132.08 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 132.08 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "4mm banana jack"
-			(at 127 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "d34b6298-21b5-406c-a1c7-a524065d3571")
-		)
-		(instances
-			(project "Function"
-				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
-					(reference "J**12")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "5Y:Pomona_1581")
-		(at 76.2 76.2 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "bc02bc92-937b-4ce8-93f9-11b6bbe83942")
-		(property "Reference" "J**6"
-			(at 77.47 74.9299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Pomona_1581"
-			(at 77.47 77.4699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "5Y:Pomona-1581"
-			(at 81.28 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 81.28 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "4mm banana jack"
-			(at 76.2 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "e6609e42-a278-40d9-b352-e80cc5e33d3c")
-		)
-		(instances
-			(project "Function"
-				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
-					(reference "J**6")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "5Y:Pomona_1581")
-		(at 50.8 101.6 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d017e4b6-0c37-4c02-952d-264544403b9f")
-		(property "Reference" "J**9"
-			(at 52.07 100.3299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Pomona_1581"
-			(at 52.07 102.8699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "5Y:Pomona-1581"
-			(at 55.88 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 55.88 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "4mm banana jack"
-			(at 50.8 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "044a0b9c-bcb9-4731-ac22-be77e5d30f77")
-		)
-		(instances
-			(project "Function"
-				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
-					(reference "J**9")
+					(reference "D1")
 					(unit 1)
 				)
 			)
@@ -859,8 +2584,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "e45580f1-0d24-445d-a535-d86a9f74b7a6")
-		(property "Reference" "J**5"
+		(uuid "3607c20c-3cec-4366-ad52-16f9b9cd9a84")
+		(property "Reference" "J**3"
 			(at 52.07 74.9299 0)
 			(effects
 				(font
@@ -906,12 +2631,1467 @@
 			)
 		)
 		(pin "1"
+			(uuid "568ef7e0-55b3-4ba8-9dca-df54dfdbf3fc")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "J**3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 170.18 88.9 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "37d78c6d-51e7-403d-a612-89080cf1d6b5")
+		(property "Reference" "R3"
+			(at 170.18 82.55 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10K"
+			(at 170.18 85.09 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
+			(at 170.18 90.678 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 170.18 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 170.18 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f0682d33-6c93-49aa-9b88-160ac70132d6")
+		)
+		(pin "2"
+			(uuid "f46d2bce-4d9f-4b9c-9c4b-a81cc648415e")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "R3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 171.45 71.12 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "42d9486d-ef87-4239-8cb0-70cc31753b78")
+		(property "Reference" "R6"
+			(at 171.45 77.47 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100K"
+			(at 171.45 74.93 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
+			(at 171.45 69.342 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 171.45 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 171.45 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "eb75727c-6a87-4e40-a6b3-a399ab5a9105")
+		)
+		(pin "2"
+			(uuid "bffd51b4-60b4-4201-901a-8b762d5eea26")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "R6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5Y:Pomona_1581")
+		(at 50.8 101.6 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "4c096d06-d041-459a-8e49-19e0d4f3736a")
+		(property "Reference" "J**7"
+			(at 52.07 100.3299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Pomona_1581"
+			(at 52.07 102.8699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "5Y:Pomona-1581"
+			(at 55.88 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 55.88 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "4mm banana jack"
+			(at 50.8 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f4621564-039f-46a5-850f-95f0e55b330f")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "J**7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 30.48 375.92 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "557a50a9-df76-4b9d-860d-0a45ea4e49c9")
+		(property "Reference" "R5"
+			(at 36.83 375.92 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10K"
+			(at 34.29 375.92 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
+			(at 28.702 375.92 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 30.48 375.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 30.48 375.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "043b160b-33f3-4060-a1c5-ab686c84be8e")
+		)
+		(pin "2"
+			(uuid "7732a89b-caa5-4b3d-b43c-12c3345f082c")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "R5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x03")
+		(at 132.08 127 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "559acdcb-cdfe-4642-9fd1-d8d0897b6d12")
+		(property "Reference" "J2"
+			(at 134.62 125.7299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Conn_01x03"
+			(at 134.62 128.2699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 132.08 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 132.08 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 132.08 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "013255b0-3c13-4a0c-988d-592ffa237bfe")
+		)
+		(pin "3"
+			(uuid "b09c93c6-a499-4db8-b461-43d985eb8900")
+		)
+		(pin "1"
+			(uuid "28bcc7be-bb3f-41e9-aade-2a0aabf28cd4")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "J2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 111.76 381 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "568e51ce-f6f0-4980-912c-a6e06933164a")
+		(property "Reference" "C5"
+			(at 115.062 379.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n"
+			(at 115.062 382.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 112.7252 384.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 111.76 381 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 111.76 381 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "bb3deadc-2de3-4b51-9f27-565ffcf6862c")
+		)
+		(pin "1"
+			(uuid "0d1d50d2-19fe-4d4d-81ca-8daa9567b50e")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "C5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x03")
+		(at 55.88 127 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6dd9a199-40b9-4310-8d64-eb808200698e")
+		(property "Reference" "J1"
+			(at 58.42 125.7299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Conn_01x03"
+			(at 58.42 128.2699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 55.88 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 55.88 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 55.88 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "ad94d9c4-76e9-4b4c-8a08-e13aa5f8adc9")
+		)
+		(pin "3"
+			(uuid "c48e80fc-e361-44e7-8ee9-aad7d6e57e05")
+		)
+		(pin "1"
+			(uuid "b2f3d674-ae1b-4fcd-8f2c-232bf4d1d5a9")
+		)
+		(instances
+			(project ""
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 166.37 95.25 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6fa38b32-00aa-4fce-9275-7ad5880b73ae")
+		(property "Reference" "R4"
+			(at 160.02 95.25 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100K"
+			(at 162.56 95.25 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
+			(at 168.148 95.25 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 166.37 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 166.37 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "65ca8e12-660d-4094-b96b-dfc54227f10b")
+		)
+		(pin "2"
+			(uuid "9634a043-c25b-45e0-8277-25be4bce209d")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "R4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5Y:Pomona_1581")
+		(at 76.2 76.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "73e2c5da-997e-4e92-8a93-475a83ecce50")
+		(property "Reference" "J**4"
+			(at 77.47 74.9299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Pomona_1581"
+			(at 77.47 77.4699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "5Y:Pomona-1581"
+			(at 81.28 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 81.28 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "4mm banana jack"
+			(at 76.2 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2ff510ce-9647-44ff-a508-1c8a21a780e8")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "J**4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5Y:Pomona_1581")
+		(at 76.2 101.6 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9d3e6b3f-b822-4f3d-854e-5ed36a351299")
+		(property "Reference" "J**8"
+			(at 77.47 100.3299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Pomona_1581"
+			(at 77.47 102.8699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "5Y:Pomona-1581"
+			(at 81.28 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 81.28 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "4mm banana jack"
+			(at 76.2 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d3ec416a-be21-4842-a9ea-472c6f67aec1")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "J**8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 71.12 384.81 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a102252b-71ee-4078-9093-c4fab7b794e7")
+		(property "Reference" "C4"
+			(at 74.422 383.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "4u7"
+			(at 74.422 386.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 72.0852 388.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 71.12 384.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 71.12 384.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "a63d1be8-4b74-4111-a527-fa66ac0e0634")
+		)
+		(pin "1"
+			(uuid "369ef9e3-7691-4eb1-87d9-c2fe6d81dae0")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "C4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Reference_Voltage:LM4040DBZ-5")
+		(at 30.48 386.08 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a42fbdf7-5510-4daa-a2ca-8d143095133e")
+		(property "Reference" "U2"
+			(at 27.94 384.8099 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "LM4040DBZ-5"
+			(at 27.94 387.3499 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 25.4 386.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm4040-n.pdf"
+			(at 30.48 386.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "5.000V Precision Micropower Shunt Voltage Reference, SOT-23"
+			(at 30.48 386.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "67bd004d-10cf-4e95-86ad-78e890a35679")
+		)
+		(pin "3"
+			(uuid "4faf823e-d32f-4f70-8365-17815b940c51")
+		)
+		(pin "2"
+			(uuid "1d9c18e1-212f-44a3-96e2-5ba096ead19c")
+		)
+		(instances
+			(project ""
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "U2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5Y:Pomona_1581")
+		(at 127 101.6 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a6ff0d16-98d8-451c-945c-b2ee779240b9")
+		(property "Reference" "J**10"
+			(at 128.27 100.3299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Pomona_1581"
+			(at 128.27 102.8699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "5Y:Pomona-1581"
+			(at 132.08 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 132.08 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "4mm banana jack"
+			(at 127 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "47474e91-90dc-4e8b-86b5-b055d8013dc1")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "J**10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 182.88 101.6 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a75f003d-f39f-4478-8839-bec9fc097739")
+		(property "Reference" "R2"
+			(at 182.88 95.25 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "680K"
+			(at 182.88 97.79 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
+			(at 182.88 103.378 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 182.88 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 182.88 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cf5b83c0-d2a6-425f-9931-2fe8d92d8d4f")
+		)
+		(pin "2"
+			(uuid "a2cf4ba4-b7fe-4837-92a1-7662c4ab506f")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "R2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5Y:Pomona_1581")
+		(at 127 76.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "bc02bc92-937b-4ce8-93f9-11b6bbe83942")
+		(property "Reference" "J**6"
+			(at 128.27 74.9299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Pomona_1581"
+			(at 128.27 77.4699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "5Y:Pomona-1581"
+			(at 132.08 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 132.08 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "4mm banana jack"
+			(at 127 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e6609e42-a278-40d9-b352-e80cc5e33d3c")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "J**6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 184.15 71.12 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c299a475-7217-404f-98a5-f79dcf2c7d10")
+		(property "Reference" "R7"
+			(at 184.15 77.47 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100K"
+			(at 184.15 74.93 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
+			(at 184.15 69.342 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 184.15 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 184.15 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1e38745f-4f41-48fe-bc5e-d2bec9657123")
+		)
+		(pin "2"
+			(uuid "ea79db34-6f40-4bea-b06e-fc380f6a997d")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "R7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5Y:Pomona_1581")
+		(at 101.6 101.6 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d017e4b6-0c37-4c02-952d-264544403b9f")
+		(property "Reference" "J**9"
+			(at 102.87 100.3299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Pomona_1581"
+			(at 102.87 102.8699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "5Y:Pomona-1581"
+			(at 106.68 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 106.68 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "4mm banana jack"
+			(at 101.6 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "044a0b9c-bcb9-4731-ac22-be77e5d30f77")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "J**9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 71.12 377.19 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d0a4e5b2-f61b-476a-9427-12a9c9a20fd6")
+		(property "Reference" "C3"
+			(at 74.422 375.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "4u7"
+			(at 74.422 378.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 72.0852 381 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 71.12 377.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 71.12 377.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "022f52ee-ae6e-4fdb-984c-f302a8796cc9")
+		)
+		(pin "1"
+			(uuid "5ac0a955-0058-494e-b48e-27e6b0e2016a")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "C3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5Y:AD823")
+		(at 187.96 86.36 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d87ea5cc-3abd-40ea-b23c-7debb0749100")
+		(property "Reference" "U1"
+			(at 187.96 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AD823"
+			(at 187.96 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 187.96 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm358.pdf"
+			(at 187.96 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Dual Operational Amplifiers, DIP-8/SOIC-8/TSSOP-8/VSSOP-8"
+			(at 187.96 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "5"
+			(uuid "2892438c-50bc-4833-b69f-680d66ebd6c4")
+		)
+		(pin "2"
+			(uuid "f72ed3df-ebaf-4bff-b43a-68c55c76115d")
+		)
+		(pin "1"
+			(uuid "47dd0781-26c4-4a71-963f-adaa6c5c6664")
+		)
+		(pin "7"
+			(uuid "eaf7148c-0010-4e18-9f81-312226b0e60b")
+		)
+		(pin "4"
+			(uuid "7b9bda7e-dec2-4381-9803-818f46842829")
+		)
+		(pin "8"
+			(uuid "ec7e6e06-906c-4003-bb7e-b28adbcbd9a6")
+		)
+		(pin "6"
+			(uuid "a8f49153-5d9c-4c6c-bb8e-47b07e18b410")
+		)
+		(pin "3"
+			(uuid "7387128c-5f73-4abc-bc61-9a815e76690a")
+		)
+		(instances
+			(project ""
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5Y:Pomona_1581")
+		(at 101.6 76.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e45580f1-0d24-445d-a535-d86a9f74b7a6")
+		(property "Reference" "J**5"
+			(at 102.87 74.9299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Pomona_1581"
+			(at 102.87 77.4699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "5Y:Pomona-1581"
+			(at 106.68 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 106.68 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "4mm banana jack"
+			(at 101.6 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
 			(uuid "4ad54bc0-5ec7-4d12-b1b5-11dc169d1b1e")
 		)
 		(instances
 			(project "Function"
 				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
 					(reference "J**5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 60.96 384.81 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ed5019ab-214a-442a-8971-e4ed3cf8a7ef")
+		(property "Reference" "C2"
+			(at 63.754 383.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "4u7"
+			(at 63.754 386.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 61.9252 388.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.96 384.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 60.96 384.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "27143400-0692-4c88-b699-1aac1f668d71")
+		)
+		(pin "1"
+			(uuid "2fa1041e-d2c4-42b9-9738-fec2eec26ad8")
+		)
+		(instances
+			(project "Function"
+				(path "/411f1d4c-f349-4d7d-a3c5-8d89173dd9dc"
+					(reference "C2")
 					(unit 1)
 				)
 			)
