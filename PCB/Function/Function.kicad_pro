@@ -461,7 +461,7 @@
   "net_settings": {
     "classes": [
       {
-        "bus_width": 22,
+        "bus_width": 10,
         "clearance": 0.2,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
@@ -476,7 +476,22 @@
         "track_width": 0.2,
         "via_diameter": 0.6,
         "via_drill": 0.3,
-        "wire_width": 22
+        "wire_width": 10
+      },
+      {
+        "bus_width": 10,
+        "line_style": 0,
+        "name": "Power",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 1,
+        "schematic_color": "rgb(63, 63, 255)",
+        "wire_width": 10
+      },
+      {
+        "name": "Signal",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 0,
+        "schematic_color": "rgb(255, 255, 63)"
       }
     ],
     "meta": {
@@ -589,7 +604,7 @@
     "drawing": {
       "dashed_lines_dash_length_ratio": 12.0,
       "dashed_lines_gap_length_ratio": 3.0,
-      "default_line_thickness": 6.0,
+      "default_line_thickness": 3.0,
       "default_text_size": 50.0,
       "field_names": [],
       "intersheets_ref_own_page": false,

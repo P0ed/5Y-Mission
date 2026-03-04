@@ -11,4 +11,4 @@ DerivedData/
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
 
-*-backups/*.zip
+*.zip
