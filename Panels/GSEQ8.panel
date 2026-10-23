@@ -1,0 +1,416 @@
+{
+  "cells" : [
+    {
+      "caption" : "Q3",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "Q2",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "Q1",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "PATTERN",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "Q3",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "Q2",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "Q1",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "CLOCK",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "J3",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "J2",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "J1",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "RESET",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "J3",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "J2",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "J1",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "WIDTH",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "1",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "2",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "3",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "4",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "5",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "6",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "7",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "8",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    }
+  ],
+  "finish" : "enig",
+  "size" : "fourBySix",
+  "title" : "CD4029",
+  "version" : 1
+}
