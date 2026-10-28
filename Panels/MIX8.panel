@@ -1,0 +1,440 @@
+{
+  "cells" : [
+    {
+      "caption" : "POWER",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "L",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "SEND",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "IN",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "IN",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "SEND",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "R",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "IN",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 3,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 3,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 3,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 3,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 3,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 3,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 3,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "bourns51",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : -90,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "bourns51",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "bourns51",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : -150,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "bourns51",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 60,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "bourns51",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : -150,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "bourns51",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 0,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "bourns51",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : -120,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "bourns51",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 60,
+      "togglePosition" : "down"
+    }
+  ],
+  "finish" : "aluminum",
+  "size" : "eightBySix",
+  "title" : "MIX",
+  "version" : 1
+}

@@ -1,0 +1,416 @@
+{
+  "cells" : [
+    {
+      "caption" : "POWER",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "SEND",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "OUT",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "RETURN",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 3,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "gray",
+      "control" : "pomona1581",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 3,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 3,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 3,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 1,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "bourns51",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : -90,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "bourns51",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "bourns51",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : -150,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "bourns51",
+      "frame" : "rectangle",
+      "frameRotation" : 2,
+      "knobAngle" : 60,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    }
+  ],
+  "finish" : "aluminum",
+  "size" : "fourBySix",
+  "title" : "MIX",
+  "version" : 1
+}

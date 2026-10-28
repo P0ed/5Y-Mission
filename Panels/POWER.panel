@@ -1,0 +1,401 @@
+{
+  "cells" : [
+    {
+      "caption" : "IN",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "black",
+      "control" : "nkkMN12",
+      "frame" : "rectangle",
+      "frameRotation" : 3,
+      "knobAngle" : 45,
+      "togglePosition" : "down"
+    },
+    {
+      "caption" : "",
+      "color" : "amber",
+      "control" : "vccCLB300",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "OUT",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "OUT",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "OUT",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "OUT",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "OUT",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "OUT",
+      "color" : "black",
+      "control" : "lemo1B303",
+      "frame" : "rectangle",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    },
+    {
+      "caption" : "",
+      "color" : "white",
+      "frame" : "none",
+      "frameRotation" : 0,
+      "knobAngle" : 45,
+      "togglePosition" : "up"
+    }
+  ],
+  "finish" : "aluminum",
+  "size" : "fourBySix",
+  "title" : "MIX",
+  "version" : 1
+}
